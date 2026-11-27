@@ -33,7 +33,7 @@ Catalogue content (a route, a POI or a business listing) is **not** an event. On
 
 | Event type | Produced by | Verified by |
 |---|---|---|
-| `checkin.qr` | Visitor scans a member's or POI's QR code in the app | Signed QR token + server time window + optional GPS distance check |
+| `checkin.qr` | Visitor scans a member's or POI's QR code in the app | Signed QR token + server time window + phone location within 500 m of the place (required when the place has coordinates, accuracy 300 m or better; ETAM's manual admin entries are exempt) |
 | `checkin.geo` | Visitor taps "I'm here" at a POI that has no physical QR | GPS within the POI's radius (default 75 m, max accuracy 50 m), dwell of at least 2 minutes, one per POI per day; earns fewer points than a QR check-in |
 | `route.completed` | Visitor checks in at the required stops of a route or package | All component check-ins verified |
 | `referral.issued` | Member A refers a visitor to member B (in-app referral code or QR) | Issued by an authenticated member |

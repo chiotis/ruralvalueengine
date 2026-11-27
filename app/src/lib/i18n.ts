@@ -73,6 +73,10 @@ export function reasonText(reason: string | undefined, lang: Lang): string {
     qr_unknown_target: ["Ο κωδικός δεν είναι πλέον ενεργός.", "This code is no longer active."],
     qr_rotated: ["Ο κωδικός έχει αντικατασταθεί. Ζητήστε τον νέο.", "This code has been replaced. Ask for the new one."],
     geo_too_far: ["Βρίσκεστε πολύ μακριά από το σημείο.", "You're too far from the place."],
+    geo_required: [
+      "Χρειάζεται η τοποθεσία σας για να μετρήσει η σάρωση. Ενεργοποιήστε την τοποθεσία και δοκιμάστε ξανά.",
+      "Your location is needed for the scan to count. Turn on location and try again.",
+    ],
     geo_inaccurate: ["Το GPS δεν είναι αρκετά ακριβές. Δοκιμάστε σε ανοιχτό χώρο.", "GPS isn't accurate enough. Try in the open."],
     dwell_too_short: ["Μείνετε λίγο ακόμα κοντά στο σημείο.", "Stay near the place a little longer."],
     time_in_future: ["Ελέγξτε την ώρα του τηλεφώνου σας.", "Check your phone's clock."],

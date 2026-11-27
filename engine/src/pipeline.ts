@@ -13,7 +13,8 @@ export interface PipelineConfig {
 export const LIMITS = {
   maxFutureSkewMs: 5 * 60 * 1000, // device clock ahead of server
   maxOfflineAgeMs: 72 * 60 * 60 * 1000, // offline queue may hold scans up to 3 days
-  qrMaxDistanceM: 500, // when the device sends a location with a QR scan
+  qrMaxDistanceM: 500, // phone location vs the place, for a QR whose place has coordinates
+  qrMaxAccuracyM: 300, // a fix vaguer than this can't prove the phone is at the place
   geoMaxAccuracyM: 50,
   geoMinDwellS: 120,
 } as const;
@@ -201,13 +202,31 @@ async function processQrCheckin(tx: Tx, cfg: PipelineConfig, input: EventInput, 
   if (!qr.ok) return reject(qr.reason);
   ev.checks.push("qr_signature");
 
-  const t = (await tx.query<QrTarget>("SELECT * FROM qr_targets WHERE id = $1", [qr.target])).rows[0];
+  // A target without its own coordinates uses its member's or POI's, so a QR made before the
+  // place had coordinates still gets the distance check.
+  const t = (
+    await tx.query<QrTarget>(
+      `SELECT q.id, q.kind, q.member_ids, q.poi_id, q.key_version, q.active,
+              COALESCE(q.lat, p.lat, CASE WHEN q.kind = 'member' THEN m.lat END) AS lat,
+              COALESCE(q.lng, p.lng, CASE WHEN q.kind = 'member' THEN m.lng END) AS lng
+         FROM qr_targets q
+         LEFT JOIN pois p ON p.id = q.poi_id
+         LEFT JOIN members m ON m.id = q.member_ids[1]
+        WHERE q.id = $1`,
+      [qr.target],
+    )
+  ).rows[0];
   if (!t || !t.active) reject("qr_unknown_target");
   const target = t as QrTarget;
   if (target.key_version !== qr.version) reject("qr_rotated");
 
-  if (ev.geo && target.lat != null && target.lng != null) {
-    if (distanceMeters(ev.geo, { lat: target.lat, lng: target.lng }) > LIMITS.qrMaxDistanceM) reject("geo_too_far");
+  // A place with coordinates needs the phone's location: a photo of the QR must not earn points from afar.
+  // ETAM's manual entries from the admin panel are exempt from needing one.
+  if (target.lat != null && target.lng != null && (ev.geo || ev.source !== "admin")) {
+    if (!ev.geo) reject("geo_required");
+    const geo = ev.geo as GeoPoint;
+    if (geo.accuracy_m != null && geo.accuracy_m > LIMITS.qrMaxAccuracyM) reject("geo_inaccurate");
+    if (distanceMeters(geo, { lat: target.lat, lng: target.lng }) > LIMITS.qrMaxDistanceM) reject("geo_too_far");
     ev.checks.push("geo_distance");
   }
 

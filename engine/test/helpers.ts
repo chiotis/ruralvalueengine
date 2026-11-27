@@ -32,8 +32,22 @@ export async function seed(db: Db) {
 
 export const qr = (target: string, version = 1) => makeQrToken(cfg.qrKeys, target, version);
 
+/** Where a phone standing at each seeded QR would be. */
+const AT: Record<string, { lat: number; lng: number; accuracy_m: number }> = {
+  "biz-1": { lat: 37.5546, lng: 22.0772, accuracy_m: 15 },
+  "biz-2": { lat: 37.5601, lng: 22.0801, accuracy_m: 15 },
+  "biz-3": { lat: 37.5701, lng: 22.0901, accuracy_m: 15 },
+  "poi-9": { lat: 37.5501, lng: 22.0701, accuracy_m: 15 },
+};
+
 export function qrCheckin(target: string, at: Date, extra: Record<string, unknown> = {}, id = ulid()) {
-  return { event_id: id, type: "checkin.qr", occurred_at: at.toISOString(), payload: { qr_token: qr(target), ...extra } };
+  return {
+    event_id: id,
+    type: "checkin.qr",
+    occurred_at: at.toISOString(),
+    ...(AT[target] ? { geo: AT[target] } : {}),
+    payload: { qr_token: qr(target), ...extra },
+  };
 }
 
 export async function balance(db: Db, ownerType: "visitor" | "member", id: string): Promise<number> {
