@@ -5,7 +5,7 @@ import { CameraView, useCameraPermissions } from "expo-camera";
 import * as Location from "expo-location";
 import { reasonText, useI18n } from "../../lib/i18n";
 import { useSession } from "../../lib/session";
-import { newEvent, submit } from "../../lib/queue";
+import { lastFlushError, newEvent, submit } from "../../lib/queue";
 import { describeOutcome, type Outcome } from "../../lib/outcome";
 import { Button, Card, Field, H2, P } from "../../components/ui";
 import { colors, radius, space } from "../../lib/theme";
@@ -137,7 +137,12 @@ export default function Scan() {
               </>
             )}
             {outcome.kind === "duplicate" && <P>{t.checkinDuplicate}</P>}
-            {outcome.kind === "queued" && <P>{t.checkinQueued}</P>}
+            {outcome.kind === "queued" && (
+              <>
+                <P>{t.checkinQueued}</P>
+                {lastFlushError && <P muted>{lastFlushError}</P>}
+              </>
+            )}
             {outcome.kind === "rejected" && (
               <>
                 <H2>{t.checkinRejected}</H2>
