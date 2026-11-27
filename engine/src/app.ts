@@ -14,12 +14,34 @@ import { makeQrToken } from "./qr.js";
 import { passport, wallet } from "./wallet.js";
 import { registerCatalog } from "./catalog.js";
 import { WpClient } from "./wordpress/client.js";
+import { registerAdminRoutes } from "./admin.js";
+import { RateLimiter } from "./ratelimit.js";
+import { registerAdminPanel } from "./admin-panel.js";
 
 const MAX_BATCH = 100;
 const Id = z.string().regex(/^[a-z0-9-]+$/, "ids are lowercase letters, digits and dashes");
 
 export function buildApp(db: Db, cfg: Config, mailer: Mailer, opts: { logger?: boolean; wpClient?: WpClient } = {}): FastifyInstance {
-  const app = Fastify({ logger: opts.logger ?? false, bodyLimit: 1_000_000 });
+  const app = Fastify({ logger: opts.logger ?? false, bodyLimit: 1_000_000, trustProxy: cfg.trustProxy ?? false });
+  const wpClient = opts.wpClient ?? (cfg.ruralgreeceUrl ? new WpClient(cfg.ruralgreeceUrl) : undefined);
+
+  // Per-IP limits on the login endpoints (the per-email limits live in Auth) and on failed admin tokens.
+  const limits = {
+    start: new RateLimiter(20, 60 * 60 * 1000),
+    verify: new RateLimiter(60, 60 * 60 * 1000),
+    adminFail: new RateLimiter(20, 15 * 60 * 1000),
+  };
+  app.addHook("onRequest", async (req, reply) => {
+    const path = req.url.split("?")[0]!;
+    const which = path.endsWith("/auth/email/start") ? limits.start : path.endsWith("/auth/email/verify") ? limits.verify : null;
+    if (which && !which.hit(req.ip)) return reply.status(429).send({ error: "too_many_requests" });
+  });
+  app.addHook("onSend", async (_req, reply, payload) => {
+    reply.header("x-content-type-options", "nosniff");
+    reply.header("referrer-policy", "no-referrer");
+    reply.header("x-frame-options", "DENY");
+    return payload;
+  });
   const auth = new Auth(db, mailer, cfg.jwtSecret);
   const memberAuth = new MemberAuth(db, auth, cfg.jwtSecret);
   const pipelineCfg = { qrKeys: cfg.qrKeys, networkTz: cfg.networkTz };
@@ -44,7 +66,9 @@ export function buildApp(db: Db, cfg: Config, mailer: Mailer, opts: { logger?: b
   };
   const requireAdmin = async (req: FastifyRequest, reply: FastifyReply) => {
     const t = bearer(req);
-    if (!t || !safeEqual(t, cfg.adminToken)) return reply.status(401).send({ error: "unauthorized" });
+    if (t && safeEqual(t, cfg.adminToken)) return;
+    if (!limits.adminFail.hit(req.ip)) return reply.status(429).send({ error: "too_many_requests" });
+    return reply.status(401).send({ error: "unauthorized" });
   };
 
   const submit = async (body: unknown, actor: Actor) => {
@@ -56,9 +80,11 @@ export function buildApp(db: Db, cfg: Config, mailer: Mailer, opts: { logger?: b
   };
 
   registerCatalog(app, db, {
-    wpClient: opts.wpClient ?? (cfg.ruralgreeceUrl ? new WpClient(cfg.ruralgreeceUrl) : undefined),
+    wpClient,
     webhookSecret: cfg.wpWebhookSecret,
   });
+
+  registerAdminPanel(app);
 
   app.get("/health", async () => {
     await db.query("SELECT 1");
@@ -91,6 +117,7 @@ export function buildApp(db: Db, cfg: Config, mailer: Mailer, opts: { logger?: b
   // ---- admin API (ETAM) ----
   app.register(async (admin) => {
     admin.addHook("onRequest", requireAdmin);
+    registerAdminRoutes(admin, { db, qrKeys: cfg.qrKeys, wpClient });
 
     admin.post("/v1/admin/events", async (req) => submit(req.body, { kind: "admin" }));
 

@@ -2,14 +2,16 @@ import { loadConfig } from "./config.js";
 import { createPool } from "./db.js";
 import { migrate } from "./migrate.js";
 import { buildApp } from "./app.js";
-import { ConsoleMailer } from "./mailer.js";
+import { ConsoleMailer, SmtpMailer } from "./mailer.js";
 import { WpClient } from "./wordpress/client.js";
 import { syncRuralGreece } from "./wordpress/sync.js";
 
 const cfg = loadConfig();
 const db = createPool(cfg.databaseUrl);
 await migrate(db);
-const app = buildApp(db, cfg, new ConsoleMailer(), { logger: true });
+const mailer = cfg.smtpUrl ? new SmtpMailer(cfg.smtpUrl, cfg.mailFrom ?? "no-reply@ruralgreece.gr") : new ConsoleMailer();
+const app = buildApp(db, cfg, mailer, { logger: true });
+if (!cfg.smtpUrl) app.log.warn("SMTP_URL is not set: login codes are written to the log instead of being emailed");
 await app.listen({ host: "0.0.0.0", port: cfg.port });
 
 // Content sync: incremental every 15 minutes, full pass every night.
