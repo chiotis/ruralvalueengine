@@ -1,6 +1,7 @@
 export interface Config {
   databaseUrl: string;
   port: number;
+  host: string;
   jwtSecret: string;
   qrKeys: Record<string, string>;
   adminToken: string;
@@ -22,6 +23,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
   const cfg: Config = {
     databaseUrl: required("DATABASE_URL"),
     port: Number(env.PORT ?? 8080),
+    host: env.HOST || "127.0.0.1",
     jwtSecret: required("JWT_SECRET"),
     qrKeys: JSON.parse(required("QR_KEYS")) as Record<string, string>,
     adminToken: required("ADMIN_TOKEN"),

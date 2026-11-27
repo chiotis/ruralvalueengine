@@ -13,7 +13,7 @@ await migrate(db);
 const mailer = cfg.smtpUrl ? new SmtpMailer(cfg.smtpUrl, cfg.mailFrom ?? "no-reply@ruralgreece.gr") : new ConsoleMailer();
 const app = buildApp(db, cfg, mailer, { logger: true });
 if (!cfg.smtpUrl) app.log.warn("SMTP_URL is not set: login codes are written to the log instead of being emailed");
-await app.listen({ host: "0.0.0.0", port: cfg.port });
+await app.listen({ host: cfg.host, port: cfg.port });
 
 // Content sync: incremental every 15 minutes, full pass every night.
 if (cfg.ruralgreeceUrl) {
