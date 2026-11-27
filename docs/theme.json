@@ -1,16 +1,26 @@
 {
-  "_note": "PLACEHOLDER values. The real ruralgreece.gr palette could not be read automatically; replace these with the site's GeneratePress / Elementor global colours once Chris sends them.",
+  "_note": "Palette from Chris (2026-11-27): greens are the main colours; burgundy, brown and light blue are complementary/accent. Fonts still TBD.",
   "color": {
-    "primary": "#4F6B3A",
-    "primaryDark": "#36492A",
-    "accent": "#C8893B",
+    "greenDark": "#1c2c23",
+    "green": "#376245",
+    "greenBright": "#2d9141",
+    "burgundy": "#7a3123",
+    "brown": "#8a5a3c",
+    "sky": "#b1d1ea",
+
+    "primary": "#376245",
+    "primaryDark": "#1c2c23",
+    "primaryAction": "#2d9141",
+    "accent": "#8a5a3c",
+    "accentStrong": "#7a3123",
+    "highlight": "#b1d1ea",
     "background": "#FAF8F3",
     "surface": "#FFFFFF",
-    "text": "#222222",
-    "textMuted": "#6B6B6B",
-    "border": "#E4E0D6",
-    "success": "#2E7D32",
-    "danger": "#C62828"
+    "text": "#1c2c23",
+    "textMuted": "#5E6B63",
+    "border": "#E1E5DF",
+    "success": "#2d9141",
+    "danger": "#7a3123"
   },
   "font": {
     "heading": "TBD",

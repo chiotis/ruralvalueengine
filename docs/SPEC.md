@@ -23,8 +23,8 @@ The deliverable is an Android and iOS app for ETAM, backed by the engine on the 
 
 ## 3. Users and roles
 
-- **Visitor**: anyone with the app. Can browse without an account; needs an account (email or phone OTP) to check in, collect points and keep a Passport. Stored with a pseudonymous id in the engine.
-- **Member**: a business or organisation of the network (a `business` on ruralgreece.gr, linked to its epaithros+ member record). Logs in to the member area of the same app.
+- **Visitor**: anyone with the app. Can browse without an account; needs an account to check in, collect points and keep a Passport. Login is passwordless: the visitor enters an email, receives a 6-digit code, and is signed in; the session stays on the device (refresh token) so they rarely repeat it. Sign in with Apple/Google can be added later. Stored with a pseudonymous id in the engine.
+- **Member**: a business or organisation of the network. Members have an account on epaithros+ (LMS, research and small services) and are promoted on ruralgreece.gr as a `business`, shown along the routes near them. Members log in to the member area of the same app with their **existing epaithros+ credentials**.
 - **Network admin (ETAM)**: web admin panel (part of the engine), not in the mobile app. Manages rules, QR codes, members, corrections and reports.
 
 ## 4. Events (what the engine counts)
@@ -34,6 +34,7 @@ Catalogue content (a route, a POI or a business listing) is **not** an event. On
 | Event type | Produced by | Verified by |
 |---|---|---|
 | `checkin.qr` | Visitor scans a member's or POI's QR code in the app | Signed QR token + server time window + optional GPS distance check |
+| `checkin.geo` | Visitor taps "I'm here" at a POI that has no physical QR | GPS within the POI's radius (default 75 m, max accuracy 50 m), dwell of at least 2 minutes, one per POI per day; earns fewer points than a QR check-in |
 | `route.completed` | Visitor checks in at the required stops of a route or package | All component check-ins verified |
 | `referral.issued` | Member A refers a visitor to member B (in-app referral code or QR) | Issued by an authenticated member |
 | `referral.redeemed` | Visitor checks in at member B with A's referral | Matching `checkin.qr` at B within the validity window |
@@ -59,7 +60,8 @@ Every event uses the common envelope in `docs/DATA-CONTRACT.md`. Events are immu
 |---|---|---|
 | First check-in at a member on a given day | +10 | +5 to the member |
 | Repeat scan at the same place on the same day | 0 (duplicate) | 0 |
-| Check-in at a POI | +5 | none |
+| Check-in at a POI (QR) | +5 | none |
+| Check-in at a POI (GPS, no QR) | +3 | none |
 | Completed route or package | +30 bonus | +5 to each member on it |
 | Redeemed referral (A refers to B) | +5 | A +10 (referrer), B +5 (host) |
 | New confirmed partnership | none | +20 to each member |
@@ -99,10 +101,14 @@ Offline: catalogue cached for browsing; check-ins queued offline with the signed
 4. App: Explore + Map → Scan + Passport + Wallet → Member area → Packages → Impact Score + Analytics → Connect + Matchmaking.
 5. Admin panel, hardening, handover docs for ETAM.
 
-## 10. Open questions for Chris
+## 10. Decisions from review (2026-11-27)
 
-1. **epaithros+**: what does it store (member records, membership status, partnerships)? Is each epaithros+ member also a `business` on ruralgreece.gr, and how are the two linked (same email, an id field)?
-2. **Colours**: the theme's colour values couldn't be read automatically. Please send the hex values from ruralgreece.gr (Appearance → Customize → Colors in GeneratePress, or the Elementor kit's global colours) and the font names. `docs/theme.json` has placeholders until then.
-3. **QR placement**: one QR per business, or also per POI and route stop? Who prints and places them?
-4. **Point values**: are the numbers in section 6 a reasonable start?
-5. **Visitor login**: email magic link, phone OTP, or both?
+1. **epaithros+** is the members' platform (LMS, research, small services). ruralgreece.gr promotes those members through routes, each route showing nearby businesses and POIs. Members log in with epaithros+ accounts; each member must be linked to its `business` on ruralgreece.gr (link field to be confirmed when we inspect epaithros+).
+2. **Colours**: greens `#1c2c23`, `#376245`, `#2d9141` are the main colours; `#7a3123`, `#8a5a3c`, `#b1d1ea` are complementary/accent. Fonts still to confirm.
+3. **QR codes**: on businesses for sure, on POIs where ETAM places them. POIs without a QR use GPS check-in (`checkin.geo`).
+4. **Point values**: keep section 6 as is for now; ETAM tunes later (rules are versioned).
+5. **Visitor login**: passwordless email code.
+
+### Still open
+- Fonts used on ruralgreece.gr.
+- How an epaithros+ member record is linked to a ruralgreece.gr `business` (same email, or an id field).
