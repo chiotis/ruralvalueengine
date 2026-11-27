@@ -1,3 +1,4 @@
+import "./env.js";
 import { loadConfig } from "./config.js";
 import { createPool } from "./db.js";
 import { migrate } from "./migrate.js";

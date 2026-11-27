@@ -47,4 +47,4 @@ The pipeline tests cover the four edge cases from the technical description: a r
 
 ## Deploying to lighthouse03
 
-See `../docs/DEPLOY.md`, with the systemd unit, nginx site and backup script in `../deploy/`.
+See `../docs/DEPLOY.md`. lighthouse03 runs CloudPanel, so the engine runs as a CloudPanel Node.js site under pm2 and reads its settings from `engine/.env`. For a plain server, `../deploy/` has a systemd unit and an nginx site.
