@@ -67,7 +67,7 @@ describe("end to end: admin sets up a QR, visitor scans it", () => {
 
     const v = await login("visitor@example.com");
     const auth = { authorization: `Bearer ${v.access_token}` };
-    const ev = { event_id: ulid(), type: "checkin.qr", occurred_at: new Date().toISOString(), payload: { qr_token: qr } };
+    const ev = { event_id: ulid(), type: "checkin.qr", occurred_at: new Date().toISOString(), geo: { lat: 37.5546, lng: 22.0772, accuracy_m: 12 }, payload: { qr_token: qr } };
     const r = await app.inject({ method: "POST", url: "/v1/events", headers: auth, payload: { events: [ev, ev] } });
     expect(r.json().results.map((x: { status: string }) => x.status)).toEqual(["verified", "already_received"]);
 

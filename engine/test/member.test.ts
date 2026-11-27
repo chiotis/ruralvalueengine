@@ -5,7 +5,7 @@ import type { Db } from "../src/db.js";
 import { buildApp } from "../src/app.js";
 import { ConsoleMailer } from "../src/mailer.js";
 import { scoreFromInputs } from "../src/score.js";
-import { cfg as pcfg, freshDb, qr } from "./helpers.js";
+import { cfg as pcfg, freshDb, qr, qrCheckin } from "./helpers.js";
 
 let db: Db;
 let app: FastifyInstance;
@@ -57,7 +57,7 @@ const scan = (auth: object, target: string, extra: object = {}) =>
     method: "POST",
     url: "/v1/events",
     headers: auth,
-    payload: { event_id: ulid(), type: "checkin.qr", occurred_at: new Date().toISOString(), payload: { qr_token: qr(target), ...extra } },
+    payload: qrCheckin(target, new Date(), extra),
   });
 
 describe("member login", () => {

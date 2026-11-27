@@ -97,6 +97,22 @@ describe("QR verification", () => {
     expect(r!.reason).toBe("geo_too_far");
   });
 
+  it("requires the phone's location when the place has coordinates", async () => {
+    const { geo: _geo, ...noGeo } = qrCheckin("biz-1", NOW);
+    expect((await run(noGeo))[0]!.reason).toBe("geo_required");
+    const vague = { ...qrCheckin("biz-1", NOW), geo: { lat: 37.5546, lng: 22.0772, accuracy_m: 2000 } };
+    expect((await run(vague))[0]!.reason).toBe("geo_inaccurate");
+    expect(await balance(db, "visitor", "v_alice")).toBe(0);
+  });
+
+  it("uses the member's coordinates when the QR has none of its own", async () => {
+    await db.query("UPDATE qr_targets SET lat = NULL, lng = NULL WHERE id = 'biz-1'");
+    const [far] = await run({ ...qrCheckin("biz-1", NOW), geo: { lat: 38.0, lng: 23.7, accuracy_m: 10 } });
+    expect(far!.reason).toBe("geo_too_far");
+    const [near] = await run(qrCheckin("biz-1", NOW));
+    expect(near!.status).toBe("verified");
+  });
+
   it("rejects times in the future and scans older than 3 days", async () => {
     expect((await run(qrCheckin("biz-1", later(H))))[0]!.reason).toBe("time_in_future");
     expect((await run(qrCheckin("biz-1", later(-4 * 24 * H))))[0]!.reason).toBe("too_old");

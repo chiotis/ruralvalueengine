@@ -12,15 +12,20 @@ import { colors, radius, space } from "../../lib/theme";
 
 const QR_PREFIX = "rve://c/";
 
-/** Best-effort location to send with a scan: never blocks the check-in for long. */
+/**
+ * The phone's location to send with a scan. The engine refuses a scan at a place with coordinates
+ * when none comes with it, so ask for permission here and fall back to a recent last-known fix.
+ */
 async function quickPosition() {
   try {
-    const perm = await Location.getForegroundPermissionsAsync();
+    let perm = await Location.getForegroundPermissionsAsync();
+    if (perm.status !== "granted" && perm.canAskAgain) perm = await Location.requestForegroundPermissionsAsync();
     if (perm.status !== "granted") return undefined;
-    const pos = await Promise.race([
-      Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced }),
-      new Promise<null>((r) => setTimeout(() => r(null), 4000)),
-    ]);
+    const pos =
+      (await Promise.race([
+        Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.High }),
+        new Promise<null>((r) => setTimeout(() => r(null), 8000)),
+      ]).catch(() => null)) ?? (await Location.getLastKnownPositionAsync({ maxAge: 10 * 60 * 1000 }));
     if (!pos) return undefined;
     return { lat: pos.coords.latitude, lng: pos.coords.longitude, accuracy_m: pos.coords.accuracy ?? undefined };
   } catch {
