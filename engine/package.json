@@ -13,7 +13,8 @@
     "start": "node dist/index.js",
     "migrate": "tsx src/migrate-cli.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "sync": "tsx src/sync-cli.ts"
   },
   "dependencies": {
     "fastify": "^5.12.8",

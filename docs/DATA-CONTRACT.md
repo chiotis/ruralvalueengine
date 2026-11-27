@@ -17,6 +17,22 @@ Notes:
 - Sync is incremental using `modified_gmt` (`?modified_after=`), plus a nightly full pass to catch deletions.
 - Webhooks: a small plugin (`rve-sync`) on each site will POST `{type, id, action: upsert|delete}` to the engine on save/trash so changes appear within seconds.
 
+
+### Exact ACF keys (checked against the live API on 2026-11-27)
+
+Shared by all three types: `title_en`, `υπότιτλος_el`, `υπότιτλος_en`, `εισαγωγικό_κείμενο`, `εισαγωγικό_κείμενο_en`, `κεντρικό_κείμενο`, `κεντρικό_κείμενο_en`, `latitude`, `longitude` (strings), `map_kml`, `banner_image` (media id, or `""`), `map_img_url`, `photo_gallery` (media ids), `youtube_video`.
+
+- **business:** `τύπος_επιχείρησης`, `open_on`, `address`, `email`, `telephone`, `website_url`, `booking_url`, `υπηρεσίες_επιχείρησης_el/_en`, `τουριστικά_πακέτα_el/_en`
+- **route:** `μήκος_μονοπατιού`, `προτεινόμενη_περίοδος_el/_en`, `διάρκεια_el/_en`
+- **pois:** `address`, `email`, `telephone`, `website_url`, `ωράριο_λειτουργίας_el/_en`
+
+There is **no relationship field** between routes and businesses or POIs. "Nearby" is worked out by the engine from coordinates (default 10 km), plus the shared `location` and `post_tag` terms.
+
+### Sync (implemented in `engine/src/wordpress/`)
+- Incremental every 15 minutes (`modified_after`, stepping back one day to allow for WordPress's local time), and a full pass every night that also refreshes terms and marks removed posts as deleted.
+- The `wordpress/rve-sync` plugin sends a signed `{type, id, action}` notice on save, unpublish or delete, and the engine fetches that one post.
+- Each business becomes an engine `member` (`biz-<id>`), each POI with coordinates an engine `poi` (`poi-<id>`), and each route a `route` (`route-<id>`). Route stops for completion bonuses are set by ETAM in the admin API.
+
 ## 2. epaithros+
 
 The members' platform (LMS, research, small services). Used for **member login** and membership status. Not yet inspected; to read: user/member records (id, name, email, role, membership status) and the field that links a member to its ruralgreece.gr `business`. Member login options: WordPress Application Passwords or a JWT/OAuth plugin on epaithros+, with the engine exchanging the result for its own session token.
