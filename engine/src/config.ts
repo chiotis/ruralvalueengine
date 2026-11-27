@@ -5,6 +5,8 @@ export interface Config {
   qrKeys: Record<string, string>;
   adminToken: string;
   networkTz: string;
+  ruralgreeceUrl?: string;
+  wpWebhookSecret?: string;
 }
 
 export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
@@ -20,5 +22,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     qrKeys: JSON.parse(required("QR_KEYS")) as Record<string, string>,
     adminToken: required("ADMIN_TOKEN"),
     networkTz: env.NETWORK_TZ ?? "Europe/Athens",
+    ruralgreeceUrl: env.RURALGREECE_URL || undefined,
+    wpWebhookSecret: env.WP_WEBHOOK_SECRET || undefined,
   };
 }

@@ -13,7 +13,9 @@ Node.js + TypeScript + PostgreSQL service that receives events from the app, ver
 - **Login:** passwordless email code (6 digits, 10 minutes, 5 attempts, 5 codes per hour), a 1-hour access token, and a 90-day rotating refresh token.
 - **Admin API** (bearer `ADMIN_TOKEN`): members, POIs, QR targets (returns the string to print as a QR code), routes and stops, referral codes, member wallets.
 
-Not yet included: WordPress sync, epaithros+ member login, partnerships, packages, Impact Score, matchmaking, analytics, reward redemption, and real email sending (codes are logged by `ConsoleMailer` for now).
+- **Content sync from ruralgreece.gr:** businesses, routes, POIs, terms and media, plus a catalogue API (`/v1/catalog/{businesses,routes,pois}`, `/v1/catalog/item/:id` with nearby places) and a signed webhook for the `rve-sync` plugin. Run `npm run sync -- --full` by hand, or let the server do it every 15 minutes.
+
+Not yet included: epaithros+ member login, partnerships, packages, Impact Score, matchmaking, analytics, reward redemption, and real email sending (codes are logged by `ConsoleMailer` for now).
 
 ## Run locally
 

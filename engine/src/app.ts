@@ -10,11 +10,13 @@ import { ingest, type EventResult } from "./pipeline.js";
 import type { Actor } from "./envelope.js";
 import { makeQrToken } from "./qr.js";
 import { passport, wallet } from "./wallet.js";
+import { registerCatalog } from "./catalog.js";
+import { WpClient } from "./wordpress/client.js";
 
 const MAX_BATCH = 100;
 const Id = z.string().regex(/^[a-z0-9-]+$/, "ids are lowercase letters, digits and dashes");
 
-export function buildApp(db: Db, cfg: Config, mailer: Mailer, opts: { logger?: boolean } = {}): FastifyInstance {
+export function buildApp(db: Db, cfg: Config, mailer: Mailer, opts: { logger?: boolean; wpClient?: WpClient } = {}): FastifyInstance {
   const app = Fastify({ logger: opts.logger ?? false, bodyLimit: 1_000_000 });
   const auth = new Auth(db, mailer, cfg.jwtSecret);
   const pipelineCfg = { qrKeys: cfg.qrKeys, networkTz: cfg.networkTz };
@@ -49,6 +51,11 @@ export function buildApp(db: Db, cfg: Config, mailer: Mailer, opts: { logger?: b
     for (const raw of list) results.push(...(await ingest(db, pipelineCfg, raw, actor)));
     return { results };
   };
+
+  registerCatalog(app, db, {
+    wpClient: opts.wpClient ?? (cfg.ruralgreeceUrl ? new WpClient(cfg.ruralgreeceUrl) : undefined),
+    webhookSecret: cfg.wpWebhookSecret,
+  });
 
   app.get("/health", async () => {
     await db.query("SELECT 1");
