@@ -105,6 +105,7 @@ The engine reads `engine/.env` on start. Fill in every value, and make each secr
 | `RURALGREECE_URL` | `https://ruralgreece.gr` |
 | `SMTP_URL`, `MAIL_FROM` | the mailbox that sends login codes, e.g. `smtps://no-reply%40ruralgreece.gr:PASSWORD@mail.host:465` (an `@` in the user name is written `%40`) |
 | `TRUST_PROXY` | `1` (CloudPanel's nginx sits in front) |
+| `HOST` | leave out: the default `127.0.0.1` lets only the local nginx reach the engine |
 
 The engine refuses to start with short secrets, which catches a value you forgot to fill in.
 
