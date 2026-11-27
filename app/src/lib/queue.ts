@@ -24,6 +24,8 @@ export function newEvent(type: string, fields: Omit<QueuedEvent, "event_id" | "t
 export const pending = () => store.getJson<QueuedEvent[]>(KEY, []);
 
 let flushing: Promise<EventResult[]> | null = null;
+/** Why the last send failed (shown under "queued" so a test can tell network from app errors). */
+export let lastFlushError: string | null = null;
 
 /** Send everything waiting. Returns the engine's results; keeps events only if the network failed. */
 export function flush(): Promise<EventResult[]> {
@@ -36,8 +38,10 @@ export function flush(): Promise<EventResult[]> {
         const sent = new Set(list.slice(0, 100).map((e) => e.event_id));
         const rest = (await pending()).filter((e) => !sent.has(e.event_id));
         await store.setJson(KEY, rest);
+        lastFlushError = null;
         return res.results;
       } catch (e) {
+        lastFlushError = e instanceof ApiError ? `${e.status} ${e.code}` : String((e as Error)?.message ?? e);
         if (e instanceof ApiError && e.status < 500 && e.status !== 401 && e.status !== 429) {
           // The engine refused the whole batch (should not happen): drop it rather than retry forever.
           await store.setJson(KEY, []);
@@ -54,7 +58,10 @@ export function flush(): Promise<EventResult[]> {
 /** Queue one event and try to send it now. `null` result means it is waiting for the network. */
 export async function submit(ev: QueuedEvent): Promise<EventResult[] | null> {
   await store.setJson(KEY, [...(await pending()), ev]);
-  const results = await flush();
+  // A send already running (e.g. started when the app came to the foreground) may have read the
+  // queue before this event was added: wait for it, then send again, and look in both results.
+  const earlier = flushing ? await flushing : [];
+  const results = [...earlier, ...(await flush())];
   const mine = results.filter((r) => r.event_id === ev.event_id || r.event_id.startsWith(`${ev.event_id}.`));
   return mine.length ? mine : null;
 }
