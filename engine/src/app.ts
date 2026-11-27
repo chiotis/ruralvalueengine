@@ -5,7 +5,9 @@ import { z } from "zod";
 import type { Db } from "./db.js";
 import type { Config } from "./config.js";
 import type { Mailer } from "./mailer.js";
-import { Auth, AuthError, safeEqual } from "./auth.js";
+import { Auth, AuthError, MemberAuth, safeEqual } from "./auth.js";
+import { registerMemberRoutes } from "./member.js";
+import { registerPackageRoutes } from "./packages.js";
 import { ingest, type EventResult } from "./pipeline.js";
 import type { Actor } from "./envelope.js";
 import { makeQrToken } from "./qr.js";
@@ -19,6 +21,7 @@ const Id = z.string().regex(/^[a-z0-9-]+$/, "ids are lowercase letters, digits a
 export function buildApp(db: Db, cfg: Config, mailer: Mailer, opts: { logger?: boolean; wpClient?: WpClient } = {}): FastifyInstance {
   const app = Fastify({ logger: opts.logger ?? false, bodyLimit: 1_000_000 });
   const auth = new Auth(db, mailer, cfg.jwtSecret);
+  const memberAuth = new MemberAuth(db, auth, cfg.jwtSecret);
   const pipelineCfg = { qrKeys: cfg.qrKeys, networkTz: cfg.networkTz };
 
   app.setErrorHandler((err, _req, reply) => {
@@ -81,6 +84,9 @@ export function buildApp(db: Db, cfg: Config, mailer: Mailer, opts: { logger?: b
   app.post("/v1/events", async (req) => submit(req.body, { kind: "visitor", visitorId: await visitorOf(req) }));
   app.get("/v1/me/wallet", async (req) => wallet(db, "visitor", await visitorOf(req)));
   app.get("/v1/me/passport", async (req) => passport(db, await visitorOf(req)));
+
+  registerMemberRoutes(app, { db, auth, memberAuth, qrKeys: cfg.qrKeys, visitorOf });
+  registerPackageRoutes(app, db, visitorOf);
 
   // ---- admin API (ETAM) ----
   app.register(async (admin) => {
@@ -183,6 +189,91 @@ export function buildApp(db: Db, cfg: Config, mailer: Mailer, opts: { logger?: b
         [id, code, b.from_member_id, b.to_member_id, b.valid_days],
       );
       return { id, code };
+    });
+
+    // Let an email (besides the business email on ruralgreece.gr) act for a member.
+    admin.put("/v1/admin/member-users", async (req) => {
+      const b = z.object({ email: z.string().email(), member_id: Id }).parse(req.body);
+      await db.query("INSERT INTO member_users(email_hash, member_id) VALUES ($1, $2) ON CONFLICT DO NOTHING", [auth.memberEmailHash(b.email), b.member_id]);
+      return { ok: true };
+    });
+
+    admin.put<{ Params: { id: string } }>("/v1/admin/packages/:id", async (req) => {
+      const id = Id.parse(req.params.id);
+      const b = z
+        .object({
+          title_el: z.string().min(1),
+          title_en: z.string().optional(),
+          description: z.object({ el: z.string().nullable().optional(), en: z.string().nullable().optional() }).default({}),
+          stops: z.array(Id).min(2),
+          active: z.boolean().default(true),
+        })
+        .parse(req.body);
+      const client = await db.connect();
+      try {
+        await client.query("BEGIN");
+        await client.query(
+          `INSERT INTO routes(id, name, kind, title_en, description, active) VALUES ($1, $2, 'package', $3, $4, $5)
+           ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name, kind = 'package', title_en = EXCLUDED.title_en,
+                                          description = EXCLUDED.description, active = EXCLUDED.active`,
+          [id, b.title_el, b.title_en ?? null, JSON.stringify(b.description), b.active],
+        );
+        await client.query("DELETE FROM route_stops WHERE route_id = $1", [id]);
+        for (const [i, stop] of b.stops.entries()) {
+          await client.query("INSERT INTO route_stops(route_id, target_id, position) VALUES ($1, $2, $3)", [id, stop, i]);
+        }
+        await client.query("COMMIT");
+      } catch (e) {
+        await client.query("ROLLBACK");
+        throw e;
+      } finally {
+        client.release();
+      }
+      return { id, stops: b.stops.length };
+    });
+
+    // Network-wide rewards offered by ETAM (member_id = null).
+    admin.put<{ Params: { id: string } }>("/v1/admin/rewards/:id", async (req) => {
+      const id = Id.parse(req.params.id);
+      const b = z.object({ member_id: Id.nullable().default(null), title_el: z.string().min(1), title_en: z.string().optional(), cost: z.number().int().positive(), active: z.boolean().default(true) }).parse(req.body);
+      await db.query(
+        `INSERT INTO rewards(id, member_id, title_el, title_en, cost, active) VALUES ($1,$2,$3,$4,$5,$6)
+         ON CONFLICT (id) DO UPDATE SET member_id = EXCLUDED.member_id, title_el = EXCLUDED.title_el, title_en = EXCLUDED.title_en,
+                                        cost = EXCLUDED.cost, active = EXCLUDED.active`,
+        [id, b.member_id, b.title_el, b.title_en ?? null, b.cost, b.active],
+      );
+      return { id };
+    });
+
+    admin.get("/v1/admin/analytics", async (req) => {
+      const { days } = z.object({ days: z.coerce.number().int().min(1).max(365).default(30) }).parse(req.query);
+      const byType = await db.query(
+        `SELECT type, status, count(*)::int AS n FROM events WHERE occurred_at > now() - make_interval(days => $1)
+          GROUP BY type, status ORDER BY type, status`,
+        [days],
+      );
+      const rejected = await db.query(
+        `SELECT reason, count(*)::int AS n FROM events WHERE status = 'rejected' AND occurred_at > now() - make_interval(days => $1)
+          GROUP BY reason ORDER BY n DESC`,
+        [days],
+      );
+      const top = await db.query(
+        `SELECT mid AS member_id, m.name, count(*)::int AS visits FROM (
+           SELECT unnest(member_ids) AS mid FROM events
+            WHERE type = 'checkin.qr' AND status = 'verified' AND occurred_at > now() - make_interval(days => $1)) x
+           JOIN members m ON m.id = x.mid GROUP BY mid, m.name ORDER BY visits DESC LIMIT 20`,
+        [days],
+      );
+      const totals = await db.query(
+        `SELECT (SELECT count(*)::int FROM visitors) AS visitors,
+                (SELECT count(DISTINCT visitor_id)::int FROM events WHERE status = 'verified' AND type LIKE 'checkin.%'
+                   AND occurred_at > now() - make_interval(days => $1)) AS active_visitors,
+                (SELECT count(*)::int FROM partnerships WHERE status = 'active') AS active_partnerships,
+                (SELECT COALESCE(SUM(points), 0)::int FROM ledger WHERE owner_type = 'visitor' AND points > 0
+                   AND created_at > now() - make_interval(days => $1)) AS points_issued`,
+        [days],
+      );
+      return { days, totals: totals.rows[0], events: byType.rows, rejected_reasons: rejected.rows, top_members: top.rows };
     });
 
     admin.get<{ Params: { id: string } }>("/v1/admin/members/:id/wallet", async (req) => wallet(db, "member", Id.parse(req.params.id)));
