@@ -100,7 +100,7 @@ describe("member dashboard, QR and referrals", () => {
     expect(dash.points).toBe(10);
     expect(dash.last_30_days.referrals_sent).toBe(1);
     const list = (await app.inject({ url: "/v1/member/referrals", headers: bearer(taverna.access_token) })).json();
-    expect(list.referrals[0].redeemed).toBe(1);
+    expect(list.referrals[0]).toMatchObject({ redeemed: 1, from_name: "Taverna" });
 
     const qrs = (await app.inject({ url: "/v1/member/qr", headers: bearer(taverna.access_token) })).json();
     expect(qrs.qr_codes[0].qr).toMatch(/^rve:\/\/c\/biz-1\//);
@@ -158,6 +158,8 @@ describe("rewards", () => {
     await scan(v, "biz-2"); // 20 points
     const listed = (await app.inject({ url: "/v1/rewards?lang=en" })).json().rewards;
     expect(listed[0]).toMatchObject({ id: "free-coffee", title: "Free coffee", cost: 15, member_name: "Taverna" });
+    const own = (await app.inject({ url: "/v1/member/rewards", headers: bearer(taverna.access_token) })).json().rewards;
+    expect(own).toEqual([{ id: "free-coffee", title_el: "Δωρεάν καφές", title_en: "Free coffee", cost: 15, active: true }]);
 
     const r1 = (await app.inject({ method: "POST", url: "/v1/me/redemptions", headers: v, payload: { reward_id: "free-coffee" } })).json();
     const r2 = (await app.inject({ method: "POST", url: "/v1/me/redemptions", headers: v, payload: { reward_id: "free-coffee" } })).json();

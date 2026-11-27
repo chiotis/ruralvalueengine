@@ -131,8 +131,12 @@ export function registerMemberRoutes(app: FastifyInstance, d: MemberDeps) {
     const m = actingAs(await sessionOf(req), memberParam(req));
     const rows = await db.query(
       `SELECT r.id, r.code, r.from_member_id, r.to_member_id, r.expires_at, r.created_at,
+              mf.name AS from_name, mt.name AS to_name,
               (SELECT count(*)::int FROM events e WHERE e.referral_id = r.id AND e.type = 'referral.redeemed' AND e.status = 'verified') AS redeemed
-         FROM referrals r WHERE r.from_member_id = $1 OR r.to_member_id = $1
+         FROM referrals r
+         LEFT JOIN members mf ON mf.id = r.from_member_id
+         LEFT JOIN members mt ON mt.id = r.to_member_id
+        WHERE r.from_member_id = $1 OR r.to_member_id = $1
         ORDER BY r.created_at DESC LIMIT 200`,
       [m],
     );
@@ -239,6 +243,16 @@ export function registerMemberRoutes(app: FastifyInstance, d: MemberDeps) {
       [id, m, b.title_el, b.title_en ?? null, b.cost, b.active],
     );
     return { id };
+  });
+
+  // The member's own rewards, active or not, with both titles for editing.
+  app.get("/v1/member/rewards", async (req) => {
+    const m = actingAs(await sessionOf(req), memberParam(req));
+    const rows = await db.query(
+      "SELECT id, title_el, title_en, cost, active FROM rewards WHERE member_id = $1 ORDER BY active DESC, cost, id",
+      [m],
+    );
+    return { rewards: rows.rows };
   });
 
   app.get("/v1/rewards", async (req) => {
