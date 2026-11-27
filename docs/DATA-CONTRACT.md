@@ -84,16 +84,31 @@ wallet_ledger(id, owner_type[visitor|member], owner_id, points, event_id, rule_v
 
 Balances are always `SUM(points)` over the ledger, never stored counters, so a recompute with a new rule version is possible and auditable.
 
-## 6. Engine API (for the app), first cut
+## 6. Engine API (for the app)
+
+Visitor calls use the visitor token, member calls (`/v1/member/*`) the member token. A member call may pass `member_id` when one email manages several businesses.
 
 | Method | Path | Purpose |
 |---|---|---|
-| `GET` | `/v1/catalog/{businesses,routes,pois,packages}` | Cached content, `?lang=el|en&location=&type=` |
+| `POST` | `/v1/auth/email/start`, `/v1/auth/email/verify`, `/v1/auth/refresh` | Visitor passwordless login (6-digit code) |
+| `GET` | `/v1/catalog/{business,route,poi}` | Cached ruralgreece.gr content, `?lang=el\|en&q=&near=lat,lng&limit=` |
+| `GET` | `/v1/catalog/item/{id}` | One item with gallery, contact, track and nearby places |
+| `GET` | `/v1/packages`, `/v1/me/progress/{id}` | Thematic packages and a visitor's progress |
 | `POST` | `/v1/events` | Submit one or a batch of events (offline queue) |
-| `GET` | `/v1/me/passport` | Verified experiences |
-| `GET` | `/v1/me/wallet` | Balance + ledger |
-| `POST` | `/v1/me/wallet/redeem` | Start a redemption |
-| `GET` | `/v1/member/dashboard` | Score, visits, referrals |
-| `POST` | `/v1/member/referrals` | Create a referral code |
-| `GET` | `/v1/member/matches` | Matchmaking suggestions |
-| `POST` | `/v1/member/partnerships` | Request or confirm a partnership |
+| `GET` | `/v1/me/passport`, `/v1/me/wallet` | Verified experiences; balance and ledger |
+| `GET` | `/v1/rewards` | Active rewards, `?member_id=&lang=` |
+| `POST` | `/v1/me/redemptions` | Visitor asks to redeem; returns a 6-digit code for the member |
+| `GET` | `/v1/members/{id}/score` | Public Impact Score |
+| `POST` | `/v1/member/auth/email/start`, `…/verify`, `…/refresh` | Member passwordless login |
+| `GET` | `/v1/member/me`, `/v1/member/dashboard`, `/v1/member/qr` | Businesses for this login, dashboard, QR codes |
+| `GET` `POST` | `/v1/member/referrals` | List / create referral codes |
+| `GET` `POST` | `/v1/member/partnerships` | List / request partnerships |
+| `POST` | `/v1/member/partnerships/{id}/confirm`, `…/decline` | The invited member answers |
+| `GET` | `/v1/member/matches` | Matchmaking suggestions with reasons |
+| `GET` | `/v1/member/rewards` | The member's own rewards, active or not |
+| `PUT` | `/v1/member/rewards/{id}` | Create or edit a reward |
+| `POST` | `/v1/member/redemptions/confirm` | Member confirms a visitor's code; points move only now |
+| `GET` | `/v1/member/analytics` | `?days=` visits per day, returning visitors, referrals, points, "also visited" |
+| `POST` | `/v1/webhooks/wordpress` | Signed change notice from the rve-sync plugin |
+| various | `/v1/admin/*` | ETAM administration, `ADMIN_TOKEN` |
+

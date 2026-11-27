@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "Rural Greece",
+    "slug": "rural-greece",
+    "scheme": "ruralgreece",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1c2c23"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "gr.ruralgreece.app"
+    },
+    "android": {
+      "package": "gr.ruralgreece.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#376245",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      ["expo-router", { "root": "./src/app" }],
+      "expo-secure-store",
+      ["expo-localization", { "supportedLocales": ["el", "en"] }],
+      ["expo-camera", { "cameraPermission": "Η κάμερα χρησιμοποιείται για τη σάρωση των κωδικών QR του δικτύου Rural Greece.", "barcodeScannerEnabled": true }],
+      ["expo-location", { "locationWhenInUsePermission": "Η τοποθεσία σας χρησιμοποιείται για να δείτε τι είναι κοντά και για να επιβεβαιώσετε επισκέψεις σε σημεία χωρίς QR." }]
+    ],
+    "experiments": { "typedRoutes": false },
+    "extra": {
+      "apiUrl": "https://engine.ruralgreece.gr"
+    }
+  }
+}
