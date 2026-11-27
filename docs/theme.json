@@ -1,0 +1,21 @@
+{
+  "_note": "PLACEHOLDER values. The real ruralgreece.gr palette could not be read automatically; replace these with the site's GeneratePress / Elementor global colours once Chris sends them.",
+  "color": {
+    "primary": "#4F6B3A",
+    "primaryDark": "#36492A",
+    "accent": "#C8893B",
+    "background": "#FAF8F3",
+    "surface": "#FFFFFF",
+    "text": "#222222",
+    "textMuted": "#6B6B6B",
+    "border": "#E4E0D6",
+    "success": "#2E7D32",
+    "danger": "#C62828"
+  },
+  "font": {
+    "heading": "TBD",
+    "body": "TBD"
+  },
+  "radius": { "sm": 6, "md": 12, "lg": 20 },
+  "spacing": [4, 8, 12, 16, 24, 32, 48]
+}
