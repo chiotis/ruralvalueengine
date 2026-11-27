@@ -15,7 +15,12 @@ Node.js + TypeScript + PostgreSQL service that receives events from the app, ver
 
 - **Content sync from ruralgreece.gr:** businesses, routes, POIs, terms and media, plus a catalogue API (`/v1/catalog/{businesses,routes,pois}`, `/v1/catalog/item/:id` with nearby places) and a signed webhook for the `rve-sync` plugin. Run `npm run sync -- --full` by hand, or let the server do it every 15 minutes.
 
-Not yet included: epaithros+ member login, partnerships, packages, Impact Score, matchmaking, analytics, reward redemption, and real email sending (codes are logged by `ConsoleMailer` for now).
+- **Member area:** login with the business email listed on ruralgreece.gr (or emails ETAM adds), a dashboard, the member's QR codes, referral codes, epaithros Connect partnerships (both sides confirm, +20 points each once), matchmaking suggestions with reasons, member rewards, visitor redemption with a 6-digit code confirmed by the member, and analytics including where else their visitors go.
+- **Packages:** themed sets of member stops with a visitor progress view; completing one pays the route bonus.
+- **Rural Impact Score** (`score-v1`, 0–100): 90 days of verified visitors, referrals, partnerships and completed routes, on a log scale, with every input shown.
+- **Network analytics** for ETAM: events by type and status, rejection reasons, top members, active visitors and points issued.
+
+Not yet included: login with epaithros+ accounts (members currently log in by email code), an LLM-based matchmaking layer, and real email sending (`ConsoleMailer` logs codes).
 
 ## Run locally
 
