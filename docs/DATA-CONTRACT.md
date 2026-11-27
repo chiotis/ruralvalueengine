@@ -110,5 +110,5 @@ Visitor calls use the visitor token, member calls (`/v1/member/*`) the member to
 | `POST` | `/v1/member/redemptions/confirm` | Member confirms a visitor's code; points move only now |
 | `GET` | `/v1/member/analytics` | `?days=` visits per day, returning visitors, referrals, points, "also visited" |
 | `POST` | `/v1/webhooks/wordpress` | Signed change notice from the rve-sync plugin |
-| various | `/v1/admin/*` | ETAM administration, `ADMIN_TOKEN` |
+| various | `/v1/admin/*` | ETAM administration (used by the panel at `/admin`), `ADMIN_TOKEN` |
 

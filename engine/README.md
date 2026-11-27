@@ -20,7 +20,11 @@ Node.js + TypeScript + PostgreSQL service that receives events from the app, ver
 - **Rural Impact Score** (`score-v1`, 0–100): 90 days of verified visitors, referrals, partnerships and completed routes, on a log scale, with every input shown.
 - **Network analytics** for ETAM: events by type and status, rejection reasons, top members, active visitors and points issued.
 
-Not yet included: login with epaithros+ accounts (members currently log in by email code), an LLM-based matchmaking layer, and real email sending (`ConsoleMailer` logs codes).
+- **Admin panel for ETAM** at `/admin` (Greek): overview and sync, members and extra logins, POIs and their radius, printable QR sheets, packages, network rewards, partnerships, events with cancellation, and network analytics. It uses the admin API with `ADMIN_TOKEN`.
+- **Email:** login codes go out over SMTP (`SMTP_URL`), in Greek and English. Without it they are written to the log.
+- **Hardening:** per-IP limits on login and on wrong admin tokens, security headers, a strict CSP on the admin panel, and start-up checks that refuse short secrets.
+
+Not yet included: login with epaithros+ accounts (members currently log in by email code) and an LLM-based matchmaking layer.
 
 ## Run locally
 
@@ -41,8 +45,6 @@ DATABASE_URL=postgres://postgres@localhost:5433/rve_test npm test
 
 The pipeline tests cover the four edge cases from the technical description: a repeated QR scan, a cancellation, a visit shared by several members, and a corrected event.
 
-## Deploying to lighthouse03 (later)
+## Deploying to lighthouse03
 
-1. Install Node 22 and PostgreSQL 16, then create a database and user.
-2. Set the variables from `.env.example`, using long random secrets.
-3. `npm ci && npm run build && npm run migrate && npm start`, behind nginx with HTTPS, managed by systemd or pm2.
+See `../docs/DEPLOY.md`, with the systemd unit, nginx site and backup script in `../deploy/`.

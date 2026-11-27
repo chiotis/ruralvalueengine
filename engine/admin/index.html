@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Rural Greece · Διαχείριση</title>
+<link rel="stylesheet" href="/admin/app.css">
+</head>
+<body>
+<header class="top">
+  <strong>Rural Greece · Διαχείριση</strong>
+  <nav id="nav" hidden>
+    <a href="#overview">Επισκόπηση</a>
+    <a href="#members">Μέλη</a>
+    <a href="#pois">Σημεία</a>
+    <a href="#qr">Κωδικοί QR</a>
+    <a href="#packages">Πακέτα</a>
+    <a href="#rewards">Ανταμοιβές</a>
+    <a href="#partnerships">Συνεργασίες</a>
+    <a href="#events">Συμβάντα</a>
+    <a href="#analytics">Στατιστικά</a>
+    <button id="logout" class="link">Έξοδος</button>
+  </nav>
+</header>
+<main id="main">
+  <section id="login" class="card narrow">
+    <h2>Σύνδεση</h2>
+    <p>Επικολλήστε το κλειδί διαχείρισης (ADMIN_TOKEN). Κρατιέται μόνο σε αυτή την καρτέλα.</p>
+    <form id="login-form">
+      <input id="token" type="password" autocomplete="off" placeholder="ADMIN_TOKEN" required>
+      <button type="submit">Σύνδεση</button>
+    </form>
+    <p id="login-error" class="error"></p>
+  </section>
+  <section id="view"></section>
+</main>
+<div id="toast" role="status"></div>
+<script src="/admin/app.js"></script>
+</body>
+</html>
