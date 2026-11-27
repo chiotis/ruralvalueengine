@@ -1,0 +1,64 @@
+name: android-apk
+
+# Builds an installable Android APK for test phones (no store account needed).
+# On main it is published as the GitHub release "android-test", so the latest
+# build can always be downloaded from the repository's Releases page.
+on:
+  workflow_dispatch:
+  pull_request:
+    paths: [".github/workflows/android-apk.yml"]
+  push:
+    branches: [main]
+    paths: ["app/**", ".github/workflows/android-apk.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android-apk-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - run: npm ci
+      - run: npx expo prebuild --platform android --no-install
+      # Release build signed with the debug key: fine for test installs, not for the Play Store.
+      - run: ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a,armeabi-v7a --no-daemon
+        working-directory: app/android
+      - name: Name the APK
+        run: |
+          mkdir -p ../dist
+          cp android/app/build/outputs/apk/release/app-release.apk ../dist/rural-greece-test.apk
+          ls -l ../dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rural-greece-test-apk
+          path: dist/rural-greece-test.apk
+          retention-days: 30
+      - name: Publish as the "android-test" release
+        if: github.ref == 'refs/heads/main'
+        working-directory: .
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete android-test --yes --cleanup-tag || true
+          gh release create android-test dist/rural-greece-test.apk \
+            --title "Android test build" --prerelease --target "$GITHUB_SHA" \
+            --notes "Test build of the Rural Greece app from ${GITHUB_SHA::7}. Talks to https://engine.ruralgreece.gr. Install on Android: download the APK on the phone, open it, allow installs from this source."
