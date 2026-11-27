@@ -32,16 +32,22 @@ export async function hasSession(role: Role) {
   return !!(await secure.get(KEYS[role].refresh));
 }
 
+const TIMEOUT_MS = 15000;
+
 async function raw(path: string, init: RequestInit = {}, token?: string | null) {
+  // A request that never answers (bad signal) must not leave the screen waiting forever.
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   const res = await fetch(`${API_URL}${path}`, {
     ...init,
+    signal: ctrl.signal,
     headers: {
       accept: "application/json",
       ...(init.body ? { "content-type": "application/json" } : {}),
       ...(token ? { authorization: `Bearer ${token}` } : {}),
       ...(init.headers ?? {}),
     },
-  });
+  }).finally(() => clearTimeout(timer));
   const body = res.status === 204 ? null : await res.json().catch(() => null);
   if (!res.ok) throw new ApiError(res.status, (body as { error?: string } | null)?.error ?? `http_${res.status}`);
   return body;

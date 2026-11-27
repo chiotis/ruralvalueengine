@@ -36,7 +36,8 @@ export default function Scan() {
   const [focused, setFocused] = useState(false);
   const [busy, setBusy] = useState(false);
   const [referral, setReferral] = useState("");
-  const [outcome, setOutcome] = useState<Outcome | null>(null);
+  const [outcome, setOutcome] = useState<Outcome | "error" | null>(null);
+  const [foreign, setForeign] = useState(false);
   const lastScan = useRef<{ data: string; at: number } | null>(null);
 
   // Only one camera preview may run at a time, so mount it only while this tab is visible.
@@ -48,11 +49,19 @@ export default function Scan() {
   );
 
   const onScan = async ({ data }: { data: string }) => {
-    if (busy || !data.startsWith(QR_PREFIX)) return;
+    if (busy) return;
     const now = Date.now();
+    if (!data.startsWith(QR_PREFIX)) {
+      // Tell the visitor instead of ignoring it silently, e.g. a menu or Wi-Fi QR.
+      setForeign(true);
+      setOutcome(null);
+      return;
+    }
+    setForeign(false);
     if (lastScan.current && lastScan.current.data === data && now - lastScan.current.at < 5000) return;
     lastScan.current = { data, at: now };
     setBusy(true);
+    setOutcome(null);
     try {
       const geo = await quickPosition();
       const ev = newEvent("checkin.qr", {
@@ -61,6 +70,8 @@ export default function Scan() {
       });
       setOutcome(describeOutcome(await submit(ev)));
       setReferral("");
+    } catch {
+      setOutcome("error");
     } finally {
       setBusy(false);
     }
@@ -100,7 +111,22 @@ export default function Scan() {
       <View style={[styles.pad, { gap: space.md }]}>
         <P muted>{t.scanHelp}</P>
         <Field label={t.referralCode} value={referral} onChangeText={setReferral} autoCapitalize="characters" autoCorrect={false} maxLength={12} />
-        {outcome && (
+        {busy && (
+          <Card>
+            <P>{t.checking}</P>
+          </Card>
+        )}
+        {!busy && foreign && !outcome && (
+          <Card>
+            <P>{t.notOurQr}</P>
+          </Card>
+        )}
+        {!busy && outcome === "error" && (
+          <Card style={{ borderColor: colors.burgundy, borderWidth: 2 }}>
+            <P>{t.checkinError}</P>
+          </Card>
+        )}
+        {!busy && outcome && outcome !== "error" && (
           <Card style={{ borderColor: outcome.kind === "ok" ? colors.greenBright : outcome.kind === "rejected" ? colors.burgundy : colors.border, borderWidth: 2 }}>
             {outcome.kind === "ok" && (
               <>
