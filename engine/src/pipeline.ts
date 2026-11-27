@@ -552,3 +552,49 @@ async function validRef(tx: Tx, id: string | null | undefined): Promise<string |
 function result(ev: NewEvent, points: LedgerRow[]): EventResult {
   return { event_id: ev.event_id, type: ev.type, status: ev.status, points };
 }
+
+/**
+ * Record an event produced by the engine itself (partnership confirmed, reward
+ * redeemed) inside an existing transaction, credit it under the active rules,
+ * and add any extra ledger rows (for example a points spend).
+ */
+export async function recordEngineEvent(
+  tx: Tx,
+  ev: {
+    event_id: string;
+    type: string;
+    occurred_at: Date;
+    source: string;
+    visitor_id?: string | null;
+    member_ids?: string[];
+    dedupe_key?: string | null;
+    checks?: string[];
+    payload?: Record<string, unknown>;
+  },
+  extra: LedgerRow[] = [],
+): Promise<LedgerRow[]> {
+  const version = await activeRuleVersion(tx);
+  const full: NewEvent = {
+    event_id: ev.event_id,
+    type: ev.type,
+    occurred_at: ev.occurred_at,
+    received_at: new Date(),
+    source: ev.source,
+    visitor_id: ev.visitor_id ?? null,
+    member_ids: ev.member_ids ?? [],
+    status: "verified",
+    checks: ev.checks ?? [],
+    dedupe_key: ev.dedupe_key ?? null,
+    rule_version: version,
+    payload: ev.payload ?? {},
+  };
+  await insertEvent(tx, full);
+  const rows = await credit(tx, version, full.event_id, ruleEvent(full, null, null));
+  for (const r of extra) {
+    await tx.query(
+      "INSERT INTO ledger(owner_type, owner_id, points, event_id, rule_version, rule_id) VALUES ($1, $2, $3, $4, $5, $6)",
+      [r.owner_type, r.owner_id, r.points, full.event_id, version, r.rule_id],
+    );
+  }
+  return [...rows, ...extra];
+}

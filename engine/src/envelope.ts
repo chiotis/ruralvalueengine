@@ -13,7 +13,7 @@ export const INPUT_TYPES = [
   "correction",
 ] as const;
 
-export const DERIVED_TYPES = ["referral.redeemed", "route.completed"] as const;
+export const DERIVED_TYPES = ["referral.redeemed", "route.completed", "partnership.created", "wallet.redeemed"] as const;
 
 export type InputType = (typeof INPUT_TYPES)[number];
 export type EventType = InputType | (typeof DERIVED_TYPES)[number];

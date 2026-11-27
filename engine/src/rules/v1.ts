@@ -14,6 +14,7 @@ export const POINTS_V1 = {
   referralVisitor: 5,
   referralReferrer: 10,
   referralHost: 5,
+  partnershipEach: 20,
 } as const;
 
 export const rulesV1: RuleSet = (ev) => {
@@ -47,6 +48,9 @@ export const rulesV1: RuleSet = (ev) => {
         member(ev.referral.from_member_id, POINTS_V1.referralReferrer, "referral.referrer");
         member(ev.referral.to_member_id, POINTS_V1.referralHost, "referral.host");
       }
+      break;
+    case "partnership.created":
+      for (const id of new Set(ev.member_ids)) member(id, POINTS_V1.partnershipEach, "partnership.member");
       break;
     default:
       break; // interactions earn nothing in v1
