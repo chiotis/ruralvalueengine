@@ -65,6 +65,7 @@ Every event uses the common envelope in `docs/DATA-CONTRACT.md`. Events are immu
 | Completed route or package | +30 bonus | +5 to each member on it |
 | Redeemed referral (A refers to B) | +5 | A +10 (referrer), B +5 (host) |
 | New confirmed partnership | none | +20 to each member |
+| Visit shared by several members (one QR for a co-hosted experience) | +10 once | +5 to each co-host |
 | Cancellation or correction | reverses the original rows | reverses the original rows |
 
 Points are spent only on rewards that members or ETAM define (for example "free coffee", or a badge). Redemption is an event too (`wallet.redeemed`), confirmed by the member scanning the visitor's code.
