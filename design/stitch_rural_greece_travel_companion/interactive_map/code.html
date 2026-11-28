@@ -1,0 +1,354 @@
+<!DOCTYPE html><html lang="el"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_tab" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "tertiary-container": "#c4a66a", "primary-fixed-dim": "#8ecf9e", "on-secondary-container": "#5e5548", "secondary": "#6b6358", "error": "#b83230", "surface-bright": "#faf6f0", "primary-container": "#78a886", "background": "#faf6f0", "on-tertiary-fixed-variant": "#554020", "surface-container-highest": "#e4e0d8", "on-error-container": "#690005", "surface-container": "#f0ece4", "on-tertiary": "#ffffff", "surface-dim": "#dbd7cf", "on-surface": "#2e3230", "on-secondary-fixed-variant": "#4a4538", "primary": "#4a7c59", "on-primary-container": "#d8f0de", "primary-fixed": "#c8e8d0", "surface-container-lowest": "#ffffff", "on-background": "#2e3230", "inverse-surface": "#2e3230", "on-secondary": "#ffffff", "tertiary-fixed-dim": "#dcc48e", "outline-variant": "#c4c8bc", "on-surface-variant": "#4a4e4a", "on-primary-fixed": "#002110", "on-error": "#ffffff", "secondary-container": "#f0e8db", "on-primary": "#ffffff", "outline": "#74796e", "surface-container-high": "#eae6de", "on-secondary-fixed": "#1e1a13", "surface-container-low": "#f5f1ea", "secondary-fixed": "#f0e8db", "on-primary-fixed-variant": "#2a6038", "error-container": "#ffdad8", "surface": "#faf6f0", "tertiary": "#705c30", "inverse-primary": "#8ecf9e", "surface-variant": "#e4e0d8", "on-tertiary-container": "#554020", "secondary-fixed-dim": "#d4ccbf", "surface-tint": "#4a7c59", "inverse-on-surface": "#f5f0e8", "on-tertiary-fixed": "#221a05", "tertiary-fixed": "#f8e0a8" }, borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" }, spacing: {}, fontFamily: { "headline": ["Literata"], "display": ["Literata"], "body": ["Nunito Sans"], "label": ["Nunito Sans"] }, fontSize: {} } } }</script><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#faf6f0;color:#2e3230;}body{overscroll-behavior-y:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}body{min-height:max(884px, 100dvh);}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  <style>
+body, h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, select, label { font-family: 'Inter', sans-serif !important; }
+.material-symbols-outlined, .material-icons { font-family: 'Material Symbols Outlined' !important; }
+</style></head><body class="bg-surface font-body flex flex-col min-h-screen text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed" style="font-family: Inter, sans-serif;"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(46,50,48,0.05)] pt-safe"><div class="h-20 px-4 flex items-center justify-between"><div class="flex items-center gap-3 min-w-0"><img alt="Rural Greece Logo" class="h-9 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/ALJJyrBKf8xwmH3uW2_66YxNxNcz-ubsFfqu2x37aRKeFJPMOPoL5jKWvh3lMZEBBhao5hjMvVMOII9tZslH8HEKR-fDnrXLCUVrPaj2BQZcN6XjZbUCJivwwqE0UHh6JGbRE4qrtioMo_75puuSKyorbiAEZ_JBwyfLbIcX7_DzqQv5AJ3fjvAbPi0Lsxp8YYPQlKMBR44htzElNTVikHgYkg_p1jbRb9tVoR3mDkkW7A"><div class="flex flex-col min-w-0"><div class="flex items-center gap-1.5"><span class="font-headline font-bold text-base leading-tight tracking-tight text-on-surface truncate">Ύπαιθρος Ελλάς</span></div><span class="text-[11px] font-medium leading-none tracking-normal text-on-surface-variant truncate">Rural Greece • Explore</span></div></div><div class="flex items-center gap-2.5 shrink-0"><div class="flex items-center gap-1.5 px-3 py-1.5 bg-secondary-container rounded-full shadow-[0_2px_8px_rgba(46,50,48,0.04)]"><span class="material-symbols-outlined text-[16px] text-tertiary">token</span><span class="text-xs font-bold text-on-secondary-fixed leading-none">340 πόντοι</span></div><a class="relative block rounded-full focus:outline-none focus:ring-2 focus:ring-primary/40" data-path="προφίλ" href="#"><img alt="Profile" class="w-9 h-9 rounded-full object-cover shadow-[0_2px_6px_rgba(46,50,48,0.08)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJRvITLBM7gM0CgopyTH7O07aBjftQJmMtbteCz9Ci727aFWu8o1vpVwaLRhlj2GmCubpnXMLosQhHmYOzP6LXeWj_AbpHMCHpv6ECilYSRh3LJU3239gz6syTjaUrf2t7xTF_ZK0tUt3w1HJix5W8EHmtMyTFFrNTlouZ4LbvT_wfRJQJfVBkSyFYtZiaWTrw2OJawZeQY6zID77JK7kaBsx4uMiuUvRkoXyYvw"></a></div></div></header><main class="flex flex-col relative w-full pt-20 pb-28 bg-surface min-h-screen"><div class="flex flex-col w-full relative select-none">
+<!-- Top Floating Controls Layer -->
+<div class="px-4 pt-3 pb-2 z-30 flex flex-col gap-2.5">
+<!-- Search Bar & Switch View Pill -->
+<div class="flex items-center gap-2">
+<div class="flex-1 flex items-center bg-surface-container-lowest/95 backdrop-blur-md rounded-xl px-3.5 py-2.5 shadow-[0_4px_20px_rgba(46,50,48,0.06)]">
+<span class="material-symbols-outlined text-[20px] text-primary shrink-0 mr-2">search</span>
+<input class="bg-transparent border-0 outline-none p-0 w-full text-xs font-label text-on-surface placeholder:text-on-surface-variant/70 focus:ring-0" placeholder="Αναζήτηση χωριού, γεφυριού, εργαστηρίου..." type="text">
+<button aria-label="Φίλτρα αναζήτησης" class="shrink-0 p-1 rounded-full text-secondary hover:text-primary transition-colors focus:outline-none">
+<span class="material-symbols-outlined text-[19px]">tune</span>
+</button>
+</div>
+<!-- View Switcher Toggle -->
+<div class="flex items-center bg-surface-container-high/90 backdrop-blur-md p-1 rounded-xl shadow-[0_2px_10px_rgba(46,50,48,0.05)]">
+<button class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-primary text-on-primary shadow-sm flex items-center gap-1 transition-all" id="viewMapBtn">
+<span class="material-symbols-outlined text-[15px]">map</span>
+<span>Χάρτης</span>
+</button>
+<button class="px-2.5 py-1.5 rounded-lg text-xs font-medium text-on-surface-variant hover:text-on-surface flex items-center gap-1 transition-all" id="viewListBtn">
+<span class="material-symbols-outlined text-[15px]">format_list_bulleted</span>
+<span>Λίστα</span>
+</button>
+</div>
+</div>
+<!-- Filter Chips Carousel -->
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-4 px-4 py-0.5">
+<button class="chip-filter active shrink-0 px-3 py-1.5 rounded-full text-xs font-bold bg-primary text-on-primary shadow-sm flex items-center gap-1.5 transition-all">
+<span class="material-symbols-outlined text-[14px]">explore</span>
+<span>Όλα (18)</span>
+</button>
+<button class="chip-filter shrink-0 px-3 py-1.5 rounded-full text-xs font-medium bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface-variant hover:text-on-surface shadow-[0_2px_8px_rgba(46,50,48,0.04)] flex items-center gap-1.5 transition-all">
+<span class="material-symbols-outlined text-[14px] text-tertiary">restaurant</span>
+<span>Γαστρονομία &amp; Καφενεία</span>
+</button>
+<button class="chip-filter shrink-0 px-3 py-1.5 rounded-full text-xs font-medium bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface-variant hover:text-on-surface shadow-[0_2px_8px_rgba(46,50,48,0.04)] flex items-center gap-1.5 transition-all">
+<span class="material-symbols-outlined text-[14px] text-primary">drive_file_stream</span>
+<span>Ιστορικά Γεφύρια</span>
+</button>
+<button class="chip-filter shrink-0 px-3 py-1.5 rounded-full text-xs font-medium bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface-variant hover:text-on-surface shadow-[0_2px_8px_rgba(46,50,48,0.04)] flex items-center gap-1.5 transition-all">
+<span class="material-symbols-outlined text-[14px] text-primary">hiking</span>
+<span>Πεζοπορίες</span>
+</button>
+<button class="chip-filter shrink-0 px-3 py-1.5 rounded-full text-xs font-medium bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface-variant hover:text-on-surface shadow-[0_2px_8px_rgba(46,50,48,0.04)] flex items-center gap-1.5 transition-all">
+<span class="material-symbols-outlined text-[14px] text-tertiary">palette</span>
+<span>Εργαστήρια</span>
+</button>
+<button class="chip-filter shrink-0 px-3 py-1.5 rounded-full text-xs font-medium bg-surface-container-lowest/90 backdrop-blur-sm text-on-surface-variant hover:text-on-surface shadow-[0_2px_8px_rgba(46,50,48,0.04)] flex items-center gap-1.5 transition-all">
+<span class="material-symbols-outlined text-[14px] text-secondary">cottage</span>
+<span>Διαμονή</span>
+</button>
+</div>
+</div>
+<!-- Interactive Map Canvas Area -->
+<div class="relative w-full h-[580px] overflow-hidden bg-surface-container-low" id="mapViewport">
+<!-- Stylized Topo Map SVG (Zagori / Pindos Terrain) -->
+<svg class="absolute inset-0 w-full h-full object-cover select-none pointer-events-none" fill="none" viewBox="0 0 420 620" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<!-- Contour line styling pattern -->
+<linearGradient id="topoRiverGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#b1d1ea" stop-opacity="0.9"></stop>
+<stop offset="50%" stop-color="#8bb7dc" stop-opacity="0.85"></stop>
+<stop offset="100%" stop-color="#6ea2cf" stop-opacity="0.95"></stop>
+</linearGradient>
+<radialGradient cx="40%" cy="30%" id="mountainRidge" r="60%">
+<stop offset="0%" stop-color="#f5f1ea" stop-opacity="0.8"></stop>
+<stop offset="60%" stop-color="#eae6de" stop-opacity="0.5"></stop>
+<stop offset="100%" stop-color="#e4e0d8" stop-opacity="0.1"></stop>
+</radialGradient>
+</defs>
+<!-- Shaded Mountain Basemap -->
+<rect fill="#f7f4ec" height="620" width="420"></rect>
+<path d="M0,0 C120,40 280,30 420,110 L420,380 C310,320 220,390 0,330 Z" fill="url(#mountainRidge)"></path>
+<path d="M0,320 C180,340 290,440 420,410 L420,620 L0,620 Z" fill="#f0ece4" fill-opacity="0.6"></path>
+<!-- Forest Canopy hints (Zagori woodland) -->
+<g fill="#4a7c59" fill-opacity="0.08">
+<path d="M40,90 Q90,70 110,120 Q120,160 80,180 Q30,170 40,90 Z"></path>
+<path d="M290,140 Q360,110 390,170 Q370,220 310,210 Q280,180 290,140 Z"></path>
+<path d="M60,430 Q120,400 150,460 Q130,520 80,510 Q40,480 60,430 Z"></path>
+<path d="M240,490 Q310,470 340,520 Q320,580 260,570 Q220,530 240,490 Z"></path>
+</g>
+<!-- Topographic Contour Lines -->
+<g fill="none" stroke="#74796e" stroke-linecap="round" stroke-opacity="0.18" stroke-width="1.2">
+<path d="M -20,70 Q 80,40 180,85 T 380,60 T 450,110"></path>
+<path d="M -30,110 Q 70,80 170,120 T 360,105 T 450,150"></path>
+<path d="M -10,155 Q 90,120 190,165 T 390,150 T 450,195"></path>
+<path d="M -40,205 Q 60,170 160,205 T 340,195 T 440,240"></path>
+<path d="M -20,250 Q 80,220 180,250 T 370,240 T 450,290"></path>
+<path d="M -30,300 Q 70,270 165,300 T 350,285 T 440,335"></path>
+<path d="M -10,350 Q 90,320 180,345 T 370,330 T 450,380" stroke-opacity="0.25" stroke-width="1.6"></path>
+<!-- Index contour with elevation text -->
+<text fill="#74796e" fill-opacity="0.45" font-family="Nunito Sans" font-size="8" font-weight="600" x="195" y="342">950m</text>
+<path d="M -30,400 Q 60,370 155,395 T 340,380 T 440,430"></path>
+<path d="M -20,450 Q 80,410 175,445 T 365,425 T 450,475"></path>
+<path d="M -40,500 Q 70,460 160,490 T 350,470 T 440,520"></path>
+<path d="M -20,550 Q 90,510 180,540 T 375,520 T 450,570" stroke-opacity="0.25" stroke-width="1.6"></path>
+<text fill="#74796e" fill-opacity="0.45" font-family="Nunito Sans" font-size="8" font-weight="600" x="185" y="538">800m</text>
+</g>
+<!-- Voidomatis River Stream (#b1d1ea) -->
+<path d="M 430,70 C 370,120 320,180 290,260 C 265,330 240,380 210,430 C 180,480 150,530 110,630" fill="none" opacity="0.9" stroke="url(#topoRiverGrad)" stroke-linecap="round" stroke-width="5"></path>
+<path d="M 430,70 C 370,120 320,180 290,260 C 265,330 240,380 210,430 C 180,480 150,530 110,630" fill="none" opacity="0.6" stroke="#ffffff" stroke-dasharray="8 6" stroke-linecap="round" stroke-width="1"></path>
+<!-- River Name Label -->
+<text fill="#6ea2cf" font-family="Literata" font-size="9" font-style="italic" font-weight="600" letter-spacing="1.2" transform="rotate(-62 250 360)" x="250" y="360">
+        Ποταμός Βοϊδομάτης
+      </text>
+<!-- Pin 4: Vikos Gorge Hiking Trail (Dashed Green Polyline) -->
+<path d="M 120,130 C 145,170 170,210 205,250 C 235,285 245,340 220,385 C 190,440 160,470 120,510" fill="none" id="vikosTrail" stroke="#4a7c59" stroke-dasharray="5 5" stroke-linecap="round" stroke-width="3"></path>
+<!-- Hiking footsteps effect -->
+<circle cx="160" cy="190" fill="#4a7c59" opacity="0.7" r="2.5"></circle>
+<circle cx="180" cy="220" fill="#4a7c59" opacity="0.7" r="2.5"></circle>
+<circle cx="215" cy="270" fill="#4a7c59" opacity="0.7" r="2.5"></circle>
+<circle cx="230" cy="320" fill="#4a7c59" opacity="0.7" r="2.5"></circle>
+</svg>
+<!-- Trail Badge on Path (Pin 4 Callout) -->
+<div class="absolute top-[235px] left-[105px] z-10">
+<div class="flex items-center gap-1.5 bg-surface-container-lowest/95 backdrop-blur-sm px-2.5 py-1 rounded-full shadow-[0_2px_8px_rgba(46,50,48,0.12)] cursor-pointer hover:scale-105 transition-transform">
+<span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+<span class="font-headline font-bold text-[11px] text-primary">Μονοπάτι Βίκου</span>
+<span class="text-[10px] text-on-surface-variant font-semibold">12.4 χλμ</span>
+</div>
+</div>
+<!-- Pin 2: Γεφύρι Κόκκορη (Stone Bridge) -->
+<div class="absolute top-[140px] right-[75px] z-10 flex flex-col items-center cursor-pointer group" onclick="switchActivePin('kokkori')">
+<div class="relative flex items-center justify-center">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-[0_4px_12px_rgba(74,124,89,0.35)] group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[20px]">drive_file_stream</span>
+</div>
+<div class="absolute -top-1 -right-2 px-1.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-fixed text-[9px] font-bold shadow-xs">
+          +10π.
+        </div>
+</div>
+<div class="mt-1 px-2 py-0.5 bg-surface-container-lowest/90 backdrop-blur-sm rounded-md shadow-xs">
+<span class="text-[10px] font-bold text-on-surface">Γεφύρι Κόκκορη</span>
+</div>
+</div>
+<!-- Pin 3: Εργαστήριο Υφαντικής (Weaving Workshop) -->
+<div class="absolute top-[320px] left-[45px] z-10 flex flex-col items-center cursor-pointer group" onclick="switchActivePin('weaving')">
+<div class="relative flex items-center justify-center">
+<div class="w-10 h-10 rounded-full bg-tertiary text-on-tertiary flex items-center justify-center shadow-[0_4px_12px_rgba(112,92,48,0.35)] group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[20px]">brush</span>
+</div>
+<div class="absolute -top-1 -right-2 px-1.5 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed text-[9px] font-bold shadow-xs">
+          +20π.
+        </div>
+</div>
+<div class="mt-1 px-2 py-0.5 bg-surface-container-lowest/90 backdrop-blur-sm rounded-md shadow-xs">
+<span class="text-[10px] font-bold text-on-surface">Εργαστήριο Υφαντικής</span>
+</div>
+</div>
+<!-- Pin 1 (Active/Selected): Παραδοσιακός Νερόμυλος & Ταβέρνα «Τα Λιθάρια» -->
+<div class="absolute top-[210px] left-[175px] z-20 flex flex-col items-center cursor-pointer" onclick="switchActivePin('mill')">
+<!-- Radar Pulse Ring -->
+<span class="absolute -top-3 w-16 h-16 rounded-full bg-tertiary-container/35 animate-ping pointer-events-none"></span>
+<span class="absolute -top-1.5 w-13 h-13 rounded-full bg-tertiary/20 animate-pulse pointer-events-none"></span>
+<!-- Main Glowing Marker -->
+<div class="relative flex items-center justify-center">
+<div class="w-12 h-12 rounded-full bg-tertiary text-on-tertiary flex items-center justify-center shadow-[0_6px_18px_rgba(112,92,48,0.45)] scale-105 border-2 border-surface-container-lowest">
+<span class="material-symbols-outlined text-[24px]">restaurant</span>
+</div>
+<!-- Points Pill on Marker -->
+<div class="absolute -top-2.5 -right-3.5 px-2 py-0.5 rounded-full bg-primary text-on-primary text-[10px] font-extrabold shadow-sm flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[11px]">bolt</span>
+<span>+15 π.</span>
+</div>
+</div>
+<!-- Pointer Tip -->
+<div class="w-2.5 h-2.5 bg-tertiary rotate-45 -mt-1 rounded-xs shadow-xs"></div>
+<!-- Marker Caption -->
+<div class="mt-1.5 px-2.5 py-1 bg-surface-container-lowest/95 backdrop-blur-md rounded-lg shadow-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="text-[11px] font-headline font-bold text-on-surface">Νερόμυλος «Λιθάρια»</span>
+</div>
+</div>
+<!-- Floating Map Controls (Right & Top Left) -->
+<!-- Current Region Breadcrumb (Top Left overlay) -->
+<div class="absolute top-3 left-4 z-10">
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-lowest/90 backdrop-blur-md shadow-[0_2px_10px_rgba(46,50,48,0.08)]">
+<span class="material-symbols-outlined text-primary text-[15px]">terrain</span>
+<span class="text-xs font-semibold text-on-surface">Ζαγόρι, Ήπειρος</span>
+<span class="material-symbols-outlined text-secondary text-[14px]">expand_more</span>
+</div>
+</div>
+<!-- Map Utility Floating Controls (Right Vertical Bar) -->
+<div class="absolute top-3 right-4 z-10 flex flex-col gap-2">
+<!-- GPS Current Location -->
+<button class="w-10 h-10 rounded-xl bg-surface-container-lowest/95 backdrop-blur-md text-on-surface flex items-center justify-center shadow-[0_4px_12px_rgba(46,50,48,0.08)] hover:text-primary active:scale-95 transition-all" title="Η θέση μου">
+<span class="material-symbols-outlined text-[20px] text-primary">my_location</span>
+</button>
+<!-- Map Layer Switcher -->
+<button class="w-10 h-10 rounded-xl bg-surface-container-lowest/95 backdrop-blur-md text-on-surface flex items-center justify-center shadow-[0_4px_12px_rgba(46,50,48,0.08)] hover:text-primary active:scale-95 transition-all" title="Επίπεδα Χάρτη (Topo/Terrain)">
+<span class="material-symbols-outlined text-[20px]">layers</span>
+</button>
+<!-- Compass / Orientation -->
+<button class="w-10 h-10 rounded-xl bg-surface-container-lowest/95 backdrop-blur-md text-on-surface flex items-center justify-center shadow-[0_4px_12px_rgba(46,50,48,0.08)] active:scale-95 transition-all" title="Βορράς">
+<span class="material-symbols-outlined text-[20px] text-tertiary">explore</span>
+</button>
+</div>
+<!-- Scale Legend (Bottom Left of Canvas) -->
+<div class="absolute bottom-28 left-4 z-10 flex items-center gap-1.5 px-2 py-1 rounded bg-surface-container-lowest/80 backdrop-blur-xs text-[10px] text-on-surface-variant font-medium">
+<div class="w-8 h-1 bg-on-surface-variant/40 rounded-full"></div>
+<span>500 μέτρα</span>
+</div>
+</div>
+<!-- Interactive Bottom Sheet Preview Card (Active POI Preview) -->
+<div class="relative -mt-24 px-4 pb-2 z-30 w-full">
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-[0_12px_32px_rgba(46,50,48,0.12)] flex flex-col gap-3 transition-all duration-300" id="poiCard">
+<!-- Top Row: Thumbnail + Core Details -->
+<div class="flex gap-3 items-start">
+<!-- Thumbnail Photo -->
+<div class="relative w-20 h-20 rounded-lg overflow-hidden shrink-0 shadow-xs bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Close-up exterior of a rustic traditional stone watermill in Zagori mountain Greece, mossy stone walls, crystal clear river stream rushing by, warm golden hour sunlight, terracotta slate roof, cozy authentic rural Greek atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHtQ0aI6FSRKuL0bb-F-hI1sexjyjRZ_WxD_hTcDjV9KSZx6sghwIb4CVjZEi0ec0Kf6rIagoU1zkpGNScCk2byqCNI1DXQuuy3rKWJeelaC_a74WMw1JwCa-H4hLwClhdcQiKih2i2QjUD_28kpwxq3JnxVAqTFf25GHDkBDvHGhSExVoBxmz6bIJDm7E3aMxSKAmVlwXln3xkLdmkblsxVa5HihWmxYj4OXsrg">
+<span class="absolute bottom-1 right-1 px-1.5 py-0.5 rounded bg-inverse-surface/80 text-inverse-on-surface text-[9px] font-bold">
+            ★ 4.9
+          </span>
+</div>
+<!-- Info Column -->
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between gap-1">
+<span class="inline-flex items-center gap-1 text-[10px] font-bold text-primary tracking-wide uppercase">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+              Πιστοποιημένο Σημείο
+            </span>
+<button aria-label="Αποθήκευση στα αγαπημένα" class="text-on-surface-variant hover:text-tertiary p-0.5">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+</button>
+</div>
+<h3 class="font-headline font-bold text-base text-on-surface truncate leading-snug mt-0.5" id="poiTitle">
+            Παραδοσιακός Νερόμυλος «Τα Λιθάρια»
+          </h3>
+<!-- Subtitle / Meta distance & hours -->
+<div class="flex items-center gap-2 text-xs text-on-surface-variant mt-1">
+<span class="flex items-center gap-0.5 text-on-surface">
+<span class="material-symbols-outlined text-[14px] text-primary">near_me</span>
+<strong class="font-semibold">120μ</strong> μακριά
+            </span>
+<span>•</span>
+<span class="text-primary font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary inline-block"></span>
+              Ανοιχτά τώρα
+            </span>
+</div>
+</div>
+</div>
+<!-- Reward & Perks Highlight Banner -->
+<div class="flex items-center justify-between px-3 py-2 rounded-lg bg-secondary-container/70">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-full bg-tertiary text-on-tertiary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[14px]">redeem</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[11px] font-bold text-on-secondary-container leading-tight">
+              Κέρασμα Σπιτικό Γλυκό Κουταλιού
+            </span>
+<span class="text-[10px] text-on-secondary-container/80">
+              Με κάθε check-in επισκέπτη
+            </span>
+</div>
+</div>
+<div class="shrink-0 px-2 py-1 rounded-full bg-primary/10 text-primary text-xs font-extrabold flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">add_circle</span>
+<span>+15 πόντοι</span>
+</div>
+</div>
+<!-- Action Buttons (Directions & Check-in Details) -->
+<div class="grid grid-cols-2 gap-2 pt-1">
+<button class="w-full py-2.5 px-3 rounded-lg bg-surface-container-high text-on-surface font-semibold text-xs flex items-center justify-center gap-1.5 hover:bg-surface-container-highest transition-colors active:scale-98">
+<span class="material-symbols-outlined text-[16px] text-primary">directions</span>
+<span>Οδηγίες</span>
+</button>
+<a class="w-full py-2.5 px-3 rounded-lg bg-primary text-on-primary font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm hover:opacity-95 transition-opacity active:scale-98 text-center" data-path="λεπτομέρειες-σημείου" href="#">
+<span class="material-symbols-outlined text-[16px]">qr_code_2</span>
+<span>Check-in &amp; Info</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Interactive Client-side Script for Pin switching & Filter selection -->
+<script>
+    // Simple POI state store
+    const poiData = {
+      mill: {
+        title: "Παραδοσιακός Νερόμυλος «Τα Λιθάρια»",
+        category: "Πιστοποιημένο Τοπικό Σημείο",
+        dist: "120μ μακριά",
+        perk: "Κέρασμα Σπιτικό Γλυκό Κουταλιού",
+        points: "+15 πόντοι",
+        status: "Ανοιχτά τώρα"
+      },
+      kokkori: {
+        title: "Ιστορικό Γεφύρι Κόκκορη (Νούτσου)",
+        category: "Προστατευόμενο Μνημείο 1750",
+        dist: "1.4 χλμ μακριά",
+        perk: "Ηχητικός Οδηγός & Ιστορία Γεφυριού",
+        points: "+10 πόντοι",
+        status: "Ελεύθερη Πρόσβαση"
+      },
+      weaving: {
+        title: "Εργαστήριο Υφαντικής «Άνθη της Πίνδου»",
+        category: "Παραδοσιακό Εργαστήριο",
+        dist: "450μ μακριά",
+        perk: "10% Έκπτωση σε χειροποίητα υφαντά",
+        points: "+20 πόντοι",
+        status: "Ανοιχτά μέχρι τις 19:00"
+      }
+    };
+
+    function switchActivePin(key) {
+      const data = poiData[key];
+      if (!data) return;
+      const titleEl = document.getElementById('poiTitle');
+      if (titleEl) {
+        titleEl.textContent = data.title;
+      }
+    }
+
+    // Toggle filter chips active state
+    document.querySelectorAll('.chip-filter').forEach(chip => {
+      chip.addEventListener('click', function() {
+        document.querySelectorAll('.chip-filter').forEach(c => {
+          c.classList.remove('bg-primary', 'text-on-primary', 'font-bold');
+          c.classList.add('bg-surface-container-lowest/90', 'text-on-surface-variant', 'font-medium');
+        });
+        this.classList.remove('bg-surface-container-lowest/90', 'text-on-surface-variant', 'font-medium');
+        this.classList.add('bg-primary', 'text-on-primary', 'font-bold');
+      });
+    });
+
+    // View switcher toggling
+    const mapBtn = document.getElementById('viewMapBtn');
+    const listBtn = document.getElementById('viewListBtn');
+    if (mapBtn && listBtn) {
+      mapBtn.addEventListener('click', () => {
+        mapBtn.className = "px-2.5 py-1.5 rounded-lg text-xs font-bold bg-primary text-on-primary shadow-sm flex items-center gap-1 transition-all";
+        listBtn.className = "px-2.5 py-1.5 rounded-lg text-xs font-medium text-on-surface-variant hover:text-on-surface flex items-center gap-1 transition-all";
+      });
+      listBtn.addEventListener('click', () => {
+        listBtn.className = "px-2.5 py-1.5 rounded-lg text-xs font-bold bg-primary text-on-primary shadow-sm flex items-center gap-1 transition-all";
+        mapBtn.className = "px-2.5 py-1.5 rounded-lg text-xs font-medium text-on-surface-variant hover:text-on-surface flex items-center gap-1 transition-all";
+      });
+    }
+  </script>
+</div></main><div class="fixed bottom-24 right-5 z-50"><a aria-label="QR Check-in Scanner" class="w-14 h-14 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-[0_8px_20px_rgba(74,124,89,0.35),0_0_12px_rgba(184,50,48,0.2)] hover:scale-105 transition-transform duration-200 focus:outline-none" data-path="σαρωτής-qr" href="#"><span class="material-symbols-outlined text-[28px]">qr_code_scanner</span></a></div><nav class="fixed bottom-0 w-full z-40 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(46,50,48,0.05)]" data-active-classes="text-primary font-bold"><div class="flex justify-around items-center h-16 px-2"><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="εξερεύνηση" href="#"><span class="material-symbols-outlined text-[22px]">explore</span><span class="text-[10px] tracking-tight leading-normal mt-0.5">Εξερεύνηση</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[56px] h-12 transition-colors text-primary font-bold" data-path="χάρτης" href="#"><span class="material-symbols-outlined text-[22px]">pin_drop</span><span class="text-[10px] tracking-tight leading-normal mt-0.5">Χάρτης</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="διαβατήριο" href="#"><span class="material-symbols-outlined text-[22px]">menu_book</span><span class="text-[10px] tracking-tight leading-normal mt-0.5">Διαβατήριο</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="πορτοφόλι-(wallet)" href="#"><span class="material-symbols-outlined text-[22px]">wallet</span><span class="text-[10px] tracking-tight leading-normal mt-0.5">Πορτοφόλι</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="προφίλ" href="#"><span class="material-symbols-outlined text-[22px]">person</span><span class="text-[10px] tracking-tight leading-normal mt-0.5">Προφίλ</span></a></div></nav>
+
+
+
+</body></html>

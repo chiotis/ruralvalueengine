@@ -1,0 +1,388 @@
+<!DOCTYPE html><html lang="el"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_tab" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "tertiary-container": "#c4a66a", "primary-fixed-dim": "#8ecf9e", "on-secondary-container": "#5e5548", "secondary": "#6b6358", "error": "#b83230", "surface-bright": "#faf6f0", "primary-container": "#78a886", "background": "#faf6f0", "on-tertiary-fixed-variant": "#554020", "surface-container-highest": "#e4e0d8", "on-error-container": "#690005", "surface-container": "#f0ece4", "on-tertiary": "#ffffff", "surface-dim": "#dbd7cf", "on-surface": "#2e3230", "on-secondary-fixed-variant": "#4a4538", "primary": "#4a7c59", "on-primary-container": "#d8f0de", "primary-fixed": "#c8e8d0", "surface-container-lowest": "#ffffff", "on-background": "#2e3230", "inverse-surface": "#2e3230", "on-secondary": "#ffffff", "tertiary-fixed-dim": "#dcc48e", "outline-variant": "#c4c8bc", "on-surface-variant": "#4a4e4a", "on-primary-fixed": "#002110", "on-error": "#ffffff", "secondary-container": "#f0e8db", "on-primary": "#ffffff", "outline": "#74796e", "surface-container-high": "#eae6de", "on-secondary-fixed": "#1e1a13", "surface-container-low": "#f5f1ea", "secondary-fixed": "#f0e8db", "on-primary-fixed-variant": "#2a6038", "error-container": "#ffdad8", "surface": "#faf6f0", "tertiary": "#705c30", "inverse-primary": "#8ecf9e", "surface-variant": "#e4e0d8", "on-tertiary-container": "#554020", "secondary-fixed-dim": "#d4ccbf", "surface-tint": "#4a7c59", "inverse-on-surface": "#f5f0e8", "on-tertiary-fixed": "#221a05", "tertiary-fixed": "#f8e0a8" }, borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" }, spacing: {}, fontFamily: { "headline": ["Literata"], "display": ["Literata"], "body": ["Nunito Sans"], "label": ["Nunito Sans"] }, fontSize: {} } } }</script><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#faf6f0;color:#2e3230;}body{overscroll-behavior-y:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+  body, h1, h2, h3, h4, h5, h6, p, span:not(.material-symbols-outlined), a, button, input, label {
+    font-family: 'Inter', sans-serif !important;
+  }
+</style></head><body class="bg-surface font-body flex flex-col min-h-screen text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(46,50,48,0.05)] pt-safe"><div class="h-20 px-4 flex items-center justify-between"><div class="flex items-center gap-3 min-w-0"><img alt="Rural Greece Logo" class="h-9 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/ALJJyrBKf8xwmH3uW2_66YxNxNcz-ubsFfqu2x37aRKeFJPMOPoL5jKWvh3lMZEBBhao5hjMvVMOII9tZslH8HEKR-fDnrXLCUVrPaj2BQZcN6XjZbUCJivwwqE0UHh6JGbRE4qrtioMo_75puuSKyorbiAEZ_JBwyfLbIcX7_DzqQv5AJ3fjvAbPi0Lsxp8YYPQlKMBR44htzElNTVikHgYkg_p1jbRb9tVoR3mDkkW7A"><div class="flex flex-col min-w-0"><div class="flex items-center gap-1.5"><span class="font-headline font-bold text-base leading-tight tracking-tight text-on-surface truncate">Ύπαιθρος Ελλάς</span></div><span class="text-[11px] font-medium leading-none tracking-normal text-on-surface-variant truncate">Rural Greece • Explore</span></div></div><div class="flex items-center gap-2.5 shrink-0"><div class="flex items-center gap-1.5 px-3 py-1.5 bg-secondary-container rounded-full shadow-[0_2px_8px_rgba(46,50,48,0.04)]"><span class="material-symbols-outlined text-[16px] text-tertiary">token</span><span class="text-xs font-bold text-on-secondary-fixed leading-none">340 πόντοι</span></div><a class="relative block rounded-full focus:outline-none focus:ring-2 focus:ring-primary/40" data-path="profile" href="#"><img alt="Profile" class="w-9 h-9 rounded-full object-cover shadow-[0_2px_6px_rgba(46,50,48,0.08)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJRvITLBM7gM0CgopyTH7O07aBjftQJmMtbteCz9Ci727aFWu8o1vpVwaLRhlj2GmCubpnXMLosQhHmYOzP6LXeWj_AbpHMCHpv6ECilYSRh3LJU3239gz6syTjaUrf2t7xTF_ZK0tUt3w1HJix5W8EHmtMyTFFrNTlouZ4LbvT_wfRJQJfVBkSyFYtZiaWTrw2OJawZeQY6zID77JK7kaBsx4uMiuUvRkoXyYvw"></a></div></div></header><main class="flex flex-col relative w-full pt-20 pb-28 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Greeting & Cozy Travel Journal Header -->
+<section class="px-5 pt-4 pb-2">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-secondary-container text-tertiary shadow-sm">
+<span class="material-symbols-outlined text-[17px]">wb_sunny</span>
+</span>
+<span class="text-xs uppercase tracking-wider font-bold text-on-surface-variant">24 Οκτωβρίου • Ήπειρος</span>
+</div>
+<!-- Compass Stamp decoration -->
+<div class="flex items-center gap-1 text-[11px] font-semibold text-tertiary bg-secondary-container/70 px-2.5 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px]">explore</span>
+<span>Ζαγόρι, 960m</span>
+</div>
+</div>
+<h1 class="font-headline text-2xl sm:text-3xl font-extrabold text-on-surface tracking-tight leading-snug">
+      Καλημέρα, Ελένη!
+    </h1>
+<p class="font-headline italic text-sm sm:text-base text-tertiary mt-1 flex items-center gap-1.5 leading-relaxed">
+<span class="material-symbols-outlined text-[16px] shrink-0 text-primary">eco</span>
+      «Ανακάλυψε τα κρυμμένα μονοπάτια της Πίνδου»
+    </p>
+</section>
+<!-- Level & Explorer Progress Card (Organic Journal Stamp Style) -->
+<section class="px-5 my-3">
+<div class="bg-surface-container rounded-2xl p-4 shadow-[0_4px_20px_rgba(46,50,48,0.06)] relative overflow-hidden">
+<!-- Background subtle decorative motif -->
+<div class="absolute -right-4 -bottom-6 w-24 h-24 opacity-10 pointer-events-none text-primary">
+<svg fill="currentColor" viewBox="0 0 100 100">
+<path d="M50 0 L61 35 L98 35 L68 57 L79 91 L50 70 L21 91 L32 57 L2 35 L39 35 Z"></path>
+</svg>
+</div>
+<div class="flex items-center justify-between gap-3 mb-3">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-xl bg-primary flex items-center justify-center text-on-primary shadow-sm shrink-0">
+<span class="material-symbols-outlined text-[24px]">landscape</span>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-headline font-bold text-sm text-on-surface">Εξερευνητής Βουνού</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-tertiary text-[10px] font-extrabold tracking-wide uppercase">Επίπεδο 3</span>
+</div>
+<span class="text-xs text-on-surface-variant font-medium">Mountain Explorer • 340 συλλεγμένοι πόντοι</span>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="text-xs font-bold text-primary block">60 πόντοι ακόμα</span>
+<span class="text-[10px] text-on-surface-variant">για το Επίπεδο 4</span>
+</div>
+</div>
+<!-- Progress Track -->
+<div class="w-full bg-surface-container-high rounded-full h-2.5 overflow-hidden p-0.5">
+<div class="bg-primary h-full rounded-full transition-all duration-500" style="width: 68%;"></div>
+</div>
+<div class="flex items-center justify-between mt-2.5 pt-2 text-[11px] text-on-surface-variant">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-primary">card_giftcard</span>
+          Επόμενο: Κουπόνι -20% σε τοπικά εργαστήρια
+        </span>
+<a class="font-bold text-primary hover:underline flex items-center" data-path="passport" href="#">
+          Διαβατήριο
+          <span class="material-symbols-outlined text-[12px] ml-0.5">chevron_right</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Filter Category Pills (Scrollable with delightful state) -->
+<section class="mt-2 mb-4">
+<div class="px-5 mb-2 flex items-center justify-between">
+<span class="text-xs font-bold uppercase tracking-wider text-on-surface-variant">Κατηγορίες Εξερεύνησης</span>
+<span class="text-[11px] text-tertiary font-semibold">6 διαθέσιμες</span>
+</div>
+<div class="flex gap-2.5 overflow-x-auto px-5 pb-1 no-scrollbar text-xs font-bold" id="categoryPills">
+<button class="category-btn flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-primary text-on-primary shadow-sm shrink-0 transition-all duration-150" type="button">
+<span class="material-symbols-outlined text-[16px]">apps</span>
+<span>Όλα</span>
+</button>
+<button class="category-btn flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high shrink-0 transition-all duration-150" type="button">
+<span class="material-symbols-outlined text-[16px]">restaurant</span>
+<span>Φαγητό &amp; Γεύσεις</span>
+</button>
+<button class="category-btn flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high shrink-0 transition-all duration-150" type="button">
+<span class="material-symbols-outlined text-[16px]">hotel</span>
+<span>Παραδοσιακοί Ξενώνες</span>
+</button>
+<button class="category-btn flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high shrink-0 transition-all duration-150" type="button">
+<span class="material-symbols-outlined text-[16px]">handyman</span>
+<span>Χειροτεχνία</span>
+</button>
+<button class="category-btn flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high shrink-0 transition-all duration-150" type="button">
+<span class="material-symbols-outlined text-[16px]">forest</span>
+<span>Φύση &amp; Μονοπάτια</span>
+</button>
+<button class="category-btn flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high shrink-0 transition-all duration-150" type="button">
+<span class="material-symbols-outlined text-[16px]">temple_buddhist</span>
+<span>Πολιτισμός</span>
+</button>
+</div>
+</section>
+<!-- Featured Routes Carousel (Προτεινόμενες Διαδρομές) -->
+<section class="mt-2 px-5">
+<div class="flex items-baseline justify-between mb-3">
+<div>
+<h2 class="font-headline font-bold text-lg text-on-surface">Προτεινόμενες Διαδρομές</h2>
+<span class="text-xs text-on-surface-variant">Featured Traditional Trails</span>
+</div>
+<a class="text-xs font-bold text-primary flex items-center gap-0.5 hover:underline" data-path="map" href="#">
+        Όλες (12)
+        <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+<!-- Cards Scroll Horizontal -->
+<div class="flex gap-4 overflow-x-auto pb-3 -mx-5 px-5 snap-x snap-mandatory">
+<!-- Card 1: Zagori Stone Bridges -->
+<article class="min-w-[290px] max-w-[310px] bg-surface-container rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(46,50,48,0.06)] snap-start flex flex-col justify-between shrink-0 group">
+<div class="relative h-44 w-full overflow-hidden bg-surface-container-highest">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Panoramic landscape of Zagori Epirus Greece featuring an ancient arched stone bridge Kokkoris crossing a turquoise mountain river gorge surrounded by autumn plane trees and dramatic limestone cliffs in warm golden morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzWe-m1a9FYa7uVQZyXcSpC5ZujQA5ZrQ57VQNoa2vB_9UNTHcpVvRyLvTsP9WDvq1_l3ei8t_x6vkDtizyrzN-s0GHjEjg9lIO2RT7U9aRtfKtXlG-8XopZGTk6bN1tDH3o7ZLPKM9Nwo0DiUV_gvlqe7mfy_-K49wTdtlbUH57ioO6i97Qh7GPMg13XhgXkMJpl28vMX9wHssWKXI8VcUUc7HrvxDeB95DU5Ew">
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-black/20"></div>
+<!-- Badges overlay -->
+<div class="absolute top-3 left-3 flex items-center gap-1.5">
+<span class="px-2.5 py-1 rounded-full bg-error text-on-error text-[10px] font-extrabold uppercase tracking-wider shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">local_fire_department</span>
+              Δημοφιλές
+            </span>
+</div>
+<div class="absolute top-3 right-3">
+<button aria-label="Αποθήκευση διαδρομής" class="w-8 h-8 rounded-full bg-surface/85 backdrop-blur text-on-surface flex items-center justify-center hover:bg-surface transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+</button>
+</div>
+<!-- Bottom card image title snippet -->
+<div class="absolute bottom-2.5 left-3 right-3 text-surface-bright">
+<span class="text-[11px] font-semibold opacity-90 block">Ήπειρος • Κεντρικό Ζαγόρι</span>
+<h3 class="font-headline font-bold text-base leading-tight">Πέτρινα Γεφύρια Ζαγορίου</h3>
+</div>
+</div>
+<div class="p-3.5 flex flex-col gap-2.5">
+<!-- Metrics row -->
+<div class="grid grid-cols-3 gap-1.5 py-1 bg-surface-container-low rounded-xl text-center">
+<div class="flex flex-col items-center">
+<span class="text-[10px] text-on-surface-variant font-medium">Απόσταση</span>
+<span class="text-xs font-extrabold text-on-surface">14 χλμ</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="text-[10px] text-on-surface-variant font-medium">Διάρκεια</span>
+<span class="text-xs font-extrabold text-on-surface">4 ώρες</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="text-[10px] text-on-surface-variant font-medium">Check-ins</span>
+<span class="text-xs font-extrabold text-primary">5 σημεία</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1 px-2 py-1 rounded-lg bg-secondary-container text-tertiary">
+<span class="material-symbols-outlined text-[15px]">token</span>
+<span class="text-xs font-black">+45 πόντοι</span>
+</div>
+<a class="px-3.5 py-1.5 rounded-xl bg-primary text-on-primary text-xs font-bold hover:bg-primary/90 transition-colors flex items-center gap-1 shadow-sm" data-path="route-zagori" href="#">
+              Έναρξη
+              <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</article>
+<!-- Card 2: Mani Stone Towers -->
+<article class="min-w-[290px] max-w-[310px] bg-surface-container rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(46,50,48,0.06)] snap-start flex flex-col justify-between shrink-0 group">
+<div class="relative h-44 w-full overflow-hidden bg-surface-container-highest">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Traditional rugged Mani peninsula landscape in Greece with ancient stone tower village Vatheia overlooking deep blue Mediterranean sea olive groves and warm rustic terracotta rooftops under golden late afternoon sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMBiPDshmXMwY1jehntncHAcQLS7e2Z59WuKfr82DhCWIS709QDXQT8OXfJ4k5_1_-hX8LLKlIXsObCdyUNpv9G-z685zt4az1xTyCjpwY0GIcDbDyAG0lMYZEuZteZXXXhUp7HTvuFVnk9kbtAFExsmHhcGNgNBFt3Mz_2I-t1mvVMfryZrFqemKZ6h3WrkN88Ky1pOrX8JDOdxryWjIfTvyZ5kPO20IqXJln_g">
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-black/20"></div>
+<div class="absolute top-3 left-3 flex items-center gap-1.5">
+<span class="px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-extrabold uppercase tracking-wider shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">auto_awesome</span>
+              Πολιτισμός
+            </span>
+</div>
+<div class="absolute top-3 right-3">
+<button aria-label="Αποθήκευση διαδρομής" class="w-8 h-8 rounded-full bg-surface/85 backdrop-blur text-on-surface flex items-center justify-center hover:bg-surface transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+</button>
+</div>
+<div class="absolute bottom-2.5 left-3 right-3 text-surface-bright">
+<span class="text-[11px] font-semibold opacity-90 block">Πελοπόννησος • Ανατολική Μάνη</span>
+<h3 class="font-headline font-bold text-base leading-tight">Καστροπολιτεία Μάνης &amp; Ελαιώνες</h3>
+</div>
+</div>
+<div class="p-3.5 flex flex-col gap-2.5">
+<div class="grid grid-cols-3 gap-1.5 py-1 bg-surface-container-low rounded-xl text-center">
+<div class="flex flex-col items-center">
+<span class="text-[10px] text-on-surface-variant font-medium">Απόσταση</span>
+<span class="text-xs font-extrabold text-on-surface">22 χλμ</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="text-[10px] text-on-surface-variant font-medium">Διάρκεια</span>
+<span class="text-xs font-extrabold text-on-surface">6.5 ώρες</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="text-[10px] text-on-surface-variant font-medium">Check-ins</span>
+<span class="text-xs font-extrabold text-primary">7 σημεία</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1 px-2 py-1 rounded-lg bg-secondary-container text-tertiary">
+<span class="material-symbols-outlined text-[15px]">token</span>
+<span class="text-xs font-black">+60 πόντοι</span>
+</div>
+<a class="px-3.5 py-1.5 rounded-xl bg-primary text-on-primary text-xs font-bold hover:bg-primary/90 transition-colors flex items-center gap-1 shadow-sm" data-path="route-mani" href="#">
+              Έναρξη
+              <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- Section: Near You Today (Κοντά σου σήμερα) -->
+<section class="mt-6 px-5">
+<div class="flex items-baseline justify-between mb-3">
+<div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
+<h2 class="font-headline font-bold text-lg text-on-surface">Κοντά σου σήμερα</h2>
+</div>
+<span class="text-xs text-on-surface-variant">Authentic local businesses &amp; heritage spots</span>
+</div>
+<a class="text-xs font-bold text-primary flex items-center gap-0.5 hover:underline" data-path="map" href="#">
+        Στον χάρτη
+        <span class="material-symbols-outlined text-[14px]">map</span>
+</a>
+</div>
+<!-- POI Vertical List with Warm Journal Framing -->
+<div class="flex flex-col gap-3">
+<!-- POI 1: Mill Tavern Litharia -->
+<div class="bg-surface-container rounded-2xl p-3.5 shadow-[0_4px_20px_rgba(46,50,48,0.06)] hover:bg-surface-container-high transition-colors flex gap-3.5 items-center">
+<div class="relative w-24 h-24 rounded-xl overflow-hidden shrink-0 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="Cozy authentic stone watermill rustic Greek tavern in mountain village Aristi Zagori wooden tables hearth warm lighting fresh crusty bread and earthenware wine jug" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsYpFVGKXOJFIo59400HkvGo3wU2WEuZLlxPcFfHjcmOxy7w7Ob_N1omUlg_KczZ1wMAykVrmj_NbEaReL7K7LrS2qVY0w3TXd7jjBbne2iFYJ4BDTcqHAb7QwPSb-ktyVi4pEBRsp3sn6pc2Fm0OmZQ4Du9LJoPxxc9yrqsGsLQqvCw2ScbIh4N-8SMVNru5Cs9Fl4T01keuoYMNdDA7lYITiJGvXpGQAPlcrBQ">
+<div class="absolute bottom-1 right-1 bg-surface-container-lowest/90 backdrop-blur rounded px-1.5 py-0.5 flex items-center gap-0.5 shadow-sm">
+<span class="material-symbols-outlined text-[12px] text-tertiary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-[10px] font-black text-on-surface">4.9</span>
+</div>
+</div>
+<div class="flex flex-col justify-between flex-1 min-w-0">
+<div>
+<div class="flex items-center justify-between gap-1 mb-0.5">
+<span class="text-[10px] uppercase font-bold text-primary tracking-wider flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                Ανοιχτά τώρα
+              </span>
+<span class="text-[10px] text-on-surface-variant">1.2 χλμ</span>
+</div>
+<h3 class="font-headline font-bold text-sm text-on-surface truncate leading-tight">
+              Παραδοσιακός Μύλος &amp; Ταβέρνα "Τα Λιθάρια"
+            </h3>
+<p class="text-xs text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[13px] text-tertiary">location_on</span>
+              Αρίστη, Ζαγόρι
+            </p>
+</div>
+<div class="flex items-center justify-between mt-2 pt-1">
+<span class="inline-flex items-center gap-1 text-[11px] font-bold text-tertiary bg-secondary-container px-2 py-0.5 rounded-md">
+<span class="material-symbols-outlined text-[13px]">add_circle</span>
+              +15 πόντοι
+            </span>
+<a class="text-xs font-bold text-primary hover:underline flex items-center gap-0.5" data-path="poi-litharia" href="#">
+              Λεπτομέρειες
+              <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+<!-- POI 2: Weaving Workshop Arachni -->
+<div class="bg-surface-container rounded-2xl p-3.5 shadow-[0_4px_20px_rgba(46,50,48,0.06)] hover:bg-surface-container-high transition-colors flex gap-3.5 items-center">
+<div class="relative w-24 h-24 rounded-xl overflow-hidden shrink-0 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="Traditional wooden handloom in an artisanal Greek mountain workshop with colorful naturally dyed woolen yarn rolls woven tapestries Monodendri Greece artisan hands working craft" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcIUcBjuL02sZv8RUmuM6dpVxtsQj1tnKzttQjeyxEZNBvb6m2WxxFPJOc0PEvYJUJqkDJcMdpaxHN0r9LNgow-yB4eg2Xy1zuT3BGimRwgc6S6jG0Wsy2ruhC0YMDEzEj51Ew8KmwHveqEMd_DNQqZraF90sfYODeP-UBL3mGaGWKeONMt257Ui4lpJ47IYVH12m_df2QOs1WtkZ5wm-d4C3tMJkIit5W_nWYdg">
+<div class="absolute bottom-1 right-1 bg-surface-container-lowest/90 backdrop-blur rounded px-1.5 py-0.5 flex items-center gap-0.5 shadow-sm">
+<span class="material-symbols-outlined text-[12px] text-tertiary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-[10px] font-black text-on-surface">5.0</span>
+</div>
+</div>
+<div class="flex flex-col justify-between flex-1 min-w-0">
+<div>
+<div class="flex items-center justify-between gap-1 mb-0.5">
+<span class="text-[10px] uppercase font-bold text-tertiary tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[11px]">palette</span>
+                Χειροτεχνία
+              </span>
+<span class="text-[10px] text-on-surface-variant">3.8 χλμ</span>
+</div>
+<h3 class="font-headline font-bold text-sm text-on-surface truncate leading-tight">
+              Εργαστήριο Υφαντικής "Η Αράχνη"
+            </h3>
+<p class="text-xs text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[13px] text-tertiary">location_on</span>
+              Μονοδένδρι, Ζαγόρι
+            </p>
+</div>
+<div class="flex items-center justify-between mt-2 pt-1">
+<span class="inline-flex items-center gap-1 text-[11px] font-bold text-tertiary bg-secondary-container px-2 py-0.5 rounded-md">
+<span class="material-symbols-outlined text-[13px]">add_circle</span>
+              +10 πόντοι με επίσκεψη
+            </span>
+<a class="text-xs font-bold text-primary hover:underline flex items-center gap-0.5" data-path="poi-arachni" href="#">
+              Λεπτομέρειες
+              <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+<!-- POI 3: Kokkori Byzantine Stone Bridge -->
+<div class="bg-surface-container rounded-2xl p-3.5 shadow-[0_4px_20px_rgba(46,50,48,0.06)] hover:bg-surface-container-high transition-colors flex gap-3.5 items-center">
+<div class="relative w-24 h-24 rounded-xl overflow-hidden shrink-0 bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="Iconic historic single arch stone bridge Kokkoris Noutsos over clear Voidomatis tributary river surrounded by steep mountain rock faces and lush green vegetation in Greece" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4FDfML3R4v74Us0TcNIYNcTvF4RvgXB2GpqPmPi2n7zRkbhE7F0mzyfZfYY_TTGEjWu5Fk8i_SFiaLX_Ez9lJyujX21cFqNNNoHIxdBc3EnEz8Tu7nWZlPwo8iK0__WlZa7b4ykMeCXJ5EX8gUYcFvnXMIeo4jgUl8FOIzwUyKjrOvTE9BTU2bHVoSp98j97SlqrmPztPQauSgiJ2Y6w7IxtpXhJE750RGPvU-g">
+<div class="absolute bottom-1 right-1 bg-surface-container-lowest/90 backdrop-blur rounded px-1.5 py-0.5 flex items-center gap-0.5 shadow-sm">
+<span class="material-symbols-outlined text-[12px] text-primary">park</span>
+<span class="text-[10px] font-black text-on-surface">Φύση</span>
+</div>
+</div>
+<div class="flex flex-col justify-between flex-1 min-w-0">
+<div>
+<div class="flex items-center justify-between gap-1 mb-0.5">
+<span class="text-[10px] uppercase font-bold text-on-surface-variant tracking-wider flex items-center gap-1">
+                Φυσικό Αξιοθέατο
+              </span>
+<span class="text-[10px] text-on-surface-variant">2.1 χλμ</span>
+</div>
+<h3 class="font-headline font-bold text-sm text-on-surface truncate leading-tight">
+              Βυζαντινό Γεφύρι Κόκκορη
+            </h3>
+<p class="text-xs text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[13px] text-tertiary">location_on</span>
+              Κουκούλι - Δίλοφο
+            </p>
+</div>
+<div class="flex items-center justify-between mt-2 pt-1">
+<span class="inline-flex items-center gap-1 text-[11px] font-bold text-tertiary bg-secondary-container px-2 py-0.5 rounded-md">
+<span class="material-symbols-outlined text-[13px]">qr_code_2</span>
+              +5 πόντοι check-in
+            </span>
+<a class="text-xs font-bold text-primary hover:underline flex items-center gap-0.5" data-path="poi-kokkori" href="#">
+              Οδηγίες
+              <span class="material-symbols-outlined text-[14px]">near_me</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Journal Prompt Stamp (Moment of Delight) -->
+<section class="mt-6 px-5 mb-2">
+<div class="bg-gradient-to-br from-secondary-container via-surface-container to-secondary-container/60 rounded-2xl p-4 shadow-[0_4px_20px_rgba(46,50,48,0.06)] flex items-center gap-3.5">
+<div class="w-12 h-12 rounded-full bg-tertiary-container/30 flex items-center justify-center text-tertiary shrink-0">
+<span class="material-symbols-outlined text-[26px]">edit_note</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-headline font-bold text-sm text-on-surface leading-tight">Ημερολόγιο Ταξιδιού</h4>
+<p class="text-xs text-on-surface-variant mt-0.5 line-clamp-1">Κατέγραψε μια ανάμνηση ή τοπική γεύση σήμερα.</p>
+</div>
+<a class="px-3 py-1.5 rounded-xl bg-tertiary text-on-tertiary text-xs font-bold shadow-sm hover:opacity-90 transition-opacity shrink-0" data-path="passport" href="#">
+        Εγγραφή
+      </a>
+</div>
+</section>
+</div>
+<script>
+  (function() {
+    // Interactive category pill selection micro-interaction
+    const pillButtons = document.querySelectorAll('.category-btn');
+    pillButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        pillButtons.forEach(b => {
+          b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+          b.classList.add('bg-surface-container', 'text-on-surface-variant');
+        });
+        btn.classList.remove('bg-surface-container', 'text-on-surface-variant');
+        btn.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+      });
+    });
+  })();
+</script></main><div class="fixed bottom-24 right-5 z-50"><a aria-label="QR Check-in Scanner" class="w-14 h-14 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-[0_8px_20px_rgba(74,124,89,0.35),0_0_12px_rgba(184,50,48,0.2)] hover:scale-105 transition-transform duration-200 focus:outline-none" data-path="qr-scan-check-in" href="#"><span class="material-symbols-outlined text-[28px]">qr_code_scanner</span></a></div><nav class="fixed bottom-0 w-full z-40 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(46,50,48,0.05)]" data-active-classes="text-primary font-bold"><div class="flex justify-around items-center h-16 px-2"><a aria-current="page" class="flex flex-col items-center justify-center min-w-[56px] h-12 transition-colors text-primary font-bold" data-path="explore" href="#"><span class="material-symbols-outlined text-[22px]">explore</span><span class="text-[10px] tracking-tight leading-normal mt-0.5">Εξερεύνηση</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="map" href="#"><span class="material-symbols-outlined text-[22px]">pin_drop</span><span class="text-[10px] tracking-tight leading-normal mt-0.5">Χάρτης</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="passport" href="#"><span class="material-symbols-outlined text-[22px]">menu_book</span><span class="text-[10px] tracking-tight leading-normal mt-0.5">Διαβατήριο</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="wallet" href="#"><span class="material-symbols-outlined text-[22px]">wallet</span><span class="text-[10px] tracking-tight leading-normal mt-0.5">Πορτοφόλι</span></a><a class="flex flex-col items-center justify-center min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="profile" href="#"><span class="material-symbols-outlined text-[22px]">person</span><span class="text-[10px] tracking-tight leading-normal mt-0.5">Προφίλ</span></a></div></nav>
+
+
+
+</body></html>
