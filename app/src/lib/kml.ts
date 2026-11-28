@@ -9,7 +9,7 @@ export function kmlToLatLngs(kml: string): [number, number][][] {
       .split(/\s+/)
       .map((t) => t.split(",").map(Number))
       .filter((p) => p.length >= 2 && Number.isFinite(p[0]) && Number.isFinite(p[1]))
-      .map((p) => [p[1]!, p[0]!] as [number, number]);
+      .map((p) => [p[1]!, Math.abs(p[0]!) <= 180 ? p[0]! : ((((p[0]! + 180) % 360) + 360) % 360) - 180] as [number, number]);
     if (pts.length > 1) lines.push(pts);
   }
   return lines;

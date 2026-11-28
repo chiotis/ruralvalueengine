@@ -23,16 +23,18 @@ export default function ItemDetail() {
   const score = useApi<{ score: number; inputs: Record<string, number> }>(id?.startsWith("biz-") ? `/v1/members/${id}/score` : null);
   const [track, setTrack] = useState<[number, number][][]>([]);
 
+  // The engine sends the route's path ready to draw; older engines only send the KML link.
   useEffect(() => {
     const url = item.data?.map_kml;
-    if (!url) return;
+    if (!url || item.data?.track !== undefined) return;
     fetch(url)
       .then((r) => r.text())
       .then((k) => setTrack(kmlToLatLngs(k)))
       .catch(() => setTrack([]));
-  }, [item.data?.map_kml]);
+  }, [item.data?.map_kml, item.data?.track]);
 
   const d = item.data;
+  const lines = d?.track?.lines ?? track;
   if (!d) return <State loading={item.loading} error={item.error} onRetry={item.reload} />;
 
   const hero = d.gallery[0]?.url ?? d.image?.url;
@@ -88,11 +90,12 @@ export default function ItemDetail() {
           <P key={i}>{p}</P>
         ))}
 
-        {d.lat != null && d.lng != null && (
+        {((d.lat != null && d.lng != null) || lines.length > 0) && (
           <LeafletMap
             height={260}
-            markers={[{ id: d.id, lat: d.lat, lng: d.lng, kind: d.kind, title: d.title }, ...d.nearby.filter((n) => n.lat != null).map((n) => ({ id: n.id, lat: n.lat as number, lng: n.lng as number, kind: n.kind, title: n.title }))]}
-            lines={track}
+            markers={[...(d.lat != null && d.lng != null ? [{ id: d.id, lat: d.lat, lng: d.lng, kind: d.kind, title: d.title }] : []), ...d.nearby.filter((n) => n.lat != null).map((n) => ({ id: n.id, lat: n.lat as number, lng: n.lng as number, kind: n.kind, title: n.title }))]}
+            lines={lines}
+            stops={d.track?.stops}
           />
         )}
 
