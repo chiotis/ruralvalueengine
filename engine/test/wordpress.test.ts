@@ -9,6 +9,7 @@ import { buildApp } from "../src/app.js";
 import { ConsoleMailer } from "../src/mailer.js";
 import { cfg as pcfg, freshDb } from "./helpers.js";
 import { business, media, poi, route } from "./fixtures/wp.js";
+import { SAMPLE_KML } from "./fixtures/kml.js";
 
 /** Fake WordPress: serves collections, single posts, terms and media from memory, and records URLs. */
 function fakeWp(posts: Record<"business" | "route" | "pois", WpPost[]>) {
@@ -109,15 +110,23 @@ describe("catalogue API and webhook", () => {
   let app: FastifyInstance;
   let wp: ReturnType<typeof fakeWp>;
   const secret = "hook-secret";
+  let kmlCalls: string[] = [];
 
   beforeEach(async () => {
     wp = fakeWp({ business: [business(17789, "37.5545", "22.0771", "Mpelleiko"), business(18000, "38.9", "23.9", "Far away")], route: [route], pois: [poi] });
     await syncRuralGreece(db, wp.client, { full: true });
+    kmlCalls = [];
     app = buildApp(
       db,
       { databaseUrl: "", port: 0, jwtSecret: "j", qrKeys: pcfg.qrKeys, adminToken: "a", networkTz: "Europe/Athens", wpWebhookSecret: secret },
       new ConsoleMailer(false),
-      { wpClient: wp.client },
+      {
+        wpClient: wp.client,
+        kmlFetch: async (url) => {
+          kmlCalls.push(url);
+          return Buffer.from(SAMPLE_KML);
+        },
+      },
     );
   });
 
@@ -137,6 +146,16 @@ describe("catalogue API and webhook", () => {
     expect(r.duration).toBe("3 ώρες"); // falls back to Greek when English is empty
     expect(r.nearby.map((n: { id: string }) => n.id)).toEqual(["biz-17789", "poi-17531"]);
     expect(r.gallery).toHaveLength(2);
+  });
+
+  it("returns the route's KML as a simplified path with stops, and caches it", async () => {
+    const r = (await app.inject({ url: "/v1/catalog/item/route-17002" })).json();
+    expect(r.track.lines[0][0]).toEqual([41.0371, 22.5756]);
+    expect(r.track.lines[0].length).toBeLessThanOrEqual(4);
+    expect(r.track.stops).toEqual([{ name: "Πηγή & βρύση", lat: 41.0362, lng: 22.575 }]);
+    await app.inject({ url: "/v1/catalog/item/route-17002?lang=en" });
+    expect(kmlCalls).toEqual(["https://ruralgreece.gr/wp-content/uploads/kml/the-tsigganas-trail.kml"]);
+    expect((await app.inject({ url: "/v1/catalog/item/biz-17789" })).json().track).toBeNull();
   });
 
   it("webhook refuses bad signatures and applies upserts and deletes", async () => {

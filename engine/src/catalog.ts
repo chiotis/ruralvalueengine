@@ -4,6 +4,7 @@ import { z } from "zod";
 import type { Db } from "./db.js";
 import type { WpClient } from "./wordpress/client.js";
 import { markDeleted, syncOne } from "./wordpress/sync.js";
+import { routeTrack, type KmlFetch } from "./kml.js";
 
 const KINDS = { businesses: "business", routes: "route", pois: "poi" } as const;
 
@@ -51,7 +52,7 @@ function summary(it: Item, lang: "el" | "en", media: Map<number, { url: string; 
   };
 }
 
-export function registerCatalog(app: FastifyInstance, db: Db, opts: { wpClient?: WpClient; webhookSecret?: string }) {
+export function registerCatalog(app: FastifyInstance, db: Db, opts: { wpClient?: WpClient; webhookSecret?: string; kmlFetch?: KmlFetch }) {
   const Lang = z.enum(["el", "en"]).default("el");
 
   app.get<{ Params: { kind: string } }>("/v1/catalog/:kind", async (req, reply) => {
@@ -145,6 +146,8 @@ export function registerCatalog(app: FastifyInstance, db: Db, opts: { wpClient?:
       },
       trail_length: d.trail_length ?? null,
       map_kml: d.map_kml ?? null,
+      // The KML parsed and simplified by the engine, so the app can draw the path without fetching the file.
+      track: it.kind === "route" ? await routeTrack(db, it.id, d.map_kml as string | undefined, opts.kmlFetch).catch(() => null) : null,
       youtube_video: d.youtube_video ?? null,
       gallery: gallery.map((g) => media.get(g)).filter(Boolean),
       terms: terms.rows,
@@ -166,6 +169,8 @@ export function registerCatalog(app: FastifyInstance, db: Db, opts: { wpClient?:
       const b = z
         .object({ type: z.enum(["business", "route", "pois"]), id: z.number().int().positive(), action: z.enum(["upsert", "delete"]) })
         .parse(JSON.parse(raw));
+      // An edited route may have a new KML file at the same link: drop its cached path.
+      if (b.type === "route") await db.query("DELETE FROM route_tracks WHERE item_id = $1", [`route-${b.id}`]);
       if (b.action === "delete") await markDeleted(db, b.type, b.id);
       else await syncOne(db, opts.wpClient, b.type, b.id);
       return { ok: true };
