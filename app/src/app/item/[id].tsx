@@ -10,7 +10,9 @@ import { htmlToParagraphs } from "../../lib/html";
 import { LeafletMap } from "../../components/LeafletMap";
 import { GeoCheckin } from "../../components/GeoCheckin";
 import { ItemCard } from "../../components/ItemCard";
-import { Button, Card, H1, H2, P, State, Stat } from "../../components/ui";
+import { Button, Card, Eyebrow, H1, H2, P, Pill, State, Stat } from "../../components/ui";
+import { KIND_COLOR, KIND_LABEL } from "../../components/ItemCard";
+import { pointsLabel } from "../../lib/points";
 import { colors, space } from "../../lib/theme";
 
 export default function ItemDetail() {
@@ -47,12 +49,25 @@ export default function ItemDetail() {
       <Stack.Screen options={{ title: d.title }} />
       {hero ? <Image source={{ uri: hero }} style={{ width: "100%", height: 220, backgroundColor: colors.border }} /> : null}
       <View style={{ padding: space.lg, gap: space.md }}>
-        <H1>{d.title}</H1>
-        {d.subtitle ? <P muted>{d.subtitle}</P> : null}
+        <View style={{ gap: space.xs }}>
+          <Eyebrow color={KIND_COLOR[d.kind]}>{KIND_LABEL[d.kind][lang]}</Eyebrow>
+          <H1>{d.title}</H1>
+          {d.subtitle ? <P muted>{d.subtitle}</P> : null}
+        </View>
+        {pointsLabel(d.kind) && (
+          <Pill
+            icon="leaf"
+            label={
+              d.kind === "business"
+                ? `${pointsLabel(d.kind)} ${t.points} ${lang === "el" ? "ανά επίσκεψη" : "per visit"}`
+                : `${pointsLabel(d.kind)} ${t.points} ${lang === "el" ? "με QR ή «Είμαι εδώ»" : "by QR or “I'm here”"}`
+            }
+          />
+        )}
 
         {score.data && (
           <View style={{ flexDirection: "row", gap: space.md }}>
-            <Stat label={t.impactScore} value={score.data.score} />
+            <Stat icon="ribbon" label={t.impactScore} value={score.data.score} />
           </View>
         )}
 
