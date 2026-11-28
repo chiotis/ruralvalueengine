@@ -12,6 +12,12 @@ test("kml: lng,lat[,alt] becomes [lat, lng], one line per LineString", () => {
   assert.deepEqual(kmlToLatLngs(kml), [[[39.5, 22.1], [39.6, 22.2]]]);
 });
 
+test("kml: longitudes wrapped past 180 come back to Greece", () => {
+  const [[p]] = kmlToLatLngs("<kml><LineString><coordinates>382.54,40.98 382.55,40.99</coordinates></LineString></kml>");
+  assert.equal(p![0], 40.98);
+  assert.ok(Math.abs(p![1] - 22.54) < 1e-9);
+});
+
 test("html: paragraphs, line breaks and entities", () => {
   assert.deepEqual(htmlToParagraphs("<p>Καλώς <b>ήρθατε</b>&nbsp;!</p><p>A &amp; B<br>C</p>"), ["Καλώς ήρθατε !", "A & B\nC"]);
   assert.deepEqual(htmlToParagraphs(null), []);

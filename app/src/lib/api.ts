@@ -106,6 +106,10 @@ export interface CatalogSummary {
   image: { url: string; sizes: Record<string, { url: string; w: number; h: number }> } | null;
   distance_km?: number;
 }
+export interface RouteTrack {
+  lines: [number, number][][];
+  stops: { name: string; lat: number; lng: number }[];
+}
 export interface CatalogItem extends CatalogSummary {
   link: string | null;
   intro: string | null;
@@ -116,6 +120,8 @@ export interface CatalogItem extends CatalogSummary {
   services?: string | null;
   trail_length: string | null;
   map_kml: string | null;
+  /** Routes: the KML track parsed and simplified by the engine. Null when the route has no usable KML. */
+  track?: RouteTrack | null;
   youtube_video: string | null;
   contact: { address: string | null; email: string | null; telephone: string | null; website_url: string | null; booking_url: string | null };
   gallery: { url: string }[];
