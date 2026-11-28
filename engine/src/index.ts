@@ -6,6 +6,7 @@ import { buildApp } from "./app.js";
 import { ConsoleMailer, SmtpMailer } from "./mailer.js";
 import { WpClient } from "./wordpress/client.js";
 import { syncRuralGreece } from "./wordpress/sync.js";
+import { warmRouteTracks } from "./kml.js";
 
 const cfg = loadConfig();
 const db = createPool(cfg.databaseUrl);
@@ -28,7 +29,8 @@ if (cfg.ruralgreeceUrl) {
       const full = day !== lastFullDay;
       const report = await syncRuralGreece(db, client, { full });
       if (full) lastFullDay = day;
-      app.log.info({ report, full }, "ruralgreece sync");
+      const tracks = await warmRouteTracks(db);
+      app.log.info({ report, tracks, full }, "ruralgreece sync");
     } catch (err) {
       app.log.error(err, "ruralgreece sync failed");
     } finally {

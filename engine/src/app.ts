@@ -13,6 +13,7 @@ import type { Actor } from "./envelope.js";
 import { makeQrToken } from "./qr.js";
 import { passport, wallet } from "./wallet.js";
 import { registerCatalog } from "./catalog.js";
+import type { KmlFetch } from "./kml.js";
 import { WpClient } from "./wordpress/client.js";
 import { registerAdminRoutes } from "./admin.js";
 import { RateLimiter } from "./ratelimit.js";
@@ -21,7 +22,7 @@ import { registerAdminPanel } from "./admin-panel.js";
 const MAX_BATCH = 100;
 const Id = z.string().regex(/^[a-z0-9-]+$/, "ids are lowercase letters, digits and dashes");
 
-export function buildApp(db: Db, cfg: Config, mailer: Mailer, opts: { logger?: boolean; wpClient?: WpClient } = {}): FastifyInstance {
+export function buildApp(db: Db, cfg: Config, mailer: Mailer, opts: { logger?: boolean; wpClient?: WpClient; kmlFetch?: KmlFetch } = {}): FastifyInstance {
   const app = Fastify({ logger: opts.logger ?? false, bodyLimit: 1_000_000, trustProxy: cfg.trustProxy ?? false });
   const wpClient = opts.wpClient ?? (cfg.ruralgreeceUrl ? new WpClient(cfg.ruralgreeceUrl) : undefined);
 
@@ -82,6 +83,7 @@ export function buildApp(db: Db, cfg: Config, mailer: Mailer, opts: { logger?: b
   registerCatalog(app, db, {
     wpClient,
     webhookSecret: cfg.wpWebhookSecret,
+    kmlFetch: opts.kmlFetch,
   });
 
   registerAdminPanel(app);

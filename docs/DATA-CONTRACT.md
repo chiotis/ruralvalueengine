@@ -92,7 +92,7 @@ Visitor calls use the visitor token, member calls (`/v1/member/*`) the member to
 |---|---|---|
 | `POST` | `/v1/auth/email/start`, `/v1/auth/email/verify`, `/v1/auth/refresh` | Visitor passwordless login (6-digit code) |
 | `GET` | `/v1/catalog/{business,route,poi}` | Cached ruralgreece.gr content, `?lang=el\|en&q=&near=lat,lng&limit=` |
-| `GET` | `/v1/catalog/item/{id}` | One item with gallery, contact, track and nearby places |
+| `GET` | `/v1/catalog/item/{id}` | One item with gallery, contact, track and nearby places. Routes carry `track`: `{lines: [lat, lng][][], stops: {name, lat, lng}[]}`, parsed from `map_kml` (KML or KMZ) by the engine, simplified to about 8 m and at most 1,500 points, cached in `route_tracks`; `null` when the route has no usable KML |
 | `GET` | `/v1/packages`, `/v1/me/progress/{id}` | Thematic packages and a visitor's progress |
 | `POST` | `/v1/events` | Submit one or a batch of events (offline queue) |
 | `GET` | `/v1/me/passport`, `/v1/me/wallet` | Verified experiences; balance and ledger |
