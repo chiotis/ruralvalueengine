@@ -6,7 +6,7 @@ import * as Location from "expo-location";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { reasonText, useI18n } from "../lib/i18n";
 import { useSession } from "../lib/session";
-import { lastFlushError, newEvent, pending, submit } from "../lib/queue";
+import { flush, lastSendError, newEvent, pending, submit, type SendError } from "../lib/queue";
 import { describeOutcome, scanView, type Outcome, type ScanView } from "../lib/outcome";
 import { api, ApiError, type CatalogItem } from "../lib/api";
 import type { MemberInfo } from "../lib/member";
@@ -57,6 +57,7 @@ interface Result {
   geo?: Geo;
   balance?: number | null;
   waiting?: number;
+  sendError?: SendError | null;
 }
 
 const distanceText = (m: number) => (m < 1000 ? `${Math.round(m)} m` : `${(m / 1000).toFixed(1)} km`);
@@ -238,25 +239,53 @@ function InvalidBody({ r, onClose }: { r: Result; onClose: () => void }) {
   );
 }
 
-function QueuedBody({ r, onClose }: { r: Result; onClose: () => void }) {
+function QueuedBody({ r, onClose, onRetry, onSignIn }: { r: Result; onClose: () => void; onRetry: () => void; onSignIn: () => void }) {
   const { lang } = useI18n();
   const el = lang === "el";
+  const err = r.sendError;
+  const expired = err?.status === 401;
+  const server = !!err && !err.network && !expired;
+  const [busy, setBusy] = useState(false);
+  const title = expired
+    ? el ? "Η σύνδεσή σας έληξε" : "You've been signed out"
+    : server
+      ? el ? "Ο διακομιστής δεν απάντησε σωστά" : "The server had a problem"
+      : el ? "Είστε εκτός σύνδεσης" : "You're offline";
+  const text = expired
+    ? el ? "Συνδεθείτε ξανά με το email σας. Η σάρωση φυλάχτηκε και θα σταλεί αμέσως μετά." : "Sign in again with your email. The scan is saved and will be sent right after."
+    : server
+      ? el ? "Η σάρωση φυλάχτηκε στο κινητό και θα ξαναδοκιμάσει αυτόματα. Αν συνεχίσει, στείλτε μας τον κωδικό σφάλματος." : "The scan is saved on your phone and will be retried automatically. If it keeps happening, send us the error code."
+      : el ? "Μην ανησυχείτε. Η σάρωση φυλάχτηκε στο κινητό με την ώρα και τη θέση της, και θα σταλεί μόλις υπάρξει σήμα." : "Don't worry. The scan is saved on your phone with its time and position, and will be sent as soon as there's signal.";
   return (
     <View style={{ gap: space.md }}>
-      <SheetIcon name="cloud-offline" tone="sand" />
-      <H2>{el ? "Είστε εκτός σύνδεσης" : "You're offline"}</H2>
-      <P muted>
-        {el
-          ? "Μην ανησυχείτε. Η σάρωση φυλάχτηκε στο κινητό με την ώρα και τη θέση της, και θα σταλεί μόλις υπάρξει σήμα."
-          : "Don't worry. The scan is saved on your phone with its time and position, and will be sent as soon as there's signal."}
-      </P>
-      <Tip
-        icon="sync-outline"
-        title={el ? "Αυτόματος συγχρονισμός" : "Sends by itself"}
-        text={el ? "Οι πόντοι μπαίνουν στο Πορτοφόλι όταν σταλεί η σάρωση." : "The points reach your Wallet once the scan is sent."}
-      />
-      {!!r.waiting && <Pill tone="sand" icon="hourglass-outline" label={`${r.waiting} ${el ? "σε αναμονή αποστολής" : "waiting to send"}`} />}
-      {lastFlushError && <P muted>{lastFlushError}</P>}
+      <SheetIcon name={expired ? "person-circle-outline" : server ? "warning-outline" : "cloud-offline"} tone={server || expired ? "burgundy" : "sand"} />
+      <H2>{title}</H2>
+      <P muted>{text}</P>
+      {!expired && (
+        <Tip
+          icon="sync-outline"
+          title={el ? "Αυτόματος συγχρονισμός" : "Sends by itself"}
+          text={el ? "Οι πόντοι μπαίνουν στο Πορτοφόλι όταν σταλεί η σάρωση." : "The points reach your Wallet once the scan is sent."}
+        />
+      )}
+      <View style={{ flexDirection: "row", gap: space.sm, flexWrap: "wrap" }}>
+        {!!r.waiting && <Pill tone="sand" icon="hourglass-outline" label={`${r.waiting} ${el ? "σε αναμονή αποστολής" : "waiting to send"}`} />}
+        {err && <Pill tone="burgundy" icon="information-circle-outline" label={err.status ? `${err.status} ${err.code}` : err.code} />}
+      </View>
+      {expired ? (
+        <Button icon="log-in-outline" title={el ? "Σύνδεση" : "Sign in"} onPress={onSignIn} />
+      ) : (
+        <Button
+          icon="refresh"
+          busy={busy}
+          title={el ? "Αποστολή τώρα" : "Send now"}
+          onPress={async () => {
+            setBusy(true);
+            await onRetry();
+            setBusy(false);
+          }}
+        />
+      )}
       <Button kind="secondary" title={el ? "Εντάξει" : "OK"} onPress={onClose} />
     </View>
   );
@@ -377,7 +406,10 @@ export default function Scan() {
         view === "success" ? api<{ balance: number }>("/v1/me/wallet", { role: "visitor" }).then((w) => w.balance).catch(() => null) : Promise.resolve(null),
         view === "queued" ? pending().then((p) => p.length) : Promise.resolve(0),
       ]);
-      setResult({ view, outcome, place, geo, balance, waiting });
+      const sendError = view === "queued" ? lastSendError() : null;
+      // A refused refresh token signs the visitor out on the device; let the rest of the app know.
+      if (sendError?.status === 401) void session.reload();
+      setResult({ view, outcome, place, geo, balance, waiting, sendError });
       setReferral("");
     } catch {
       setResult({ view: "other", outcome: null, place: null });
@@ -497,7 +529,23 @@ export default function Scan() {
         {result?.view === "too_far" && <TooFarBody r={result} onClose={close} />}
         {result?.view === "location" && <LocationBody r={result} onClose={close} />}
         {result?.view === "invalid" && <InvalidBody r={result} onClose={close} />}
-        {result?.view === "queued" && <QueuedBody r={result} onClose={close} />}
+        {result?.view === "queued" && (
+          <QueuedBody
+            r={result}
+            onClose={close}
+            onSignIn={() => {
+              close();
+              router.push("/login");
+            }}
+            onRetry={async () => {
+              const before = result.waiting ?? 0;
+              await flush();
+              const waiting = (await pending()).length;
+              if (waiting < before && !lastSendError()) close();
+              else setResult({ ...result, waiting, sendError: lastSendError() });
+            }}
+          />
+        )}
         {result?.view === "duplicate" && <SimpleBody icon="checkmark-done" tone="green" title={t.checkinDuplicate} text={el ? "Μία σφραγίδα ανά σημείο την ημέρα. Τα λέμε αύριο!" : "One stamp per place per day. See you tomorrow!"} onClose={close} />}
         {result?.view === "other" && (
           <SimpleBody
