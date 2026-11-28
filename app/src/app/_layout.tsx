@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { AppState, View } from "react-native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { NavigationBar } from "expo-navigation-bar";
 import { deviceLang, LangContext, strings, type Lang } from "../lib/i18n";
 import { SessionProvider } from "../lib/session";
 import { store } from "../lib/storage";
@@ -35,7 +36,9 @@ export default function RootLayout() {
     <LangContext.Provider value={value}>
       <SessionProvider>
         <StatusBar style="dark" />
-        <View style={{ flex: 1 }}>
+        {/* Android: the system navigation bar is see-through over the cream app, with dark buttons (app.json plugin turns off the grey scrim). */}
+        <NavigationBar style="light" />
+        <View style={{ flex: 1, backgroundColor: colors.background }}>
           <Stack
             screenOptions={{
               headerStyle: { backgroundColor: colors.background },

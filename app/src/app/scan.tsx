@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Linking, Pressable, StyleSheet, Text, View } from "react-native";
 import { useFocusEffect, useRouter } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as Location from "expo-location";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -319,6 +320,7 @@ export default function Scan() {
   const [members, setMembers] = useState<MemberInfo[]>([]);
   const [actingFor, setActingFor] = useState<string | null>(null);
   const lastScan = useRef<{ data: string; at: number } | null>(null);
+  const insets = useSafeAreaInsets();
 
   // A business account confirms redemptions; when one email runs several businesses, the scanner asks which.
   useEffect(() => {
@@ -482,7 +484,7 @@ export default function Scan() {
         </View>
       </View>
 
-      <View style={styles.panel}>
+      <View style={[styles.panel, { paddingBottom: insets.bottom + space.lg }]}>
         {members.length > 1 && (
           <View style={{ flexDirection: "row", flexWrap: "wrap", gap: space.sm }}>
             {members.map((m) => (

@@ -32,6 +32,7 @@
     "plugins": [
       ["expo-router", { "root": "./src/app" }],
       "expo-secure-store",
+      ["expo-navigation-bar", { "enforceContrast": false, "style": "light" }],
       ["expo-localization", { "supportedLocales": ["el", "en"] }],
       ["expo-camera", { "cameraPermission": "Η κάμερα χρησιμοποιείται για τη σάρωση των κωδικών QR του δικτύου Rural Greece.", "barcodeScannerEnabled": true }],
       ["expo-location", { "locationWhenInUsePermission": "Η τοποθεσία σας χρησιμοποιείται για να δείτε τι είναι κοντά και για να επιβεβαιώσετε επισκέψεις σε σημεία χωρίς QR." }]
