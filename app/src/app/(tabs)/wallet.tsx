@@ -5,7 +5,7 @@ import { useI18n } from "../../lib/i18n";
 import { useSession } from "../../lib/session";
 import { useApi } from "../../lib/useApi";
 import { api, ApiError } from "../../lib/api";
-import { Button, Card, H1, H2, P, State } from "../../components/ui";
+import { Button, Card, H2, P, State } from "../../components/ui";
 import { colors, space } from "../../lib/theme";
 import { store } from "../../lib/storage";
 import { redeemQr } from "../../lib/qr";
@@ -125,10 +125,10 @@ export default function WalletTab() {
         <View style={{ gap: space.md }}>
           <Card style={{ backgroundColor: colors.greenDark }}>
             <P style={{ color: colors.sky }}>{t.balance}</P>
-            <H1>
-              <P style={{ color: "#fff", fontSize: 40, fontWeight: "800" }}>{`${balance} `}</P>
+            <View style={{ flexDirection: "row", alignItems: "baseline", gap: space.sm }}>
+              <P style={{ color: "#fff", fontSize: 40, fontWeight: "800" }}>{String(balance)}</P>
               <P style={{ color: "#fff" }}>{t.points}</P>
-            </H1>
+            </View>
           </Card>
           {code && now < code.until && (
             <Card style={{ borderColor: colors.greenBright, borderWidth: 2, alignItems: "center" }}>

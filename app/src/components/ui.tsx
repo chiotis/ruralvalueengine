@@ -10,7 +10,10 @@ export function H2({ children }: { children: ReactNode }) {
   return <Text style={s.h2}>{children}</Text>;
 }
 export function P({ children, muted, style }: { children: ReactNode; muted?: boolean; style?: object }) {
-  return <Text style={[s.p, muted && { color: colors.textMuted }, style]}>{children}</Text>;
+  // Body text has a fixed line height; a bigger font needs a taller line or Android clips the glyphs.
+  const fontSize = (StyleSheet.flatten(style) as { fontSize?: number } | undefined)?.fontSize;
+  const tall = fontSize && fontSize > font.body ? { lineHeight: Math.ceil(fontSize * 1.3) } : null;
+  return <Text style={[s.p, muted && { color: colors.textMuted }, tall, style]}>{children}</Text>;
 }
 
 export function Card({ children, style, onPress }: { children: ReactNode; style?: ViewStyle; onPress?: () => void }) {
