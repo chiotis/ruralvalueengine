@@ -68,7 +68,7 @@ Every event uses the common envelope in `docs/DATA-CONTRACT.md`. Events are immu
 | Visit shared by several members (one QR for a co-hosted experience) | +10 once | +5 to each co-host |
 | Cancellation or correction | reverses the original rows | reverses the original rows |
 
-Points are spent only on rewards that members or ETAM define (for example "free coffee", or a badge). Redemption is an event too (`wallet.redeemed`), confirmed by the member scanning the visitor's code.
+Points are spent only on rewards that members or ETAM define (for example "free coffee", or a badge). Redemption is an event too (`wallet.redeemed`), confirmed by the member scanning the visitor's code. The Wallet shows the code as a QR (`rve://r/<6 digits>`, valid 15 minutes) with the digits beneath for typing in; the app's one scanner, behind the floating scan button on every screen, checks the visitor in on a place QR (`rve://c/…`) and confirms a redemption on a redemption QR when a member is signed in.
 
 ## 7. Modules to app features
 

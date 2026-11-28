@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
 import { useFocusEffect, useRouter } from "expo-router";
 import { useI18n } from "../../lib/i18n";
@@ -7,10 +7,22 @@ import { useApi } from "../../lib/useApi";
 import { api, ApiError } from "../../lib/api";
 import { Button, Card, H1, H2, P, State } from "../../components/ui";
 import { colors, space } from "../../lib/theme";
+import { store } from "../../lib/storage";
+import { redeemQr } from "../../lib/qr";
+import { QrImage } from "../../components/QrImage";
+
+/** A redemption waiting for the business to confirm. Kept on the phone so leaving the Wallet doesn't lose it. */
+interface Pending {
+  id: string;
+  code: string;
+  title: string;
+  until: number;
+}
+const PENDING_KEY = "rve.pendingRedemption";
 
 interface Wallet {
   balance: number;
-  entries: { id: string; points: number; rule_id: string; event_type: string; created_at: string }[];
+  entries: { id: string; points: number; rule_id: string; event_id: string; event_type: string; created_at: string }[];
 }
 interface Reward {
   id: string;
@@ -33,14 +45,45 @@ const label = (rule: string, lang: "el" | "en") => {
   return rule.startsWith("reverse:") ? `${lang === "el" ? "Ακύρωση" : "Reversal"}: ${l}` : l;
 };
 
+const mmss = (ms: number) => {
+  const sec = Math.max(0, Math.ceil(ms / 1000));
+  return `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, "0")}`;
+};
+
 export default function WalletTab() {
   const { t, lang } = useI18n();
   const session = useSession();
   const router = useRouter();
   const w = useApi<Wallet>(session.visitor ? "/v1/me/wallet" : null, "visitor");
   const rewards = useApi<{ rewards: Reward[] }>(`/v1/rewards?lang=${lang}`);
-  const [code, setCode] = useState<{ code: string; title: string; until: number } | null>(null);
+  const [code, setCodeState] = useState<Pending | null>(null);
+  const [done, setDone] = useState<string | null>(null);
+  const [now, setNow] = useState(Date.now());
   const [err, setErr] = useState<string | null>(null);
+  const setCode = useCallback((p: Pending | null) => {
+    setCodeState(p);
+    void store.setJson(PENDING_KEY, p);
+  }, []);
+  useEffect(() => {
+    void store.getJson<Pending | null>(PENDING_KEY, null).then((p) => p && p.until > Date.now() && setCodeState(p));
+  }, []);
+  // While a code is showing: tick the countdown, and re-read the wallet so the screen knows once the business confirms.
+  useEffect(() => {
+    if (!code) return;
+    const tick = setInterval(() => setNow(Date.now()), 1000);
+    const poll = setInterval(() => void w.reload(), 8000);
+    return () => {
+      clearInterval(tick);
+      clearInterval(poll);
+    };
+  }, [code, w.reload]);
+  useEffect(() => {
+    if (!code) return;
+    if (w.data?.entries.some((e) => e.event_id === `${code.id}.redeemed`)) {
+      setDone(code.title);
+      setCode(null);
+    } else if (now > code.until) setCode(null);
+  }, [code, now, w.data, setCode]);
   useFocusEffect(
     useCallback(() => {
       // Rewards change in the admin panel and member area, so re-read them each time the tab opens.
@@ -64,8 +107,9 @@ export default function WalletTab() {
   const redeem = async (r: Reward) => {
     setErr(null);
     try {
-      const res = await api<{ code: string; expires_in: number }>("/v1/me/redemptions", { body: { reward_id: r.id }, role: "visitor" });
-      setCode({ code: res.code, title: r.title, until: Date.now() + res.expires_in * 1000 });
+      const res = await api<{ id: string; code: string; expires_in: number }>("/v1/me/redemptions", { body: { reward_id: r.id }, role: "visitor" });
+      setDone(null);
+      setCode({ id: res.id, code: res.code, title: r.title, until: Date.now() + res.expires_in * 1000 });
     } catch (e) {
       setErr(e instanceof ApiError && e.code === "not_enough_points" ? (lang === "el" ? "Δεν έχετε αρκετούς πόντους." : "Not enough points.") : t.error);
     }
@@ -86,12 +130,20 @@ export default function WalletTab() {
               <P style={{ color: "#fff" }}>{t.points}</P>
             </H1>
           </Card>
-          {code && Date.now() < code.until && (
+          {code && now < code.until && (
             <Card style={{ borderColor: colors.greenBright, borderWidth: 2, alignItems: "center" }}>
+              <P style={{ fontWeight: "700" }}>{code.title}</P>
               <P muted>{t.showCode}</P>
-              <P style={{ fontSize: 44, fontWeight: "800", letterSpacing: 6, color: colors.greenDark }}>{code.code}</P>
-              <P>{code.title}</P>
-              <P muted>{`${t.expiresIn} 15′`}</P>
+              <QrImage value={redeemQr(code.code)} size={240} />
+              <P muted>{lang === "el" ? "ή πείτε τον κωδικό:" : "or read out the code:"}</P>
+              <P style={{ fontSize: 36, fontWeight: "800", letterSpacing: 6, color: colors.greenDark }}>{code.code}</P>
+              <P muted>{`${t.expiresIn} ${mmss(code.until - now)}`}</P>
+              <Button kind="secondary" title={lang === "el" ? "Κλείσιμο" : "Close"} onPress={() => setCode(null)} />
+            </Card>
+          )}
+          {done && (
+            <Card style={{ backgroundColor: colors.greenBright }}>
+              <P style={{ color: "#fff", fontWeight: "700" }}>{lang === "el" ? `Εξαργυρώθηκε: ${done}` : `Redeemed: ${done}`}</P>
             </Card>
           )}
           {err && <P style={{ color: colors.burgundy }}>{err}</P>}

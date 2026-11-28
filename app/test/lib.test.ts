@@ -35,3 +35,11 @@ test("days: fills missing days with zero", () => {
     { day: "2026-11-27", visits: 0 },
   ]);
 });
+
+test("qr: routes check-in and redemption codes, rejects others", async () => {
+  const { parseQr, redeemQr } = await import("../src/lib/qr.ts");
+  assert.deepEqual(parseQr("rve://c/abc.def"), { kind: "checkin", token: "rve://c/abc.def" });
+  assert.deepEqual(parseQr(redeemQr("012345")), { kind: "redeem", code: "012345" });
+  assert.deepEqual(parseQr("rve://r/12345"), { kind: "foreign" });
+  assert.deepEqual(parseQr("WIFI:S:cafe;;"), { kind: "foreign" });
+});

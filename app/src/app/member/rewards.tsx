@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "expo-router";
 import { ScrollView, View } from "react-native";
 import { useI18n } from "../../lib/i18n";
 import { useMember } from "../../lib/member";
@@ -26,6 +27,7 @@ const CONFIRM_ERRORS: Record<string, [string, string]> = {
 export default function MemberRewards() {
   const { t, lang } = useI18n();
   const { q, current } = useMember();
+  const router = useRouter();
   const rewards = useApi<{ rewards: Reward[] }>(current ? q("/v1/member/rewards") : null, "member");
 
   const [code, setCode] = useState("");
@@ -91,7 +93,12 @@ export default function MemberRewards() {
   return (
     <ScrollView contentContainerStyle={{ padding: space.lg, gap: space.md }} keyboardShouldPersistTaps="handled">
       <H2>{t.confirmRedemption}</H2>
-      <P muted>{lang === "el" ? "Πληκτρολογήστε τον 6ψήφιο κωδικό που σας δείχνει ο επισκέπτης." : "Type the 6-digit code the visitor shows you."}</P>
+      <P muted>
+        {lang === "el"
+          ? "Σαρώστε τον κωδικό QR στο κινητό του επισκέπτη, ή πληκτρολογήστε τον 6ψήφιο κωδικό από κάτω."
+          : "Scan the QR code on the visitor's phone, or type the 6-digit code shown under it."}
+      </P>
+      <Button title={lang === "el" ? "Σάρωση QR επισκέπτη" : "Scan visitor's QR"} onPress={() => router.push("/scan")} />
       <Field label={lang === "el" ? "Κωδικός" : "Code"} value={code} onChangeText={(v) => setCode(v.replace(/\D/g, "").slice(0, 6))} keyboardType="number-pad" maxLength={6} />
       <Button title={t.confirm} onPress={confirm} busy={busy} disabled={code.length !== 6} />
       {result && (
