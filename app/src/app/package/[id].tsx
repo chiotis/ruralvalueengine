@@ -94,7 +94,7 @@ export default function PackageDetail() {
                   {!last && <View style={[styles.line, at ? { backgroundColor: colors.greenBright } : null]} />}
                 </View>
                 <Pressable onPress={() => router.push(`/item/${s.target_id}`)} style={({ pressed }) => [styles.stop, isNext && styles.stopNext, pressed && { opacity: 0.85 }]}>
-                  <Eyebrow color={at ? colors.greenBright : isNext ? colors.green : colors.textMuted}>
+                  <Eyebrow color={at ? colors.greenBright : isNext ? colors.greenOnSoft : colors.textMuted}>
                     {`${el ? "Στάση" : "Stop"} ${i + 1}${at ? ` · ${el ? "Ολοκληρώθηκε" : "Done"} ${fmt.format(new Date(at))}` : isNext ? ` · ${el ? "Επόμενη" : "Next"}` : ""}`}
                   </Eyebrow>
                   <Text style={styles.stopTitle}>{s.name ?? s.target_id}</Text>
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   row: { flexDirection: "row", gap: space.md },
   rail: { width: 34, alignItems: "center" },
   node: { width: 34, height: 34, borderRadius: 17, alignItems: "center", justifyContent: "center", backgroundColor: colors.sand, borderWidth: 2, borderColor: colors.border },
-  nodeDone: { backgroundColor: colors.greenBright, borderColor: colors.greenBright },
+  nodeDone: { backgroundColor: colors.green, borderColor: colors.green },
   nodeNext: { backgroundColor: colors.green, borderColor: colors.green },
   nodeText: { fontWeight: "800", color: colors.greenDark },
   line: { flex: 1, width: 3, backgroundColor: colors.border, marginVertical: 2, borderRadius: 2 },

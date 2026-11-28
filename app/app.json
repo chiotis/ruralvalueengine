@@ -19,10 +19,8 @@
     "android": {
       "package": "gr.ruralgreece.app",
       "adaptiveIcon": {
-        "backgroundColor": "#376245",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "backgroundColor": "#2d9141",
+        "foregroundImage": "./assets/android-icon-foreground.png"
       },
       "predictiveBackGestureEnabled": false
     },
@@ -30,14 +28,89 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      ["expo-router", { "root": "./src/app" }],
+      [
+        "expo-router",
+        {
+          "root": "./src/app"
+        }
+      ],
       "expo-secure-store",
-      ["expo-navigation-bar", { "enforceContrast": false, "style": "light" }],
-      ["expo-localization", { "supportedLocales": ["el", "en"] }],
-      ["expo-camera", { "cameraPermission": "Η κάμερα χρησιμοποιείται για τη σάρωση των κωδικών QR του δικτύου Rural Greece.", "barcodeScannerEnabled": true }],
-      ["expo-location", { "locationWhenInUsePermission": "Η τοποθεσία σας χρησιμοποιείται για να δείτε τι είναι κοντά και για να επιβεβαιώσετε επισκέψεις σε σημεία χωρίς QR." }]
+      [
+        "expo-navigation-bar",
+        {
+          "enforceContrast": false,
+          "style": "dark"
+        }
+      ],
+      [
+        "expo-localization",
+        {
+          "supportedLocales": [
+            "el",
+            "en"
+          ]
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Η κάμερα χρησιμοποιείται για τη σάρωση των κωδικών QR του δικτύου Rural Greece.",
+          "barcodeScannerEnabled": true
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Η τοποθεσία σας χρησιμοποιείται για να δείτε τι είναι κοντά και για να επιβεβαιώσετε επισκέψεις σε σημεία χωρίς QR."
+        }
+      ],
+      [
+        "expo-font",
+        {
+          "ios": {
+            "fonts": [
+              "./node_modules/@expo-google-fonts/inter/400Regular/Inter_400Regular.ttf",
+              "./node_modules/@expo-google-fonts/inter/500Medium/Inter_500Medium.ttf",
+              "./node_modules/@expo-google-fonts/inter/600SemiBold/Inter_600SemiBold.ttf",
+              "./node_modules/@expo-google-fonts/inter/700Bold/Inter_700Bold.ttf",
+              "./node_modules/@expo-google-fonts/inter/800ExtraBold/Inter_800ExtraBold.ttf"
+            ]
+          },
+          "android": {
+            "fonts": [
+              {
+                "fontFamily": "Inter",
+                "fontDefinitions": [
+                  {
+                    "path": "./node_modules/@expo-google-fonts/inter/400Regular/Inter_400Regular.ttf",
+                    "weight": 400
+                  },
+                  {
+                    "path": "./node_modules/@expo-google-fonts/inter/500Medium/Inter_500Medium.ttf",
+                    "weight": 500
+                  },
+                  {
+                    "path": "./node_modules/@expo-google-fonts/inter/600SemiBold/Inter_600SemiBold.ttf",
+                    "weight": 600
+                  },
+                  {
+                    "path": "./node_modules/@expo-google-fonts/inter/700Bold/Inter_700Bold.ttf",
+                    "weight": 700
+                  },
+                  {
+                    "path": "./node_modules/@expo-google-fonts/inter/800ExtraBold/Inter_800ExtraBold.ttf",
+                    "weight": 800
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
     ],
-    "experiments": { "typedRoutes": false },
+    "experiments": {
+      "typedRoutes": false
+    },
     "extra": {
       "apiUrl": "https://engine.ruralgreece.gr"
     }

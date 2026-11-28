@@ -8,7 +8,7 @@ import { colors } from "../lib/theme";
 export function QrImage({ value, size }: { value: string; size?: number }) {
   const [svg, setSvg] = useState<string | null>(null);
   useEffect(() => {
-    QRCode.toString(value, { type: "svg", margin: 1, errorCorrectionLevel: "M", color: { dark: colors.greenDark, light: "#ffffff" } })
+    QRCode.toString(value, { type: "svg", margin: 1, errorCorrectionLevel: "M", color: { dark: colors.ink, light: "#ffffff" } })
       .then(setSvg)
       .catch(() => setSvg(null));
   }, [value]);

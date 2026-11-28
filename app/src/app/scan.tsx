@@ -16,7 +16,7 @@ import { metersBetween } from "../lib/geo";
 import { Button, Card, Chip, Eyebrow, Field, H2, P, Pill, Progress, type IconName } from "../components/ui";
 import { Sheet } from "../components/Sheet";
 import { Confetti } from "../components/Confetti";
-import { colors, radius, serif, space } from "../lib/theme";
+import { colors, radius, serif, space, inter } from "../lib/theme";
 
 const CONFIRM_ERRORS: Record<string, [string, string]> = {
   unknown_code: ["Ο κωδικός δεν βρέθηκε ή έχει ήδη χρησιμοποιηθεί.", "Code not found or already used."],
@@ -449,7 +449,7 @@ export default function Scan() {
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.greenDark }}>
+    <View style={{ flex: 1, backgroundColor: colors.background }}>
       <View style={styles.camWrap}>
         {focused && (
           <CameraView
@@ -512,7 +512,7 @@ export default function Scan() {
           </Card>
         )}
         {!busy && redeemed && (
-          <Card style={{ backgroundColor: redeemed.ok ? colors.greenBright : colors.burgundySoft, flexDirection: "row", alignItems: "center", gap: space.md }}>
+          <Card style={{ backgroundColor: redeemed.ok ? colors.green : colors.burgundySoft, flexDirection: "row", alignItems: "center", gap: space.md }}>
             <Ionicons name={redeemed.ok ? "checkmark-circle" : "alert-circle"} size={24} color={redeemed.ok ? "#fff" : colors.burgundy} />
             <P style={{ color: redeemed.ok ? "#fff" : colors.burgundy, fontWeight: "700", flex: 1 }}>{redeemed.text}</P>
           </Card>
@@ -571,22 +571,22 @@ const styles = StyleSheet.create({
   camWrap: { flex: 1, minHeight: 360, backgroundColor: "#000", alignItems: "center", justifyContent: "center" },
   topRow: { position: "absolute", top: space.md, left: space.md, right: space.md, flexDirection: "row", justifyContent: "center" },
   status: { flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: "rgba(28,44,35,0.75)", borderRadius: radius.pill, paddingVertical: 6, paddingHorizontal: 12 },
-  statusText: { color: "#fff", fontSize: 12, fontWeight: "700" },
+  statusText: { color: "#fff", fontFamily: inter, fontSize: 12, fontWeight: "700" },
   frame: { width: FRAME, height: FRAME },
   corner: { position: "absolute", width: 44, height: 44, borderColor: colors.sky },
   hint: { position: "absolute", bottom: space.lg, left: space.xl, right: space.xl, alignItems: "center" },
-  hintText: { color: "#fff", fontSize: 14, lineHeight: 20, fontWeight: "700", textAlign: "center", textShadowColor: "rgba(0,0,0,0.6)", textShadowRadius: 4 },
+  hintText: { color: "#fff", fontFamily: inter, fontSize: 14, lineHeight: 20, fontWeight: "700", textAlign: "center", textShadowColor: "rgba(0,0,0,0.6)", textShadowRadius: 4 },
   panel: { padding: space.lg, gap: space.md, backgroundColor: colors.background, borderTopLeftRadius: radius.lg, borderTopRightRadius: radius.lg, marginTop: -radius.lg },
   sheetIcon: { width: 64, height: 64, borderRadius: 32, alignItems: "center", justifyContent: "center" },
   tip: { flexDirection: "row", gap: space.md, alignItems: "flex-start", backgroundColor: colors.surface, borderRadius: radius.md, padding: space.md },
-  tipTitle: { fontSize: 14, fontWeight: "800", color: colors.greenDark },
+  tipTitle: { fontFamily: inter, fontSize: 14, fontWeight: "800", color: colors.greenDark },
   stamp: { width: 190, height: 190, borderRadius: 95, borderWidth: 3, borderColor: colors.brown, borderStyle: "dashed", alignItems: "center", justifyContent: "center", backgroundColor: colors.sand },
   stampInner: { width: 166, height: 166, borderRadius: 83, borderWidth: 1.5, borderColor: colors.brown, alignItems: "center", justifyContent: "center", padding: space.md, gap: 4 },
   stampTitle: { fontFamily: serif, fontSize: 15, lineHeight: 19, fontWeight: "700", color: colors.greenDark, textAlign: "center" },
-  stampDate: { fontSize: 11, fontWeight: "800", letterSpacing: 1, color: colors.brown },
-  stampSub: { fontSize: 11, color: colors.textMuted },
+  stampDate: { fontFamily: inter, fontSize: 11, fontWeight: "800", letterSpacing: 1, color: colors.brown },
+  stampSub: { fontFamily: inter, fontSize: 11, color: colors.textMuted },
   seal: { position: "absolute", right: 6, bottom: 14, width: 38, height: 38, borderRadius: 19, backgroundColor: colors.burgundy, alignItems: "center", justifyContent: "center", borderWidth: 3, borderColor: colors.background },
   placeTitle: { fontFamily: serif, fontSize: 17, lineHeight: 22, fontWeight: "700", color: colors.greenDark },
-  scale: { fontSize: 11, fontWeight: "700", color: colors.textMuted },
+  scale: { fontFamily: inter, fontSize: 11, fontWeight: "700", color: colors.textMuted },
   trace: { fontSize: 11, lineHeight: 15, color: colors.textMuted, fontFamily: "monospace" },
 });

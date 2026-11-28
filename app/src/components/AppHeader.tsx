@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { usePathname, useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { api } from "../lib/api";
 import { useI18n } from "../lib/i18n";
 import { useSession } from "../lib/session";
-import { colors, radius, serif, space } from "../lib/theme";
+import { colors, radius, serif, space, inter } from "../lib/theme";
 
 /** The visitor's points, refreshed whenever the screen changes (after a scan, a redemption, …). */
 export function useBalance() {
@@ -33,7 +33,7 @@ export function PointsPill() {
   if (balance == null) return null;
   return (
     <Pressable onPress={() => router.navigate("/wallet")} accessibilityRole="button" style={styles.pill}>
-      <Ionicons name="leaf" size={14} color={colors.green} />
+      <Ionicons name="leaf" size={14} color={colors.greenOnSoft} />
       <Text style={styles.pillText}>{`${balance.toLocaleString("el-GR")} ${t.points}`}</Text>
     </Pressable>
   );
@@ -44,9 +44,8 @@ export function AppHeader({ title }: { title: string }) {
   const insets = useSafeAreaInsets();
   return (
     <View style={[styles.wrap, { paddingTop: insets.top + space.sm }]}>
-      <View style={styles.mark}>
-        <Ionicons name="leaf" size={18} color="#fff" />
-      </View>
+      {/* The ruralgreece.gr favicon (assets/brand-mark.png). */}
+      <Image source={require("../../assets/brand-mark.png")} style={styles.mark} accessibilityIgnoresInvertColors />
       <View style={{ flex: 1 }}>
         <Text style={styles.brand} numberOfLines={1}>
           Rural Greece
@@ -71,9 +70,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: colors.border,
   },
-  mark: { width: 36, height: 36, borderRadius: 18, backgroundColor: colors.green, alignItems: "center", justifyContent: "center" },
+  mark: { width: 36, height: 36, borderRadius: 9 },
   brand: { fontFamily: serif, fontSize: 18, lineHeight: 24, fontWeight: "700", color: colors.greenDark },
-  sub: { fontSize: 12, lineHeight: 16, color: colors.textMuted, fontWeight: "600" },
+  sub: { fontFamily: inter, fontSize: 12, lineHeight: 16, color: colors.textMuted, fontWeight: "600" },
   pill: { flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: colors.greenSoft, borderRadius: radius.pill, paddingVertical: 7, paddingHorizontal: 12 },
-  pillText: { fontSize: 13, lineHeight: 17, fontWeight: "800", color: colors.green },
+  pillText: { fontFamily: inter, fontSize: 13, lineHeight: 17, fontWeight: "800", color: colors.greenOnSoft },
 });

@@ -75,7 +75,7 @@ export default function MemberAnalytics() {
             a.visitors_also_visited.map((o) => (
               <Card key={o.member_id} style={{ flexDirection: "row", alignItems: "center", gap: space.md }}>
                 <P style={{ flex: 1, fontWeight: "600" }}>{o.name}</P>
-                <P style={{ color: colors.green, fontWeight: "800" }}>{o.shared_visitors}</P>
+                <P style={{ color: colors.greenOnSoft, fontWeight: "800" }}>{o.shared_visitors}</P>
               </Card>
             ))
           ) : (

@@ -102,7 +102,7 @@ export default function MemberRewards() {
       <Field label={lang === "el" ? "Κωδικός" : "Code"} value={code} onChangeText={(v) => setCode(v.replace(/\D/g, "").slice(0, 6))} keyboardType="number-pad" maxLength={6} />
       <Button title={t.confirm} onPress={confirm} busy={busy} disabled={code.length !== 6} />
       {result && (
-        <Card style={{ backgroundColor: result.ok ? colors.greenBright : colors.surface }}>
+        <Card style={{ backgroundColor: result.ok ? colors.green : colors.surface }}>
           <P style={{ color: result.ok ? "#fff" : colors.burgundy, fontWeight: "700" }}>{result.text}</P>
         </Card>
       )}

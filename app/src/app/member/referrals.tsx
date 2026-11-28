@@ -6,7 +6,7 @@ import { useApi } from "../../lib/useApi";
 import { api } from "../../lib/api";
 import { MemberPicker } from "../../components/MemberPicker";
 import { Button, Card, H2, P, State } from "../../components/ui";
-import { colors, space } from "../../lib/theme";
+import { colors, space, inter } from "../../lib/theme";
 
 interface Referral {
   id: string;
@@ -80,7 +80,7 @@ export default function MemberReferrals() {
       {made && (
         <Card style={{ backgroundColor: colors.sky, gap: space.sm }}>
           <P>{lang === "el" ? `Κωδικός για ${made.name}` : `Code for ${made.name}`}</P>
-          <P style={{ fontSize: 28, fontWeight: "800", letterSpacing: 3, textAlign: "center", color: colors.greenDark }}>{made.code}</P>
+          <P style={{ fontFamily: inter, fontSize: 28, fontWeight: "800", letterSpacing: 3, textAlign: "center", color: colors.greenDark }}>{made.code}</P>
           <Button kind="secondary" title={lang === "el" ? "Κοινοποίηση" : "Share"} onPress={() => share(made.code, made.name)} />
         </Card>
       )}
@@ -99,7 +99,7 @@ export default function MemberReferrals() {
                 {expired ? (lang === "el" ? " · έληξε" : " · expired") : ""}
               </P>
             </View>
-            <P style={{ fontWeight: "800", color: colors.green }}>{r.redeemed}×</P>
+            <P style={{ fontWeight: "800", color: colors.greenOnSoft }}>{r.redeemed}×</P>
           </Card>
         );
       })}

@@ -1,7 +1,7 @@
 import type { ComponentProps, ReactNode } from "react";
 import { ActivityIndicator, Image, Pressable, StyleSheet, Text, TextInput, View, type TextInputProps, type ViewStyle } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { colors, font, radius, serif, shadow, space } from "../lib/theme";
+import { colors, font, radius, serif, shadow, space, inter } from "../lib/theme";
 import { useI18n } from "../lib/i18n";
 
 export type IconName = ComponentProps<typeof Ionicons>["name"];
@@ -92,7 +92,7 @@ export function Chip({ label, active, onPress, icon, dot }: { label: string; act
   return (
     <Pressable onPress={onPress} accessibilityRole="button" accessibilityState={{ selected: !!active }} style={[s.chip, active && { backgroundColor: colors.green, borderColor: colors.green }]}>
       {dot ? <View style={[s.dot, { backgroundColor: dot }, active && { borderColor: "#fff" }]} /> : null}
-      {icon ? <Ionicons name={icon} size={15} color={active ? "#fff" : colors.green} /> : null}
+      {icon ? <Ionicons name={icon} size={15} color={active ? "#fff" : colors.greenOnSoft} /> : null}
       <Text style={[s.chipText, active && { color: "#fff" }]}>{label}</Text>
     </Pressable>
   );
@@ -101,7 +101,7 @@ export function Chip({ label, active, onPress, icon, dot }: { label: string; act
 /** A small rounded tag: points, distance, status. */
 export function Pill({ label, icon, tone = "green" }: { label: string; icon?: IconName; tone?: "green" | "sand" | "burgundy" | "sky" | "solid" }) {
   const bg = { green: colors.greenSoft, sand: colors.sand, burgundy: colors.burgundySoft, sky: colors.skySoft, solid: colors.green }[tone];
-  const fg = { green: colors.green, sand: colors.brown, burgundy: colors.burgundy, sky: colors.greenDark, solid: "#fff" }[tone];
+  const fg = { green: colors.greenOnSoft, sand: colors.brown, burgundy: colors.burgundy, sky: colors.sky, solid: "#fff" }[tone];
   return (
     <View style={[s.pill, { backgroundColor: bg }]}>
       {icon ? <Ionicons name={icon} size={13} color={fg} /> : null}
@@ -115,7 +115,7 @@ export function Stat({ label, value, icon }: { label: string; value: string | nu
     <View style={s.stat}>
       {icon ? (
         <View style={s.statIcon}>
-          <Ionicons name={icon} size={16} color={colors.green} />
+          <Ionicons name={icon} size={16} color={colors.greenOnSoft} />
         </View>
       ) : null}
       <Text style={s.statValue} numberOfLines={1} adjustsFontSizeToFit>
@@ -140,7 +140,7 @@ export function Thumb({ uri, size = 72, icon = "leaf-outline" }: { uri?: string 
     <Image source={{ uri }} style={{ width: size, height: size, borderRadius: radius.md, backgroundColor: colors.sand }} />
   ) : (
     <View style={{ width: size, height: size, borderRadius: radius.md, backgroundColor: colors.greenSoft, alignItems: "center", justifyContent: "center" }}>
-      <Ionicons name={icon} size={size / 2.6} color={colors.green} />
+      <Ionicons name={icon} size={size / 2.6} color={colors.greenOnSoft} />
     </View>
   );
 }
@@ -148,7 +148,7 @@ export function Thumb({ uri, size = 72, icon = "leaf-outline" }: { uri?: string 
 /** Loading / error / empty states for any list or screen. */
 export function State({ loading, error, empty, onRetry }: { loading?: boolean; error?: Error | null; empty?: string | false; onRetry?: () => void }) {
   const { t } = useI18n();
-  if (loading) return <ActivityIndicator style={{ marginTop: space.xl }} color={colors.green} />;
+  if (loading) return <ActivityIndicator style={{ marginTop: space.xl }} color={colors.greenOnSoft} />;
   if (error)
     return (
       <View style={{ gap: space.md, alignItems: "center", marginTop: space.xl }}>
@@ -163,15 +163,15 @@ export function State({ loading, error, empty, onRetry }: { loading?: boolean; e
 export const s = StyleSheet.create({
   h1: { fontFamily: serif, fontSize: font.h1, lineHeight: 36, fontWeight: "700", color: colors.greenDark },
   h2: { fontFamily: serif, fontSize: font.title, lineHeight: 27, fontWeight: "700", color: colors.greenDark },
-  p: { fontSize: font.body, color: colors.text, lineHeight: 22 },
-  eyebrow: { fontSize: font.tiny, lineHeight: 15, fontWeight: "800", letterSpacing: 0.8, textTransform: "uppercase", color: colors.brown },
-  link: { fontSize: font.small, fontWeight: "700", color: colors.green },
+  p: { fontFamily: inter, fontSize: font.body, color: colors.text, lineHeight: 22 },
+  eyebrow: { fontFamily: inter, fontSize: font.tiny, lineHeight: 15, fontWeight: "800", letterSpacing: 0.8, textTransform: "uppercase", color: colors.brown },
+  link: { fontFamily: inter, fontSize: font.small, fontWeight: "700", color: colors.greenOnSoft },
   sectionHeader: { flexDirection: "row", alignItems: "center", gap: space.sm },
   card: { backgroundColor: colors.surface, borderRadius: radius.lg, padding: space.lg, gap: space.sm, ...shadow },
   btn: { borderRadius: radius.md, paddingVertical: 14, paddingHorizontal: space.lg, alignItems: "center", justifyContent: "center" },
   btnRow: { flexDirection: "row", alignItems: "center", gap: space.sm },
-  btnText: { fontSize: font.body, fontWeight: "700" },
-  label: { fontSize: font.small, color: colors.textMuted, fontWeight: "600" },
+  btnText: { fontFamily: inter, fontSize: font.body, fontWeight: "700" },
+  label: { fontFamily: inter, fontSize: font.small, color: colors.textMuted, fontWeight: "600" },
   inputWrap: {
     flexDirection: "row",
     alignItems: "center",
@@ -182,7 +182,7 @@ export const s = StyleSheet.create({
     paddingHorizontal: space.md,
     backgroundColor: colors.surface,
   },
-  input: { flex: 1, paddingVertical: space.md, fontSize: font.body, color: colors.text },
+  input: { flex: 1, paddingVertical: space.md, fontFamily: inter, fontSize: font.body, color: colors.text },
   chip: {
     flexDirection: "row",
     alignItems: "center",
@@ -194,14 +194,14 @@ export const s = StyleSheet.create({
     paddingHorizontal: 14,
     backgroundColor: colors.surface,
   },
-  chipText: { fontSize: font.small, color: colors.greenDark, fontWeight: "700" },
+  chipText: { fontFamily: inter, fontSize: font.small, color: colors.greenDark, fontWeight: "700" },
   dot: { width: 9, height: 9, borderRadius: 5, borderWidth: 1.5, borderColor: "transparent" },
   pill: { flexDirection: "row", alignItems: "center", gap: 4, alignSelf: "flex-start", borderRadius: radius.pill, paddingVertical: 4, paddingHorizontal: 10 },
-  pillText: { fontSize: 12, lineHeight: 16, fontWeight: "700" },
+  pillText: { fontFamily: inter, fontSize: 12, lineHeight: 16, fontWeight: "700" },
   stat: { flex: 1, backgroundColor: colors.surface, borderRadius: radius.lg, padding: space.md, gap: 2, ...shadow },
   statIcon: { width: 28, height: 28, borderRadius: 14, backgroundColor: colors.greenSoft, alignItems: "center", justifyContent: "center", marginBottom: 4 },
-  statValue: { fontFamily: serif, fontSize: 26, lineHeight: 34, fontWeight: "700", color: colors.green },
-  statLabel: { fontSize: font.small, color: colors.textMuted },
+  statValue: { fontFamily: serif, fontSize: 26, lineHeight: 34, fontWeight: "700", color: colors.greenOnSoft },
+  statLabel: { fontFamily: inter, fontSize: font.small, color: colors.textMuted },
   track: { height: 8, borderRadius: 4, backgroundColor: colors.sand, overflow: "hidden" },
   bar: { height: 8, borderRadius: 4 },
 });

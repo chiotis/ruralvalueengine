@@ -6,7 +6,7 @@ import { lastFlushTrace, lastSendError, pending, toSendError } from "../lib/queu
 import { useI18n } from "../lib/i18n";
 import { useSession } from "../lib/session";
 import { Button, Card, H2, P } from "./ui";
-import { colors, space } from "../lib/theme";
+import { colors, space, inter } from "../lib/theme";
 
 interface Check {
   name: string;
@@ -65,12 +65,12 @@ export function ConnectionCheck() {
     <Card>
       <H2>{el ? "Έλεγχος σύνδεσης" : "Connection check"}</H2>
       <P muted>{el ? "Αν οι σαρώσεις μένουν σε αναμονή, τρέξτε τον έλεγχο και στείλτε μας ένα στιγμιότυπο." : "If scans stay waiting, run the check and send us a screenshot."}</P>
-      <Text style={{ fontSize: 11, color: colors.textMuted }}>{API_URL}</Text>
+      <Text style={{ fontFamily: inter, fontSize: 11, color: colors.textMuted }}>{API_URL}</Text>
       {checks?.map((c) => (
         <View key={c.name} style={{ flexDirection: "row", alignItems: "center", gap: space.sm }}>
           <Ionicons name={c.ok ? "checkmark-circle" : "close-circle"} size={18} color={c.ok ? colors.greenBright : colors.burgundy} />
-          <Text style={{ flex: 1, fontSize: 13, fontWeight: "700", color: colors.greenDark }}>{c.name}</Text>
-          <Text style={{ fontSize: 12, color: c.ok ? colors.textMuted : colors.burgundy, flexShrink: 1, textAlign: "right" }}>{c.detail}</Text>
+          <Text style={{ flex: 1, fontFamily: inter, fontSize: 13, fontWeight: "700", color: colors.greenDark }}>{c.name}</Text>
+          <Text style={{ fontFamily: inter, fontSize: 12, color: c.ok ? colors.textMuted : colors.burgundy, flexShrink: 1, textAlign: "right" }}>{c.detail}</Text>
         </View>
       ))}
       {queueInfo ? <Text style={{ fontSize: 12, lineHeight: 17, color: colors.textMuted, fontFamily: "monospace" }}>{queueInfo}</Text> : null}

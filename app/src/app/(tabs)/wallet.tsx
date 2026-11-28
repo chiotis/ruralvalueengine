@@ -6,7 +6,7 @@ import { useSession } from "../../lib/session";
 import { useApi } from "../../lib/useApi";
 import { api, ApiError } from "../../lib/api";
 import { Button, Card, H2, P, State } from "../../components/ui";
-import { colors, space } from "../../lib/theme";
+import { colors, space, inter } from "../../lib/theme";
 import { store } from "../../lib/storage";
 import { redeemQr } from "../../lib/qr";
 import { QrImage } from "../../components/QrImage";
@@ -123,10 +123,10 @@ export default function WalletTab() {
       keyExtractor={(e) => String(e.id)}
       ListHeaderComponent={
         <View style={{ gap: space.md }}>
-          <Card style={{ backgroundColor: colors.greenDark }}>
+          <Card style={{ backgroundColor: colors.green }}>
             <P style={{ color: colors.sky }}>{t.balance}</P>
             <View style={{ flexDirection: "row", alignItems: "baseline", gap: space.sm }}>
-              <P style={{ color: "#fff", fontSize: 40, fontWeight: "800" }}>{String(balance)}</P>
+              <P style={{ color: "#fff", fontFamily: inter, fontSize: 40, fontWeight: "800" }}>{String(balance)}</P>
               <P style={{ color: "#fff" }}>{t.points}</P>
             </View>
           </Card>
@@ -136,13 +136,13 @@ export default function WalletTab() {
               <P muted>{t.showCode}</P>
               <QrImage value={redeemQr(code.code)} size={240} />
               <P muted>{lang === "el" ? "ή πείτε τον κωδικό:" : "or read out the code:"}</P>
-              <P style={{ fontSize: 36, fontWeight: "800", letterSpacing: 6, color: colors.greenDark }}>{code.code}</P>
+              <P style={{ fontFamily: inter, fontSize: 36, fontWeight: "800", letterSpacing: 6, color: colors.greenDark }}>{code.code}</P>
               <P muted>{`${t.expiresIn} ${mmss(code.until - now)}`}</P>
               <Button kind="secondary" title={lang === "el" ? "Κλείσιμο" : "Close"} onPress={() => setCode(null)} />
             </Card>
           )}
           {done && (
-            <Card style={{ backgroundColor: colors.greenBright }}>
+            <Card style={{ backgroundColor: colors.green }}>
               <P style={{ color: "#fff", fontWeight: "700" }}>{lang === "el" ? `Εξαργυρώθηκε: ${done}` : `Redeemed: ${done}`}</P>
             </Card>
           )}
