@@ -97,7 +97,7 @@ Visitor calls use the visitor token, member calls (`/v1/member/*`) the member to
 | `POST` | `/v1/events` | Submit one or a batch of events (offline queue) |
 | `GET` | `/v1/me/passport`, `/v1/me/wallet` | Verified experiences; balance and ledger |
 | `GET` | `/v1/rewards` | Active rewards, `?member_id=&lang=` |
-| `POST` | `/v1/me/redemptions` | Visitor asks to redeem; returns a 6-digit code for the member |
+| `POST` | `/v1/me/redemptions` | Visitor asks to redeem; returns a 6-digit code for the member. The app shows it as a QR `rve://r/<code>` with the digits beneath as fallback |
 | `GET` | `/v1/members/{id}/score` | Public Impact Score |
 | `POST` | `/v1/member/auth/email/start`, `…/verify`, `…/refresh` | Member passwordless login |
 | `GET` | `/v1/member/me`, `/v1/member/dashboard`, `/v1/member/qr` | Businesses for this login, dashboard, QR codes |

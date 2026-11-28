@@ -24,7 +24,6 @@ export default function TabsLayout() {
     >
       <Tabs.Screen name="index" options={{ title: t.explore, tabBarIcon: icon("compass-outline") }} />
       <Tabs.Screen name="map" options={{ title: t.map, tabBarIcon: icon("map-outline") }} />
-      <Tabs.Screen name="scan" options={{ title: t.scan, tabBarIcon: icon("qr-code-outline") }} />
       <Tabs.Screen name="passport" options={{ title: t.passport, tabBarIcon: icon("ribbon-outline") }} />
       <Tabs.Screen name="wallet" options={{ title: t.wallet, tabBarIcon: icon("wallet-outline") }} />
       <Tabs.Screen name="profile" options={{ title: t.profile, tabBarIcon: icon("person-circle-outline") }} />
