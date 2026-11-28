@@ -43,8 +43,10 @@ export default function WalletTab() {
   const [err, setErr] = useState<string | null>(null);
   useFocusEffect(
     useCallback(() => {
+      // Rewards change in the admin panel and member area, so re-read them each time the tab opens.
+      void rewards.reload();
       if (session.visitor) void w.reload();
-    }, [session.visitor, w.reload]),
+    }, [session.visitor, w.reload, rewards.reload]),
   );
 
   if (!session.visitor) {
@@ -116,7 +118,10 @@ export default function WalletTab() {
           <P style={{ fontWeight: "800", color: item.points >= 0 ? colors.greenBright : colors.burgundy }}>{`${item.points > 0 ? "+" : ""}${item.points}`}</P>
         </Card>
       )}
-      onRefresh={w.reload}
+      onRefresh={() => {
+        void rewards.reload();
+        void w.reload();
+      }}
       refreshing={false}
     />
   );
