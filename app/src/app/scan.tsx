@@ -7,7 +7,7 @@ import * as Location from "expo-location";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { reasonText, useI18n } from "../lib/i18n";
 import { useSession } from "../lib/session";
-import { flush, lastSendError, newEvent, pending, submit, type SendError } from "../lib/queue";
+import { flush, lastFlushTrace, lastSendError, newEvent, pending, submit, type SendError } from "../lib/queue";
 import { describeOutcome, scanView, type Outcome, type ScanView } from "../lib/outcome";
 import { api, ApiError, type CatalogItem } from "../lib/api";
 import type { MemberInfo } from "../lib/member";
@@ -59,6 +59,7 @@ interface Result {
   balance?: number | null;
   waiting?: number;
   sendError?: SendError | null;
+  trace?: string;
 }
 
 const distanceText = (m: number) => (m < 1000 ? `${Math.round(m)} m` : `${(m / 1000).toFixed(1)} km`);
@@ -273,6 +274,7 @@ function QueuedBody({ r, onClose, onRetry, onSignIn }: { r: Result; onClose: () 
         {!!r.waiting && <Pill tone="sand" icon="hourglass-outline" label={`${r.waiting} ${el ? "σε αναμονή αποστολής" : "waiting to send"}`} />}
         {err && <Pill tone="burgundy" icon="information-circle-outline" label={err.status ? `${err.status} ${err.code}` : err.code} />}
       </View>
+      {r.trace ? <Text style={styles.trace}>{r.trace}</Text> : null}
       {expired ? (
         <Button icon="log-in-outline" title={el ? "Σύνδεση" : "Sign in"} onPress={onSignIn} />
       ) : (
@@ -411,7 +413,7 @@ export default function Scan() {
       const sendError = view === "queued" ? lastSendError() : null;
       // A refused refresh token signs the visitor out on the device; let the rest of the app know.
       if (sendError?.status === 401) void session.reload();
-      setResult({ view, outcome, place, geo, balance, waiting, sendError });
+      setResult({ view, outcome, place, geo, balance, waiting, sendError, trace: view === "queued" ? lastFlushTrace() : undefined });
       setReferral("");
     } catch {
       setResult({ view: "other", outcome: null, place: null });
@@ -544,7 +546,7 @@ export default function Scan() {
               await flush();
               const waiting = (await pending()).length;
               if (waiting < before && !lastSendError()) close();
-              else setResult({ ...result, waiting, sendError: lastSendError() });
+              else setResult({ ...result, waiting, sendError: lastSendError(), trace: lastFlushTrace() });
             }}
           />
         )}
@@ -586,4 +588,5 @@ const styles = StyleSheet.create({
   seal: { position: "absolute", right: 6, bottom: 14, width: 38, height: 38, borderRadius: 19, backgroundColor: colors.burgundy, alignItems: "center", justifyContent: "center", borderWidth: 3, borderColor: colors.background },
   placeTitle: { fontFamily: serif, fontSize: 17, lineHeight: 22, fontWeight: "700", color: colors.greenDark },
   scale: { fontSize: 11, fontWeight: "700", color: colors.textMuted },
+  trace: { fontSize: 11, lineHeight: 15, color: colors.textMuted, fontFamily: "monospace" },
 });

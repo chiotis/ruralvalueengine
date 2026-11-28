@@ -5,6 +5,7 @@ import { useI18n } from "../../lib/i18n";
 import { useSession } from "../../lib/session";
 import { flush, lastSendError, pending } from "../../lib/queue";
 import { Button, Card, Chip, H2, P } from "../../components/ui";
+import { ConnectionCheck } from "../../components/ConnectionCheck";
 import { colors, space } from "../../lib/theme";
 
 export default function Profile() {
@@ -31,7 +32,7 @@ export default function Profile() {
   );
 
   return (
-    <ScrollView contentContainerStyle={{ padding: space.lg, gap: space.md }}>
+    <ScrollView contentContainerStyle={{ padding: space.lg, gap: space.md, paddingBottom: 96 }}>
       <Card>
         <H2>{t.language}</H2>
         <View style={{ flexDirection: "row", gap: space.sm }}>
@@ -71,6 +72,7 @@ export default function Profile() {
         <Button kind="secondary" title={session.member ? t.dashboard : t.memberLogin} onPress={() => router.push("/member")} />
       </Card>
 
+      <ConnectionCheck />
       <P muted style={{ textAlign: "center" }}>Rural Greece · Rural Value Engine</P>
     </ScrollView>
   );

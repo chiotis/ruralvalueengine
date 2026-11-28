@@ -52,19 +52,42 @@ async function remove(ids: Set<string>) {
   await store.setJson(KEY, (await pending()).filter((e) => !ids.has(e.event_id)));
 }
 
-const send = (events: QueuedEvent[]) => api<{ results: EventResult[] }>("/v1/events", { body: { events }, role: "visitor" }).then((r) => r.results);
+const post = (events: QueuedEvent[]) => api<{ results: EventResult[] }>("/v1/events", { body: { events }, role: "visitor" }).then((r) => r.results);
+
+/**
+ * Send with one quick retry on a network failure. Android's HTTP client retries a GET silently when a
+ * kept-alive connection has gone stale (common behind home routers), but never a POST, so the first scan
+ * after a pause can fail while everything else seems to work. Re-sending is safe: the engine keys
+ * every event by its event_id and never counts one twice.
+ */
+async function send(events: QueuedEvent[]) {
+  try {
+    return await post(events);
+  } catch (e) {
+    if (!toSendError(e).network) throw e;
+    trace.push(`retry after: ${toSendError(e).code}`);
+    return post(events);
+  }
+}
 
 let flushing: Promise<EventResult[]> | null = null;
+
+/** What the last send did, step by step, for the diagnostics in Profile and the scan sheet. */
+let trace: string[] = [];
+export const lastFlushTrace = () => trace.join(" · ");
+const errText = (e: SendError) => (e.status ? `${e.status} ${e.code}` : e.code);
 
 /** Send everything waiting. Returns the engine's results; keeps events only when they may still go through later. */
 export function flush(): Promise<EventResult[]> {
   if (!flushing) {
     flushing = (async () => {
       const now = Date.now();
+      trace = [new Date(now).toISOString().slice(11, 19)];
       const all = await pending();
       const stale = all.filter((e) => now - Date.parse(e.occurred_at) > MAX_AGE_MS);
       await remove(new Set(stale.map((e) => e.event_id)));
       const list = all.filter((e) => !stale.includes(e)).slice(0, BATCH);
+      trace.push(`queue ${all.length}${stale.length ? `, ${stale.length} too old` : ""}`);
       if (!list.length) {
         lastError = null;
         return [];
@@ -73,9 +96,11 @@ export function flush(): Promise<EventResult[]> {
         const results = await send(list);
         await remove(new Set(list.map((e) => e.event_id)));
         lastError = null;
+        trace.push(`sent ${list.length}, ${results.length} results`);
         return results;
       } catch (e) {
         lastError = toSendError(e);
+        trace.push(`failed: ${errText(lastError)}`);
         if (isFinalRefusal(lastError)) {
           // The engine refused the whole batch (should not happen): drop it rather than retry forever.
           await remove(new Set(list.map((e) => e.event_id)));
@@ -92,12 +117,14 @@ export function flush(): Promise<EventResult[]> {
             done.add(ev.event_id);
           } catch (e1) {
             const err = toSendError(e1);
+            trace.push(`one failed: ${errText(err)}`);
             if (isFinalRefusal(err)) done.add(ev.event_id);
             else lastError = err;
             if (err.network) break;
           }
         }
         await remove(done);
+        trace.push(`one by one: ${done.size}/${list.length} done`);
         return results;
       } finally {
         flushing = null;
@@ -115,5 +142,6 @@ export async function submit(ev: QueuedEvent): Promise<EventResult[] | null> {
   const earlier = flushing ? await flushing : [];
   const results = [...earlier, ...(await flush())];
   const mine = results.filter((r) => r.event_id === ev.event_id || r.event_id.startsWith(`${ev.event_id}.`));
+  if (!mine.length && !lastError) trace.push(`no result for this scan (${results.length} results)`);
   return mine.length ? mine : null;
 }
