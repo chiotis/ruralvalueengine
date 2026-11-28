@@ -43,3 +43,44 @@ test("qr: routes check-in and redemption codes, rejects others", async () => {
   assert.deepEqual(parseQr("rve://r/12345"), { kind: "foreign" });
   assert.deepEqual(parseQr("WIFI:S:cafe;;"), { kind: "foreign" });
 });
+
+test("scan view: each outcome gets its own result screen", async () => {
+  const { scanView } = await import("../src/lib/outcome.ts");
+  assert.equal(scanView({ kind: "ok", points: 10, extra: [] }), "success");
+  assert.equal(scanView({ kind: "duplicate" }), "duplicate");
+  assert.equal(scanView({ kind: "queued" }), "queued");
+  assert.equal(scanView({ kind: "rejected", reason: "geo_too_far" }), "too_far");
+  assert.equal(scanView({ kind: "rejected", reason: "geo_required" }), "location");
+  assert.equal(scanView({ kind: "rejected", reason: "geo_inaccurate" }), "location");
+  assert.equal(scanView({ kind: "rejected", reason: "qr_bad_signature" }), "invalid");
+  assert.equal(scanView({ kind: "rejected", reason: "qr_rotated" }), "invalid");
+  assert.equal(scanView({ kind: "rejected", reason: "too_old" }), "other");
+});
+
+test("qr: check-in target id", async () => {
+  const { checkinTarget } = await import("../src/lib/qr.ts");
+  assert.equal(checkinTarget("rve://c/biz-123/1/abcDEF"), "biz-123");
+  assert.equal(checkinTarget("rve://c/poi-9/2/x"), "poi-9");
+  assert.equal(checkinTarget("rve://r/123456"), null);
+  assert.equal(checkinTarget("rve://c/BAD id/1/x"), null);
+});
+
+test("points labels follow rules v1", async () => {
+  const { pointsLabel, kindOfId } = await import("../src/lib/points.ts");
+  assert.equal(pointsLabel("business"), "+10");
+  assert.equal(pointsLabel("poi"), "+3–5");
+  assert.equal(pointsLabel("route"), null);
+  assert.equal(kindOfId("biz-1"), "business");
+  assert.equal(kindOfId("pkg-1"), null);
+});
+
+test("points labels match the engine's rules v1", async () => {
+  const { readFileSync } = await import("node:fs");
+  const { VISITOR_POINTS } = await import("../src/lib/points.ts");
+  const src = readFileSync(new URL("../../engine/src/rules/v1.ts", import.meta.url), "utf8");
+  const v = (name: string) => Number(new RegExp(`${name}:\\s*(\\d+)`).exec(src)?.[1]);
+  assert.equal(VISITOR_POINTS.business, v("checkinMemberVisitor"));
+  assert.equal(VISITOR_POINTS.poiQr, v("checkinPoiQr"));
+  assert.equal(VISITOR_POINTS.poiGeo, v("checkinPoiGeo"));
+  assert.equal(VISITOR_POINTS.packageCompleted, v("routeCompletedVisitor"));
+});
