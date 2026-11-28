@@ -1,0 +1,380 @@
+<!DOCTYPE html><html lang="el"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_stack" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "tertiary-container": "#c4a66a", "primary-fixed-dim": "#8ecf9e", "on-secondary-container": "#5e5548", "secondary": "#6b6358", "error": "#b83230", "surface-bright": "#faf6f0", "primary-container": "#78a886", "background": "#faf6f0", "on-tertiary-fixed-variant": "#554020", "surface-container-highest": "#e4e0d8", "on-error-container": "#690005", "surface-container": "#f0ece4", "on-tertiary": "#ffffff", "surface-dim": "#dbd7cf", "on-surface": "#2e3230", "on-secondary-fixed-variant": "#4a4538", "primary": "#4a7c59", "on-primary-container": "#d8f0de", "primary-fixed": "#c8e8d0", "surface-container-lowest": "#ffffff", "on-background": "#2e3230", "inverse-surface": "#2e3230", "on-secondary": "#ffffff", "tertiary-fixed-dim": "#dcc48e", "outline-variant": "#c4c8bc", "on-surface-variant": "#4a4e4a", "on-primary-fixed": "#002110", "on-error": "#ffffff", "secondary-container": "#f0e8db", "on-primary": "#ffffff", "outline": "#74796e", "surface-container-high": "#eae6de", "on-secondary-fixed": "#1e1a13", "surface-container-low": "#f5f1ea", "secondary-fixed": "#f0e8db", "on-primary-fixed-variant": "#2a6038", "error-container": "#ffdad8", "surface": "#faf6f0", "tertiary": "#705c30", "inverse-primary": "#8ecf9e", "surface-variant": "#e4e0d8", "on-tertiary-container": "#554020", "secondary-fixed-dim": "#d4ccbf", "surface-tint": "#4a7c59", "inverse-on-surface": "#f5f0e8", "on-tertiary-fixed": "#221a05", "tertiary-fixed": "#f8e0a8" }, borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" }, spacing: {}, fontFamily: { "headline": ["Literata"], "display": ["Literata"], "body": ["Nunito Sans"], "label": ["Nunito Sans"] }, fontSize: {} } } }</script><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#faf6f0;color:#2e3230;}body{overscroll-behavior-y:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}body{min-height:max(884px, 100dvh);}</style><style>body, h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, select, label { font-family: 'Inter', sans-serif !important; } .material-symbols-outlined, .material-icons { font-family: 'Material Symbols Outlined' !important; }</style></head><body class="bg-surface font-body flex flex-col min-h-screen text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(46,50,48,0.05)] pt-safe"><div class="h-16 px-4 flex items-center justify-between"><div class="flex items-center gap-2 min-w-0"><button aria-label="Επιστροφή" class="w-11 h-11 flex items-center justify-center -ml-2 text-on-surface hover:text-primary transition-colors focus:outline-none" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><img alt="Rural Greece Logo" class="h-8 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/ALJJyrBKf8xwmH3uW2_66YxNxNcz-ubsFfqu2x37aRKeFJPMOPoL5jKWvh3lMZEBBhao5hjMvVMOII9tZslH8HEKR-fDnrXLCUVrPaj2BQZcN6XjZbUCJivwwqE0UHh6JGbRE4qrtioMo_75puuSKyorbiAEZ_JBwyfLbIcX7_DzqQv5AJ3fjvAbPi0Lsxp8YYPQlKMBR44htzElNTVikHgYkg_p1jbRb9tVoR3mDkkW7A"><h1 class="font-headline font-bold text-base leading-tight tracking-tight text-on-surface truncate ml-1">Πύλη Συνεργάτη</h1></div><div class="flex items-center gap-2 shrink-0"><a class="w-9 h-9 rounded-full flex items-center justify-center text-on-surface hover:text-primary transition-colors" data-path="προφίλ" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover shadow-[0_2px_6px_rgba(46,50,48,0.08)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJRvITLBM7gM0CgopyTH7O07aBjftQJmMtbteCz9Ci727aFWu8o1vpVwaLRhlj2GmCubpnXMLosQhHmYOzP6LXeWj_AbpHMCHpv6ECilYSRh3LJU3239gz6syTjaUrf2t7xTF_ZK0tUt3w1HJix5W8EHmtMyTFFrNTlouZ4LbvT_wfRJQJfVBkSyFYtZiaWTrw2OJawZeQY6zID77JK7kaBsx4uMiuUvRkoXyYvw"></a></div></div></header><main class="flex flex-col relative w-full pt-16 pb-safe bg-surface min-h-screen"><div class="flex flex-col w-full pb-8">
+<!-- Business Identity Card -->
+<div class="px-4 pt-4 pb-2">
+<div class="bg-surface-container-low rounded-xl p-4 shadow-sm flex flex-col gap-3">
+<div class="flex items-start justify-between gap-3">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-12 h-12 rounded-xl bg-surface-container overflow-hidden shrink-0 shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Close-up of a traditional stone rustic watermill with lush Zagori foliage and mossy stones, bathed in soft afternoon mountain light with earthy sage and warm cream tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBo3wHiR9kxWgM0eYlPKueaiI97pJNRCeb_Zt98U9s_8irwIkek6Qrc3Xb9rIMuPL4hErxDCUrOXgZyI44DKdJuh5nZS28ULcHTn9TxdgyBK3YSvF7flaOLxlNMRPTJpA7Ol-6IDCPUpikGWTLv5uJK5Puzc13F34Sw4t_arcl-9DXp5WjMH55ltMusVh2up2teZpgN1bjyCuxDlep0TxV4hcBwSc1xDF37MYuFpg">
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5 flex-wrap">
+<h2 class="font-headline font-bold text-base text-on-surface leading-snug truncate">
+                «Τα Λιθάρια»
+              </h2>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed-variant text-xs font-semibold">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+                Επαληθευμένο
+              </span>
+</div>
+<p class="font-body text-xs text-on-surface-variant truncate mt-0.5">
+              Παραδοσιακός Νερόμυλος &amp; Ταβέρνα
+            </p>
+</div>
+</div>
+<button aria-label="Αλλαγή επιχείρησης" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors shrink-0" type="button">
+<span class="material-symbols-outlined text-[18px]">swap_horiz</span>
+</button>
+</div>
+<div class="flex items-center justify-between pt-1 border-t-0 text-xs">
+<span class="inline-flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px] text-tertiary">location_on</span>
+          Αρίστη, Κεντρικό Ζαγόρι
+        </span>
+<span class="inline-flex items-center gap-1 text-primary font-medium">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+          Ανοιχτά σήμερα
+        </span>
+</div>
+</div>
+</div>
+<!-- Primary Action: Quick Validation Hero -->
+<div class="px-4 py-2">
+<div class="bg-primary text-on-primary rounded-xl p-5 shadow-md flex flex-col gap-4 relative overflow-hidden">
+<!-- Decorative ambient organic leaf pattern (inline svg) -->
+<svg class="absolute -right-6 -bottom-6 w-36 h-36 opacity-10 pointer-events-none" fill="currentColor" viewBox="0 0 120 120">
+<path d="M60,0 C85,25 110,60 110,95 C110,108.8 98.8,120 85,120 C50,120 15,95 0,60 C25,35 45,15 60,0 Z"></path>
+</svg>
+<div class="flex items-center justify-between relative z-10">
+<div>
+<span class="text-xs uppercase tracking-wider font-semibold text-primary-fixed">Άμεση Επικύρωση</span>
+<h3 class="font-headline font-bold text-lg text-on-primary leading-tight mt-0.5">
+            Εξαργύρωση Προσφοράς
+          </h3>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px] text-on-primary">qr_code_scanner</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 relative z-10">
+<button class="w-full py-3 px-4 rounded-xl bg-surface-container-lowest text-primary font-headline font-bold text-sm flex items-center justify-center gap-2 shadow-sm hover:bg-surface-bright active:scale-[0.99] transition-all" id="scanQrBtn" type="button">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+<span>Σάρωση QR Πελάτη</span>
+</button>
+<button class="w-full py-2 px-3 rounded-lg text-primary-fixed hover:text-surface-container-lowest font-body text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors" id="manualCodeBtn" type="button">
+<span class="material-symbols-outlined text-[16px]">dialpad</span>
+<span>Χειροκίνητη εισαγωγή 6ψήφιου κωδικού</span>
+</button>
+</div>
+<!-- Quick manual code expander modal/drawer state (hidden by default) -->
+<div class="hidden flex-col gap-2 pt-2 relative z-10" id="manualCodeForm">
+<div class="flex gap-2">
+<input class="flex-1 px-3 py-2 bg-surface-container-lowest text-on-surface rounded-lg text-center tracking-widest font-mono text-sm uppercase focus:outline-none focus:ring-2 focus:ring-primary-fixed" maxlength="6" placeholder="π.χ. 482910" type="text">
+<button class="px-4 py-2 bg-tertiary-container text-on-tertiary-container font-semibold rounded-lg text-xs hover:opacity-95 transition-opacity" type="button">
+            Επικύρωση
+          </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Today's Impact & Performance Metrics -->
+<div class="px-4 pt-4 pb-2">
+<div class="flex items-center justify-between mb-3">
+<h3 class="font-headline font-bold text-base text-on-surface">Σημερινή Επίδραση</h3>
+<span class="text-xs font-medium text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+        Σήμερα, 18 Οκτ
+      </span>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<!-- Metric 1 -->
+<div class="bg-surface-container-low rounded-xl p-3.5 flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between">
+<span class="text-xs text-on-surface-variant font-medium">Επισκέψεις</span>
+<span class="material-symbols-outlined text-primary text-[18px]">footprint</span>
+</div>
+<div class="mt-2">
+<div class="font-headline font-bold text-2xl text-on-surface">18</div>
+<div class="flex items-center gap-1 text-[11px] text-primary font-semibold mt-0.5">
+<span class="material-symbols-outlined text-[13px]">trending_up</span>
+<span>+4 από χθες</span>
+</div>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="bg-surface-container-low rounded-xl p-3.5 flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between">
+<span class="text-xs text-on-surface-variant font-medium">Εξαργυρώσεις</span>
+<span class="material-symbols-outlined text-tertiary text-[18px]">confirmation_number</span>
+</div>
+<div class="mt-2">
+<div class="font-headline font-bold text-2xl text-on-surface">7</div>
+<span class="text-[11px] text-on-surface-variant">Σήμερα στο ταμείο</span>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="bg-surface-container-low rounded-xl p-3.5 flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between">
+<span class="text-xs text-on-surface-variant font-medium">Πόντοι Χωριού</span>
+<span class="material-symbols-outlined text-tertiary-container text-[18px]">award_star</span>
+</div>
+<div class="mt-2">
+<div class="font-headline font-bold text-2xl text-on-surface">350</div>
+<span class="text-[11px] text-on-surface-variant">Αποδόθηκαν σε ταξιδιώτες</span>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="bg-surface-container-low rounded-xl p-3.5 flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between">
+<span class="text-xs text-on-surface-variant font-medium">Αξιολόγηση</span>
+<span class="material-symbols-outlined text-tertiary text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<div class="mt-2">
+<div class="flex items-baseline gap-1">
+<span class="font-headline font-bold text-2xl text-on-surface">4.9</span>
+<span class="text-xs text-on-surface-variant font-normal">/ 5.0</span>
+</div>
+<span class="text-[11px] text-on-surface-variant">48 αυθεντικές κριτικές</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Active Rewards Management -->
+<div class="px-4 pt-5 pb-2">
+<div class="flex items-center justify-between mb-3">
+<div>
+<h3 class="font-headline font-bold text-base text-on-surface">Οι Προσφορές μου</h3>
+<p class="text-xs text-on-surface-variant">Επιβραβεύσεις για τους επισκέπτες</p>
+</div>
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-secondary-container text-on-secondary-container hover:bg-secondary-fixed-dim transition-colors text-xs font-bold" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Νέα Ανταμοιβή</span>
+</button>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Reward 1 -->
+<div class="bg-surface-container-low rounded-xl p-3.5 shadow-sm flex flex-col gap-2.5">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-2.5 min-w-0">
+<div class="w-10 h-10 rounded-lg bg-surface-container overflow-hidden shrink-0 mt-0.5">
+<img class="w-full h-full object-cover" data-alt="Artisanal glass jar of wild fig spoon sweet preserve next to a traditional miniature caraf of tsipouro on a weathered wooden table in an authentic Greek stone mountain tavern." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVDtF7aGmCdIifyff9_7uCIWTMJjMrU3yMKaGFYeMc52NrsCOX-Tk0CJGorVrAThxzExzFLSCNp0HyEaD3L4FIwcOpPHcotSXp3fOTsJhvMbUi6O2LBqbYWmKWs7gdqIaS0pkENHKepwHyYWGTiToNzCKG-M2wRC-8piILCulmVE6Di6RO8-bIcVNdFmJeKI1-kwvcuxwJCI3xUcFuDc-hhi4z08YAmwQUlvYhMw">
+</div>
+<div class="min-w-0">
+<h4 class="font-headline font-bold text-sm text-on-surface leading-tight">
+                Κέρασμα Σπιτικό Γλυκό Κουταλιού &amp; Τσίπουρο
+              </h4>
+<div class="flex items-center gap-2 mt-1">
+<span class="inline-flex items-center gap-1 text-xs font-bold text-tertiary">
+<span class="material-symbols-outlined text-[14px]">local_florist</span>
+                  50 πόντοι
+                </span>
+<span class="text-xs text-on-surface-variant">• 42 αυτόν τον μήνα</span>
+</div>
+</div>
+</div>
+<!-- Switch Toggle Active -->
+<label class="relative inline-flex items-center cursor-pointer shrink-0 mt-0.5">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-9 h-5 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between pt-2 text-[11px] text-on-surface-variant">
+<span class="inline-flex items-center gap-1 text-primary font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+            Ενεργή Προσφορά
+          </span>
+<button class="hover:text-primary transition-colors inline-flex items-center gap-0.5" type="button">
+<span class="material-symbols-outlined text-[13px]">tune</span>
+            Επεξεργασία
+          </button>
+</div>
+</div>
+<!-- Reward 2 -->
+<div class="bg-surface-container-low rounded-xl p-3.5 shadow-sm flex flex-col gap-2.5">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-2.5 min-w-0">
+<div class="w-10 h-10 rounded-lg bg-surface-container overflow-hidden shrink-0 mt-0.5">
+<img class="w-full h-full object-cover" data-alt="Rustic Greek clay pottery bowls filled with savory baked Zagori cheese pie and fresh village salad on hand-loomed rustic linen fabric in warm natural lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkfhgDxee4p6nx_SROgDr8i93d20SdeAa4vkcPKTFqlNKp8UUh2j22DHKIGL1SvXKETkvwlWtRTXThQabgkTPnasoVY_JeCQ7LMSPcg4kSdB6yETpC6nin_wUJuB8xCiKYRqlHzzS4jDyrWI1Pw_rVD-fPEeP-UYbworfoTh9cQnDsdzlWDBKMUnODquCARxMTDCFdL-qCcCntuAxl4hIKnNkGKyFm07xwMjIDsg">
+</div>
+<div class="min-w-0">
+<h4 class="font-headline font-bold text-sm text-on-surface leading-tight">
+                15% Έκπτωση σε γεύμα άνω των 25€
+              </h4>
+<div class="flex items-center gap-2 mt-1">
+<span class="inline-flex items-center gap-1 text-xs font-bold text-tertiary">
+<span class="material-symbols-outlined text-[14px]">percent</span>
+                  120 πόντοι
+                </span>
+<span class="text-xs text-on-surface-variant">• 19 αυτόν τον μήνα</span>
+</div>
+</div>
+</div>
+<!-- Switch Toggle Active -->
+<label class="relative inline-flex items-center cursor-pointer shrink-0 mt-0.5">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-9 h-5 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between pt-2 text-[11px] text-on-surface-variant">
+<span class="inline-flex items-center gap-1 text-primary font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+            Ενεργή Προσφορά
+          </span>
+<button class="hover:text-primary transition-colors inline-flex items-center gap-0.5" type="button">
+<span class="material-symbols-outlined text-[13px]">tune</span>
+            Επεξεργασία
+          </button>
+</div>
+</div>
+<!-- Reward 3 (Paused) -->
+<div class="bg-surface-container-low/70 rounded-xl p-3.5 shadow-sm flex flex-col gap-2.5 opacity-80">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-2.5 min-w-0">
+<div class="w-10 h-10 rounded-lg bg-surface-container overflow-hidden shrink-0 mt-0.5">
+<img class="w-full h-full object-cover filter grayscale-[30%]" data-alt="Traditional wood-fired stone oven inside a rustic Greek village bakery, with golden sourdough loaves and baking paddle in warm amber fire glow." src="https://lh3.googleusercontent.com/aida-public/AB6AXuByAFrUHacheewVi61ZC2fwjMhKDG2sUXK0V2A4-f3NJnoNHlZzgfb0JS_ARjz3TE_3S28vic1_bn6PMqD08VSmPqY7UlXfYxjXlLj1s71vUsTpwA50oRmhI7Fcz0vGo1Ycrj4fDKoswTk4jpAba-hr8tJYbXwLgGoAM6m2LTCdZmIkNSEtvTIxLNun_OdyMG0hTPrpukxUu-3xUcChNQlriLMyf7vxl2OXb6V0gw">
+</div>
+<div class="min-w-0">
+<h4 class="font-headline font-bold text-sm text-on-surface leading-tight">
+                Βιωματική επίδειξη παραδοσιακού φούρνου
+              </h4>
+<div class="flex items-center gap-2 mt-1">
+<span class="inline-flex items-center gap-1 text-xs font-bold text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">outdoor_grill</span>
+                  80 πόντοι
+                </span>
+<span class="text-xs text-on-surface-variant">• Εποχικό</span>
+</div>
+</div>
+</div>
+<!-- Switch Toggle Paused -->
+<label class="relative inline-flex items-center cursor-pointer shrink-0 mt-0.5">
+<input class="sr-only peer" type="checkbox">
+<div class="w-9 h-5 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between pt-2 text-[11px] text-on-surface-variant">
+<span class="inline-flex items-center gap-1 text-secondary font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+            Σε παύση
+          </span>
+<button class="hover:text-primary transition-colors inline-flex items-center gap-0.5" type="button">
+<span class="material-symbols-outlined text-[13px]">tune</span>
+            Επεξεργασία
+          </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Redemptions Live Feed -->
+<div class="px-4 pt-5 pb-2">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<h3 class="font-headline font-bold text-base text-on-surface">Πρόσφατες Εξαργυρώσεις</h3>
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+</div>
+<button class="text-xs text-primary font-semibold hover:underline" type="button">
+        Ιστορικό
+      </button>
+</div>
+<div class="bg-surface-container-low rounded-xl p-3 shadow-sm flex flex-col gap-2">
+<!-- Item 1 -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container/50">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-8 h-8 rounded-full bg-primary-fixed text-on-primary-fixed-variant flex items-center justify-center font-bold text-xs shrink-0">
+            ΕΜ
+          </div>
+<div class="min-w-0">
+<div class="font-headline font-bold text-xs text-on-surface truncate">
+              Ελένη Μ.
+            </div>
+<p class="text-[11px] text-on-surface-variant truncate">
+              Κέρασμα Σπιτικό Γλυκό • Πριν 14 λεπτά
+            </p>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold shrink-0">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+          Επιβεβαιώθηκε
+        </span>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container/50">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant flex items-center justify-center font-bold text-xs shrink-0">
+            ΝΚ
+          </div>
+<div class="min-w-0">
+<div class="font-headline font-bold text-xs text-on-surface truncate">
+              Νίκος Κ.
+            </div>
+<p class="text-[11px] text-on-surface-variant truncate">
+              15% Έκπτωση • Πριν 1 ώρα
+            </p>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold shrink-0">
+<span class="material-symbols-outlined text-[12px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+          Επιβεβαιώθηκε
+        </span>
+</div>
+</div>
+</div>
+<!-- Partner Tip Card / Delight Moment -->
+<div class="px-4 pt-4">
+<div class="bg-secondary-container/60 rounded-xl p-4 shadow-sm flex items-start gap-3">
+<div class="w-9 h-9 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center shrink-0 shadow-xs">
+<span class="material-symbols-outlined text-[20px]">lightbulb</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-headline font-bold text-xs text-on-surface leading-tight">
+          Συμβουλή Συνεργάτη
+        </h4>
+<p class="font-body text-xs text-on-surface-variant mt-1 leading-relaxed">
+          Τοποθετήστε το ξύλινο stand με το QR code σε εμφανές σημείο στο ταμείο ή στα τραπέζια. Οι επισκέπτες σαρώνουν ευκολότερα όταν περιμένουν τον λογαριασμό!
+        </p>
+<div class="mt-2.5 flex items-center gap-3">
+<button class="text-xs text-primary font-bold hover:underline inline-flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[14px]">download</span>
+            Λήψη Νέου QR Stand (PDF)
+          </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const manualBtn = document.getElementById('manualCodeBtn');
+    const manualForm = document.getElementById('manualCodeForm');
+    const scanBtn = document.getElementById('scanQrBtn');
+
+    if (manualBtn && manualForm) {
+      manualBtn.addEventListener('click', function() {
+        const isHidden = manualForm.classList.contains('hidden');
+        if (isHidden) {
+          manualForm.classList.remove('hidden');
+          manualForm.classList.add('flex');
+          const input = manualForm.querySelector('input');
+          if (input) input.focus();
+        } else {
+          manualForm.classList.add('hidden');
+          manualForm.classList.remove('flex');
+        }
+      });
+    }
+
+    if (scanBtn) {
+      scanBtn.addEventListener('click', function() {
+        // Haptic feedback if supported on mobile device
+        if (navigator.vibrate) {
+          navigator.vibrate(35);
+        }
+      });
+    }
+  })();
+</script></main>
+
+
+
+</body></html>
