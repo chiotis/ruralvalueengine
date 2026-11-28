@@ -19,7 +19,7 @@ export default function TabsLayout() {
       screenOptions={({ route }) => ({
         tabBarActiveTintColor: colors.green,
         tabBarInactiveTintColor: colors.textMuted,
-        tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border },
+        tabBarStyle: { backgroundColor: colors.background, borderTopColor: colors.border },
         tabBarLabelStyle: { fontWeight: "700", fontSize: 11 },
         header: ({ options }) => <AppHeader title={options.title ?? route.name} />,
         sceneStyle: { backgroundColor: colors.background },

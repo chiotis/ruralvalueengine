@@ -8,7 +8,7 @@ import { colors, radius, space } from "../lib/theme";
 export function Sheet({ visible, onClose, children, overlay }: { visible: boolean; onClose: () => void; children: ReactNode; overlay?: ReactNode }) {
   const insets = useSafeAreaInsets();
   return (
-    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose} statusBarTranslucent>
+    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose} statusBarTranslucent navigationBarTranslucent>
       <View style={styles.backdrop}>
         <Pressable style={StyleSheet.absoluteFill} onPress={onClose} accessibilityLabel="Close" />
         <View style={[styles.sheet, { paddingBottom: insets.bottom + space.lg }]}>
