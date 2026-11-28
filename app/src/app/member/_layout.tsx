@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import { useI18n } from "../../lib/i18n";
 import { MemberProvider } from "../../lib/member";
-import { colors } from "../../lib/theme";
+import { colors, serif } from "../../lib/theme";
 
 export default function MemberLayout() {
   const { t } = useI18n();
@@ -9,9 +9,10 @@ export default function MemberLayout() {
     <MemberProvider>
       <Stack
         screenOptions={{
-          headerStyle: { backgroundColor: colors.green },
-          headerTintColor: "#fff",
-          headerTitleStyle: { fontWeight: "700" },
+          headerStyle: { backgroundColor: colors.background },
+          headerShadowVisible: false,
+          headerTintColor: colors.greenDark,
+          headerTitleStyle: { fontFamily: serif, fontWeight: "700" },
           contentStyle: { backgroundColor: colors.background },
         }}
       >

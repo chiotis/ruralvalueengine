@@ -57,8 +57,8 @@ export default function Passport() {
       ListHeaderComponent={
         <View style={{ gap: space.md }}>
           <View style={{ flexDirection: "row", gap: space.md }}>
-            <Stat label={lang === "el" ? "Μέρη" : "Places"} value={places} />
-            <Stat label={lang === "el" ? "Διαδρομές" : "Routes"} value={done} />
+            <Stat icon="location" label={lang === "el" ? "Μέρη" : "Places"} value={places} />
+            <Stat icon="trail-sign" label={lang === "el" ? "Διαδρομές" : "Routes"} value={done} />
           </View>
           <State loading={res.loading && !res.data} error={res.error} onRetry={res.reload} empty={!res.loading && entries.length === 0 && t.noPassport} />
         </View>

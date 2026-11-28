@@ -6,7 +6,7 @@ import { deviceLang, LangContext, strings, type Lang } from "../lib/i18n";
 import { SessionProvider } from "../lib/session";
 import { store } from "../lib/storage";
 import { flush } from "../lib/queue";
-import { colors } from "../lib/theme";
+import { colors, serif } from "../lib/theme";
 import { ScanButton } from "../components/ScanButton";
 
 export default function RootLayout() {
@@ -34,13 +34,14 @@ export default function RootLayout() {
   return (
     <LangContext.Provider value={value}>
       <SessionProvider>
-        <StatusBar style="light" />
+        <StatusBar style="dark" />
         <View style={{ flex: 1 }}>
           <Stack
             screenOptions={{
-              headerStyle: { backgroundColor: colors.greenDark },
-              headerTintColor: "#fff",
-              headerTitleStyle: { fontWeight: "700" },
+              headerStyle: { backgroundColor: colors.background },
+              headerTintColor: colors.greenDark,
+              headerTitleStyle: { fontFamily: serif, fontWeight: "700" },
+              headerShadowVisible: false,
               contentStyle: { backgroundColor: colors.background },
             }}
           >
