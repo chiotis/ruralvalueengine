@@ -220,6 +220,12 @@ async function processQrCheckin(tx: Tx, cfg: PipelineConfig, input: EventInput, 
   const target = t as QrTarget;
   if (target.key_version !== qr.version) reject("qr_rotated");
 
+  // The server decides who the visit belongs to, never the client. Set it before the location
+  // check so a scan refused as too far is still stored against its business.
+  ev.target_id = target.id;
+  ev.member_ids = target.member_ids;
+  ev.poi_id = target.poi_id;
+
   // A place with coordinates needs the phone's location: a photo of the QR must not earn points from afar.
   // ETAM's manual entries from the admin panel are exempt from needing one.
   if (target.lat != null && target.lng != null && (ev.geo || ev.source !== "admin")) {
@@ -230,10 +236,6 @@ async function processQrCheckin(tx: Tx, cfg: PipelineConfig, input: EventInput, 
     ev.checks.push("geo_distance");
   }
 
-  // The server decides who the visit belongs to, never the client.
-  ev.target_id = target.id;
-  ev.member_ids = target.member_ids;
-  ev.poi_id = target.poi_id;
   ev.payload = { ...ev.payload, target_kind: target.kind };
 
   return finishCheckin(tx, cfg, ev, target.kind, input.payload.referral_code);

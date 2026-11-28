@@ -93,8 +93,12 @@ describe("QR verification", () => {
   });
 
   it("rejects a scan whose phone location is far from the place", async () => {
-    const [r] = await run({ ...qrCheckin("biz-1", NOW), geo: { lat: 38.0, lng: 23.7, accuracy_m: 10 } });
+    const ev = { ...qrCheckin("biz-1", NOW), geo: { lat: 38.0, lng: 23.7, accuracy_m: 10 } };
+    const [r] = await run(ev);
     expect(r!.reason).toBe("geo_too_far");
+    // Stored against its business, so ETAM can filter refused scans by member.
+    const stored = await db.query("SELECT target_id, member_ids FROM events WHERE event_id = $1", [ev.event_id]);
+    expect(stored.rows[0]).toEqual({ target_id: "biz-1", member_ids: ["biz-1"] });
   });
 
   it("requires the phone's location when the place has coordinates", async () => {
