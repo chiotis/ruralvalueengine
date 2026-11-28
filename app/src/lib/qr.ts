@@ -17,3 +17,10 @@ export function parseQr(data: string): ScannedQr {
   }
   return { kind: "foreign" };
 }
+
+/** The place a check-in QR points at (its catalogue id), e.g. "biz-123" from "rve://c/biz-123/1/<sig>". */
+export function checkinTarget(token: string): string | null {
+  if (!token.startsWith(CHECKIN_PREFIX)) return null;
+  const target = token.slice(CHECKIN_PREFIX.length).split("/")[0];
+  return /^[a-z0-9-]+$/.test(target ?? "") ? target! : null;
+}

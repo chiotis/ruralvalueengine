@@ -6,7 +6,9 @@ They were reviewed with Chris on 2026-11-28. Decisions:
 - **We keep our own data and rules.** The designs use mock numbers (150 m / 75 m QR radius, +15 / +45 points, ratings, a 35-stamp total). Those are placeholders only. The app uses the engine's values: rules v1 points (`engine/src/rules/v1.ts`), the 500 m QR distance check, and GPS check-ins at 75 m for 2 minutes.
 - **Brand colours stay** (`docs/theme.json`), not Stitch's generated palette.
 
-## Batch 1: build now (app only, the engine already supports it)
+## Batch 1: done (app only, the engine already supports it)
+
+Shipped in PRs #19 and #20 (2026-11-28). Point labels in the app come from `app/src/lib/points.ts`, and a unit test fails if they drift from `engine/src/rules/v1.ts`.
 
 | | Feature | Effort |
 |---|---|---|
