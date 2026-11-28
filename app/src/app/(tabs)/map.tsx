@@ -8,10 +8,10 @@ import { useApi } from "../../lib/useApi";
 import type { CatalogSummary } from "../../lib/api";
 import { pointsLabel } from "../../lib/points";
 import { metersBetween } from "../../lib/geo";
-import { LeafletMap, type MapMarker } from "../../components/LeafletMap";
+import { LeafletMap, PIN_COLOR, type MapMarker } from "../../components/LeafletMap";
 import { ItemCard, KIND_COLOR, KIND_ICON, KIND_LABEL } from "../../components/ItemCard";
 import { Button, Chip, Eyebrow, Pill, State, Thumb } from "../../components/ui";
-import { colors, radius, serif, shadow, space } from "../../lib/theme";
+import { colors, radius, serif, shadow, space, inter } from "../../lib/theme";
 
 type Mode = "map" | "list";
 
@@ -71,9 +71,9 @@ export default function MapTab() {
           ))}
         </View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: space.sm, paddingRight: space.lg }}>
-          <Chip dot={KIND_COLOR.route} label={t.routes} active={show.routes} onPress={() => toggle("routes")} />
-          <Chip dot={KIND_COLOR.business} label={t.businesses} active={show.businesses} onPress={() => toggle("businesses")} />
-          <Chip dot={KIND_COLOR.poi} label={t.pois} active={show.pois} onPress={() => toggle("pois")} />
+          <Chip dot={PIN_COLOR.route} label={t.routes} active={show.routes} onPress={() => toggle("routes")} />
+          <Chip dot={PIN_COLOR.business} label={t.businesses} active={show.businesses} onPress={() => toggle("businesses")} />
+          <Chip dot={PIN_COLOR.poi} label={t.pois} active={show.pois} onPress={() => toggle("pois")} />
         </ScrollView>
       </View>
 
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   segment: { flexDirection: "row", backgroundColor: colors.sand, borderRadius: radius.pill, padding: 3 },
   segBtn: { flexDirection: "row", alignItems: "center", gap: 4, paddingVertical: 6, paddingHorizontal: 10, borderRadius: radius.pill },
   segOn: { backgroundColor: colors.green },
-  segText: { fontSize: 12, fontWeight: "700", color: colors.greenDark },
+  segText: { fontFamily: inter, fontSize: 12, fontWeight: "700", color: colors.greenDark },
   // Leaves room on the right for the floating scan button.
   sheet: { position: "absolute", left: space.md, right: space.md, bottom: 88, backgroundColor: colors.surface, borderRadius: radius.lg, padding: space.lg, gap: space.md, ...shadow, elevation: 8 },
   close: { position: "absolute", top: space.md, right: space.md, width: 30, height: 30, borderRadius: 15, backgroundColor: colors.sand, alignItems: "center", justifyContent: "center", zIndex: 1 },

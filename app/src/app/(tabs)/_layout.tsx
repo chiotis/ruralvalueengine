@@ -2,7 +2,7 @@ import type { ColorValue } from "react-native";
 import { Tabs } from "expo-router/js-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useI18n } from "../../lib/i18n";
-import { colors } from "../../lib/theme";
+import { colors, inter } from "../../lib/theme";
 import { AppHeader } from "../../components/AppHeader";
 
 type IconName = keyof typeof Ionicons.glyphMap;
@@ -20,7 +20,7 @@ export default function TabsLayout() {
         tabBarActiveTintColor: colors.green,
         tabBarInactiveTintColor: colors.textMuted,
         tabBarStyle: { backgroundColor: colors.background, borderTopColor: colors.border },
-        tabBarLabelStyle: { fontWeight: "700", fontSize: 11 },
+        tabBarLabelStyle: { fontWeight: "700", fontFamily: inter, fontSize: 11 },
         header: ({ options }) => <AppHeader title={options.title ?? route.name} />,
         sceneStyle: { backgroundColor: colors.background },
       })}

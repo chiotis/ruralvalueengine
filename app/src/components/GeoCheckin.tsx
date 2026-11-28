@@ -9,7 +9,7 @@ import { describeOutcome, type Outcome } from "../lib/outcome";
 import { metersBetween } from "../lib/geo";
 import { VISITOR_POINTS } from "../lib/points";
 import { Button, Card, Eyebrow, P, Pill } from "./ui";
-import { colors, serif, space } from "../lib/theme";
+import { colors, serif, space, inter } from "../lib/theme";
 
 // The engine checks the same limits again (engine/src/pipeline.ts LIMITS, default POI radius).
 const DWELL_S = 120;
@@ -113,8 +113,8 @@ export function GeoCheckin({ poiId, lat, lng }: { poiId: string; lat: number; ln
   return (
     <Card>
       <View style={{ flexDirection: "row", alignItems: "center", gap: space.sm }}>
-        <Ionicons name="navigate-circle" size={22} color={colors.green} />
-        <Eyebrow color={colors.green}>{el ? "Check-in με GPS" : "GPS check-in"}</Eyebrow>
+        <Ionicons name="navigate-circle" size={22} color={colors.greenOnSoft} />
+        <Eyebrow color={colors.greenOnSoft}>{el ? "Check-in με GPS" : "GPS check-in"}</Eyebrow>
         <View style={{ flex: 1 }} />
         <Pill icon="leaf" label={`+${VISITOR_POINTS.poiGeo} ${t.points}`} />
       </View>
@@ -164,8 +164,8 @@ export function GeoCheckin({ poiId, lat, lng }: { poiId: string; lat: number; ln
 
 const styles = StyleSheet.create({
   time: { fontFamily: serif, fontSize: 30, lineHeight: 38, fontWeight: "700", color: colors.greenDark },
-  of: { fontSize: 12, color: colors.textMuted, fontWeight: "600" },
-  status: { textAlign: "center", fontSize: 14, lineHeight: 20, color: colors.text, fontWeight: "600" },
-  ok: { flexDirection: "row", alignItems: "center", gap: space.sm, backgroundColor: colors.greenBright, borderRadius: 14, padding: space.md },
-  okText: { color: "#fff", fontWeight: "800", fontSize: 15, flex: 1 },
+  of: { fontFamily: inter, fontSize: 12, color: colors.textMuted, fontWeight: "600" },
+  status: { textAlign: "center", fontFamily: inter, fontSize: 14, lineHeight: 20, color: colors.text, fontWeight: "600" },
+  ok: { flexDirection: "row", alignItems: "center", gap: space.sm, backgroundColor: colors.green, borderRadius: 14, padding: space.md },
+  okText: { color: "#fff", fontWeight: "800", fontFamily: inter, fontSize: 15, flex: 1 },
 });

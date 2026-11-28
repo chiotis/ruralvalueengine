@@ -18,7 +18,9 @@ export interface MapMarker {
  * For production traffic, point TILE_URL at a tile provider with an agreement (e.g. MapTiler).
  */
 const TILE_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
-const KIND_COLOR = { business: colors.burgundy, route: colors.greenBright, poi: colors.brown } as const;
+/** Pin colours stay the brand originals: they sit on light map tiles, not on the dark app. */
+export const PIN_COLOR = { business: "#7a3123", route: "#2d9141", poi: "#8a5a3c" } as const;
+const KIND_COLOR = PIN_COLOR;
 /** Pin labels appear from this zoom level, so the whole-country view stays readable. */
 const LABEL_ZOOM = 12;
 
@@ -38,7 +40,7 @@ function html(markers: MapMarker[], lines: [number, number][][], stops: MapStop[
 html,body,#m{height:100%;margin:0;background:${colors.sand}}
 .leaflet-tooltip{font:600 13px system-ui;border-radius:10px}
 .pin{position:relative;width:18px;height:18px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35);box-sizing:border-box}
-.pin b{display:none;position:absolute;left:18px;top:-4px;white-space:nowrap;font:800 11px system-ui;color:${colors.green};background:#fff;border-radius:9px;padding:2px 6px;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.pin b{display:none;position:absolute;left:18px;top:-4px;white-space:nowrap;font:800 11px system-ui;color:#2d9141;background:#fff;border-radius:9px;padding:2px 6px;box-shadow:0 1px 4px rgba(0,0,0,.25)}
 .z .pin b{display:block}
 .stop{width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid ${colors.greenBright};box-sizing:border-box}
 .me{width:16px;height:16px;border-radius:50%;background:#2b7bd6;border:3px solid #fff;box-shadow:0 0 0 6px rgba(43,123,214,.25);box-sizing:border-box}

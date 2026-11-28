@@ -3,7 +3,7 @@ import { useRouter } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import type { CatalogSummary } from "../lib/api";
 import { pointsLabel } from "../lib/points";
-import { colors, font, serif, space } from "../lib/theme";
+import { colors, font, serif, space, inter } from "../lib/theme";
 import { Card, Eyebrow, Pill, Thumb, type IconName } from "./ui";
 
 export const KIND_LABEL = { business: { el: "Επιχείρηση", en: "Business" }, route: { el: "Διαδρομή", en: "Route" }, poi: { el: "Σημείο", en: "Place" } };
@@ -23,7 +23,7 @@ export function ItemCard({ item, lang }: { item: CatalogSummary; lang: "el" | "e
           {item.title}
         </Text>
         {item.subtitle ? (
-          <Text style={{ fontSize: font.small, color: colors.textMuted }} numberOfLines={1}>
+          <Text style={{ fontFamily: inter, fontSize: font.small, color: colors.textMuted }} numberOfLines={1}>
             {item.subtitle}
           </Text>
         ) : null}

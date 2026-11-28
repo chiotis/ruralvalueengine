@@ -1,31 +1,41 @@
 {
-  "_note": "Palette from Chris (2026-11-27): greens are the main colours; burgundy, brown and light blue are complementary/accent. Fonts still TBD.",
+  "_note": "Dark green like ruralgreece.gr (Chris, 2026-11-28): page #1c2c23, cards one step lighter, favicon green #2d9141 for actions, light text. Font: Inter. Brand palette kept under 'brand'. Mirrors app/src/lib/theme.ts.",
   "color": {
+    "background": "#1c2c23",
+    "surface": "#243A2D",
+    "primaryAction": "#2d9141",
+    "success": "#5BC274",
+    "text": "#F3F1EA",
+    "textMuted": "#B3C1B7",
+    "border": "#38503F",
+    "accent": "#DDB48E",
+    "highlight": "#b1d1ea",
+    "danger": "#D06A52"
+  },
+  "font": {
+    "heading": "Inter",
+    "body": "Inter"
+  },
+  "radius": {
+    "sm": 6,
+    "md": 12,
+    "lg": 20
+  },
+  "spacing": [
+    4,
+    8,
+    12,
+    16,
+    24,
+    32,
+    48
+  ],
+  "brand": {
     "greenDark": "#1c2c23",
     "green": "#376245",
     "greenBright": "#2d9141",
     "burgundy": "#7a3123",
     "brown": "#8a5a3c",
-    "sky": "#b1d1ea",
-
-    "primary": "#376245",
-    "primaryDark": "#1c2c23",
-    "primaryAction": "#2d9141",
-    "accent": "#8a5a3c",
-    "accentStrong": "#7a3123",
-    "highlight": "#b1d1ea",
-    "background": "#FAF8F3",
-    "surface": "#FFFFFF",
-    "text": "#1c2c23",
-    "textMuted": "#5E6B63",
-    "border": "#E1E5DF",
-    "success": "#2d9141",
-    "danger": "#7a3123"
-  },
-  "font": {
-    "heading": "TBD",
-    "body": "TBD"
-  },
-  "radius": { "sm": 6, "md": 12, "lg": 20 },
-  "spacing": [4, 8, 12, 16, 24, 32, 48]
+    "sky": "#b1d1ea"
+  }
 }

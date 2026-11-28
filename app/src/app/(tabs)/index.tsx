@@ -10,7 +10,7 @@ import type { CatalogSummary } from "../../lib/api";
 import { VISITOR_POINTS } from "../../lib/points";
 import { ItemCard, KIND_ICON } from "../../components/ItemCard";
 import { Button, Card, Chip, Eyebrow, Field, H1, P, Pill, SectionHeader, State } from "../../components/ui";
-import { colors, radius, serif, shadow, space } from "../../lib/theme";
+import { colors, radius, serif, shadow, space, inter } from "../../lib/theme";
 
 type Kind = "routes" | "businesses" | "pois";
 
@@ -56,7 +56,7 @@ function Featured({ lang }: { lang: "el" | "en" }) {
             <View style={styles.pkgFoot}>
               <Text style={styles.pkgMeta}>{`${p.stops.length} ${el ? "στάσεις" : "stops"}`}</Text>
               <View style={styles.pkgPts}>
-                <Ionicons name="leaf" size={13} color={colors.greenDark} />
+                <Ionicons name="leaf" size={13} color={colors.ink} />
                 <Text style={styles.pkgPtsText}>{`+${VISITOR_POINTS.packageCompleted} ${el ? "πόντοι" : "pts"}`}</Text>
               </View>
             </View>
@@ -125,7 +125,7 @@ export default function Explore() {
 
           {session.ready && !session.visitor && (
             <Card style={{ backgroundColor: colors.greenSoft, flexDirection: "row", alignItems: "center", gap: space.md }}>
-              <Ionicons name="book" size={28} color={colors.green} />
+              <Ionicons name="book" size={28} color={colors.greenOnSoft} />
               <View style={{ flex: 1, gap: space.sm }}>
                 <P style={{ fontWeight: "700" }}>{el ? "Συλλέξτε σφραγίδες και πόντους" : "Collect stamps and points"}</P>
                 <Button title={t.verify} onPress={() => router.push("/login")} style={{ alignSelf: "flex-start", paddingVertical: 10 }} />
@@ -156,15 +156,15 @@ export default function Explore() {
 
 const styles = StyleSheet.create({
   tagline: { fontFamily: serif, fontStyle: "italic", fontSize: 15, lineHeight: 22, color: colors.brown },
-  pkg: { width: 260, minHeight: 190, borderRadius: radius.lg, padding: space.lg, gap: space.sm, backgroundColor: colors.greenDark, ...shadow },
+  pkg: { width: 260, minHeight: 190, borderRadius: radius.lg, padding: space.lg, gap: space.sm, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, ...shadow },
   pkgTitle: { fontFamily: serif, fontSize: 19, lineHeight: 25, fontWeight: "700", color: "#fff" },
-  pkgText: { fontSize: 13, lineHeight: 18, color: "rgba(255,255,255,0.75)" },
+  pkgText: { fontFamily: inter, fontSize: 13, lineHeight: 18, color: "rgba(255,255,255,0.75)" },
   pkgFoot: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: "auto" },
-  pkgMeta: { fontSize: 13, fontWeight: "700", color: colors.sky },
+  pkgMeta: { fontFamily: inter, fontSize: 13, fontWeight: "700", color: colors.sky },
   pkgPts: { flexDirection: "row", alignItems: "center", gap: 4, backgroundColor: colors.sky, borderRadius: radius.pill, paddingVertical: 4, paddingHorizontal: 10 },
-  pkgPtsText: { fontSize: 12, fontWeight: "800", color: colors.greenDark },
+  pkgPtsText: { fontFamily: inter, fontSize: 12, fontWeight: "800", color: colors.ink },
   route: { width: 260, height: 190, borderRadius: radius.lg, padding: space.md, overflow: "hidden", backgroundColor: colors.green, ...shadow },
   shade: { position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(28,44,35,0.35)" },
   routeTitle: { fontFamily: serif, fontSize: 18, lineHeight: 23, fontWeight: "700", color: "#fff", textShadowColor: "rgba(0,0,0,0.4)", textShadowRadius: 4 },
-  routeSub: { fontSize: 12, color: "rgba(255,255,255,0.85)" },
+  routeSub: { fontFamily: inter, fontSize: 12, color: "rgba(255,255,255,0.85)" },
 });

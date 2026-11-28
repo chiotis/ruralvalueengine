@@ -35,9 +35,9 @@ export default function RootLayout() {
   return (
     <LangContext.Provider value={value}>
       <SessionProvider>
-        <StatusBar style="dark" />
-        {/* Android: the system navigation bar is see-through over the cream app, with dark buttons (app.json plugin turns off the grey scrim). */}
-        <NavigationBar style="light" />
+        <StatusBar style="light" />
+        {/* Android: the system navigation bar is see-through over the green app, with light buttons (app.json plugin turns off the grey scrim). */}
+        <NavigationBar style="dark" />
         <View style={{ flex: 1, backgroundColor: colors.background }}>
           <Stack
             screenOptions={{
