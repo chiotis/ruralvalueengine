@@ -12,6 +12,9 @@ export class WpClient {
   url(path: string, params: Record<string, string | number | undefined> = {}): string {
     const u = new URL(`${this.baseUrl}/wp-json/wp/v2/${path}`);
     for (const [k, v] of Object.entries(params)) if (v !== undefined) u.searchParams.set(k, String(v));
+    // ruralgreece.gr sits behind a page cache (Varnish) that keeps REST responses for up to a week,
+    // so list queries came back stale. A unique query value makes every read go to WordPress.
+    u.searchParams.set("_rve", Date.now().toString(36));
     return u.toString();
   }
 
